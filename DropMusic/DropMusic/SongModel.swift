@@ -30,18 +30,75 @@ class Song: StoreProtocol {
     /// Music Genre
     let genre: String
     
-    let albumCoverSet: AlbumCoverCollection
+//let albumCoverSet: AlbumCoverCollection?
+    var smallImage: String = ""
+    var mediumImage: String = ""
+    var largeImage: String? = ""
     /// Track time duration in milliseconds
-    let trackTime: Double
+    let trackTime: String
+    
+    struct keys{
+        static let kSongName = "label"
+        static let kArtistSong = "label"
+        static let kStoreID = "im:id"
+        static let kAlbumName = "label"
+        static let kAlbumCoverSet = "image"
+        static let kTrackTime = "label"
+        static let kGenre = "label"
+    }
     
     /// Initialize with songName, artistSong, storeID, Images, and TrackTime.
-    init(songName: String, artistSong: String, storeID: String, albumCoverSet: AlbumCoverCollection , trackTime: Double, albumName: String, genre: String){
+    init(songName: String, artistSong: String, storeID: String,  trackTime: String, albumName: String, genre: String){
         self.songName = songName
         self.artistSong = artistSong
         self.storeID = storeID
-        self.albumCoverSet = albumCoverSet
+//self.albumCoverSet = albumCoverSet
         self.trackTime = trackTime
         self.albumName = albumName
         self.genre = genre
+    }
+    
+    init?(dictionaryTopCharts: [String: Any]){
+        guard let songNameDictionary = dictionaryTopCharts["im:name"] as? [String: String],
+            let artistDictionary = dictionaryTopCharts["im:artist"] as? [String: Any],
+            let arrayOfImageDictionary = dictionaryTopCharts["im:image"] as? [[String: Any]],
+            let albumNameDictionary = dictionaryTopCharts["im:collection"] as? [String: Any],
+            let trackTimeArrayOfDictionaries = dictionaryTopCharts["link"] as? [[String: Any]],
+            let idDictionary = dictionaryTopCharts["id"] as? [String: Any],
+            let genreDictionary = dictionaryTopCharts["category"] as? [String: Any] else { return nil }
+        
+        self.songName = songNameDictionary[keys.kSongName]!
+        self.artistSong = artistDictionary[keys.kArtistSong] as! String
+        
+        guard let storeIDDictionary = idDictionary["attributes"] as? [String: String] else { return nil }
+        self.storeID = storeIDDictionary[keys.kStoreID]!
+        
+        guard let collectionNameDictionary = albumNameDictionary["im:name"] as? [String: String] else { return nil }
+        self.albumName = collectionNameDictionary[keys.kAlbumName]!
+        
+        let lastArrayValue = trackTimeArrayOfDictionaries.last
+        let durationDictionary = lastArrayValue?["im:duration"] as? [String: String]
+        self.trackTime = (durationDictionary?[keys.kTrackTime])!
+        
+        let attributesDictinary = genreDictionary["attributes"] as? [String: String]
+        self.genre = (attributesDictinary?[keys.kGenre])!
+        
+        
+        for imageDictionary in arrayOfImageDictionary {
+            guard let url = imageDictionary["label"] as? String,
+                let attributesDictionary = imageDictionary["attributes"] as? [String: Any],
+                let height = attributesDictionary["height"] as? String else { return nil }
+            
+            switch height {
+            case "55":
+                self.smallImage = url
+            case "60":
+                self.mediumImage = url
+            case "170":
+                self.largeImage = url
+            default:
+                return nil
+            }
+        }
     }
 }

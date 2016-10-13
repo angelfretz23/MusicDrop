@@ -28,6 +28,7 @@ class Album: StoreProtocol{
     var storeID: String
     /// Array of songs objects
     let songs: [Song]
+
     
     init(albumName: String, releaseDate: Date, copyrights: String, storeID: String, songs: [Song]){
         self.albumName = albumName

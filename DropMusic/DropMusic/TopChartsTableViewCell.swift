@@ -9,16 +9,27 @@
 import UIKit
 
 class TopChartsTableViewCell: UITableViewCell {
+  
+   
+    
+    @IBOutlet weak var collectinImage: UIImageView!
+    @IBOutlet weak var indexLabel: UILabel!
+    @IBOutlet weak var songNameLabel: UILabel!
+    @IBOutlet weak var artistNameLabel: UILabel!
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+  
+    
+    func updateWith(song: Song){
+        self.songNameLabel.text = song.songName
+        self.artistNameLabel.text = song.artistSong
+        ImageController.fetchImage(withString: song.smallImage) { (image) in
+            DispatchQueue.main.async {
+//self.indexLabel.text = "\(index)"
+                
+                self.collectinImage.image = image
+                
+            }
+        }
+        
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }
