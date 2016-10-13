@@ -89,19 +89,17 @@ class Song: StoreProtocol {
             guard let urlString = imageDictionary["label"] as? String,
                 let attributesDictionary = imageDictionary["attributes"] as? [String: Any],
                 let height = attributesDictionary["height"] as? String else { return nil }
-            
-            guard let data = (try? Data(contentsOf: URL(string: urlString)!)) else {return nil}
-            
-            switch height {
-            case "55":
-                self.smallImage = UIImage(data: data)
-            case "60":
-                self.mediumImage = UIImage(data: data)
-            case "170":
-                self.largeImage = UIImage(data: data)
-            default:
-                return nil
-            }
+            ImageController.fetchImage(withString: urlString, completion: { (image) in
+                switch height {
+                case "55":
+                    self.smallImage = image
+                case "60":
+                    self.mediumImage = image
+                case "170":
+                    self.largeImage = image
+                default: ()
+                }
+            })
         }
     }
 }

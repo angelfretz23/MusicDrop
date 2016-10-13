@@ -12,19 +12,11 @@ import UIKit
 class ImageController{
     
     static func fetchImage(withString url: String, completion: @escaping (_ image: UIImage?) -> Void){
-        guard let url = URL(string: url) else { return }
-        NetworkController.performRequest(for: url, httpMethodString: "GET") { (data, error) in
-            guard let data = data else { completion(nil); print("There was nothing"); return }
-            print(data)
-            guard let responseDataString = String.init(data: data, encoding: String.Encoding.utf8) else { completion(nil); return }
-            
-            if error != nil{
-                print(error?.localizedDescription)
-            } else if responseDataString.contains("error") {
-                print("Error: \(responseDataString)")
-            }
-            let image = UIImage(data: data)
-            completion(image)
+        guard let url = URL(string: url) else {completion(nil); return }
+        guard let data = (try? Data(contentsOf: url)) else {completion(nil); return }
+        
+        DispatchQueue.main.async {
+            completion(UIImage(data: data))
         }
     }
 }
