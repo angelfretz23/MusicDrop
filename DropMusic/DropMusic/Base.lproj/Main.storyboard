@@ -54,11 +54,6 @@
                                                         <constraint firstAttribute="width" constant="60" id="h7n-b6-wmz"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2p-wc-rWr">
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8pj-bJ-WSX">
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -72,15 +67,20 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2p-wc-rWr">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="zX5-N2-YWJ" firstAttribute="trailing" secondItem="MRc-nS-vo1" secondAttribute="trailingMargin" id="BRr-CQ-XOl"/>
                                                 <constraint firstItem="zX5-N2-YWJ" firstAttribute="trailing" secondItem="8pj-bJ-WSX" secondAttribute="trailing" id="JsX-oR-EpK"/>
                                                 <constraint firstItem="8pj-bJ-WSX" firstAttribute="top" secondItem="MRc-nS-vo1" secondAttribute="topMargin" id="OLE-RR-lYz"/>
-                                                <constraint firstItem="R2p-wc-rWr" firstAttribute="leading" secondItem="ZUM-rj-pwH" secondAttribute="trailing" constant="8" symbolic="YES" id="TOf-MM-NaN"/>
+                                                <constraint firstItem="R2p-wc-rWr" firstAttribute="leading" secondItem="ZUM-rj-pwH" secondAttribute="trailing" constant="5" id="TOf-MM-NaN"/>
                                                 <constraint firstItem="ZUM-rj-pwH" firstAttribute="leading" secondItem="MRc-nS-vo1" secondAttribute="leading" id="Trg-3C-bLf"/>
                                                 <constraint firstItem="zX5-N2-YWJ" firstAttribute="leading" secondItem="8pj-bJ-WSX" secondAttribute="leading" id="WXq-2I-hlv"/>
-                                                <constraint firstItem="zX5-N2-YWJ" firstAttribute="leading" secondItem="R2p-wc-rWr" secondAttribute="trailing" constant="8" symbolic="YES" id="YwA-dP-ihI"/>
+                                                <constraint firstItem="zX5-N2-YWJ" firstAttribute="leading" secondItem="R2p-wc-rWr" secondAttribute="trailing" constant="4" id="YwA-dP-ihI"/>
                                                 <constraint firstItem="ZUM-rj-pwH" firstAttribute="centerY" secondItem="R2p-wc-rWr" secondAttribute="centerY" id="qB6-yk-aUT"/>
                                                 <constraint firstItem="ZUM-rj-pwH" firstAttribute="centerY" secondItem="MRc-nS-vo1" secondAttribute="centerY" id="ua2-TS-Csb"/>
                                                 <constraint firstItem="zX5-N2-YWJ" firstAttribute="bottom" secondItem="MRc-nS-vo1" secondAttribute="bottomMargin" id="xmk-u3-39d"/>

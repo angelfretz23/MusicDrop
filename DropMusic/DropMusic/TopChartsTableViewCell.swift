@@ -24,10 +24,7 @@ class TopChartsTableViewCell: UITableViewCell {
         self.songNameLabel.text = song.songName
         self.artistNameLabel.text = song.artistSong
         self.indexLabel.text = "\(index + 1)"
-        
-        guard let url = URL(string: song.mediumImage),
-            let data = (try? Data(contentsOf: url)) else { return }
-        collectinImage.image = UIImage(data: data)
+        collectinImage.image = song.mediumImage
     }
     
 }

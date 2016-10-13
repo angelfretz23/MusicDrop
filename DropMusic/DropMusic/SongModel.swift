@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 /**
  Song class:
  A class containing all the necessary information to play a song from Apple Music.
@@ -31,9 +32,9 @@ class Song: StoreProtocol {
     let genre: String
     
 //let albumCoverSet: AlbumCoverCollection?
-    var smallImage: String = ""
-    var mediumImage: String = ""
-    var largeImage: String? = ""
+    var smallImage: UIImage?
+    var mediumImage: UIImage?
+    var largeImage: UIImage?
     /// Track time duration in milliseconds
     let trackTime: String
     
@@ -85,17 +86,19 @@ class Song: StoreProtocol {
         
         
         for imageDictionary in arrayOfImageDictionary {
-            guard let url = imageDictionary["label"] as? String,
+            guard let urlString = imageDictionary["label"] as? String,
                 let attributesDictionary = imageDictionary["attributes"] as? [String: Any],
                 let height = attributesDictionary["height"] as? String else { return nil }
             
+            guard let data = (try? Data(contentsOf: URL(string: urlString)!)) else {return nil}
+            
             switch height {
             case "55":
-                self.smallImage = url
+                self.smallImage = UIImage(data: data)
             case "60":
-                self.mediumImage = url
+                self.mediumImage = UIImage(data: data)
             case "170":
-                self.largeImage = url
+                self.largeImage = UIImage(data: data)
             default:
                 return nil
             }

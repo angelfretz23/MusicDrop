@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import StoreKit
+import MediaPlayer
 
 class TopChartsViewController: UIViewController {
     
     @IBOutlet weak var tableView1: UITableView!
+    
+    let musicPlayer = MPMusicPlayerController.systemMusicPlayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,9 +49,18 @@ extension TopChartsViewController: UITableViewDelegate, UITableViewDataSource{
         
         let song = self.songs[indexPath.row]
         cell?.updateWith(song: song, on: indexPath.row)
-//        cell.textLabel?.text = song.songName
-//        cell.detailTextLabel?.text = song.artistSong
         
         return cell ?? TopChartsTableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let song = songs[indexPath.row]
+        print(song.storeID)
+        playSongWithID(id: song.storeID)
+    }
+    
+    func playSongWithID(id: String...){
+        musicPlayer.setQueueWithStoreIDs(id)
+        musicPlayer.play()
     }
 }

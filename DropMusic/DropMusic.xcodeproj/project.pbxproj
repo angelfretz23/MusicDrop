@@ -21,7 +21,6 @@
 		0F2DBCE51DAE4FB00084AAD9 /* TopChartsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2DBCE41DAE4FB00084AAD9 /* TopChartsController.swift */; };
 		0F2DBCE71DAE5F8A0084AAD9 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2DBCE61DAE5F8A0084AAD9 /* NetworkController.swift */; };
 		0F2DBD0C1DAEAA5D0084AAD9 /* ImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2DBD0B1DAEAA5D0084AAD9 /* ImageController.swift */; };
-		0FB34FB71DAEFCC60016B2D8 /* TestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB34FB61DAEFCC60016B2D8 /* TestTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +40,6 @@
 		0F2DBCE41DAE4FB00084AAD9 /* TopChartsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopChartsController.swift; sourceTree = "<group>"; };
 		0F2DBCE61DAE5F8A0084AAD9 /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		0F2DBD0B1DAEAA5D0084AAD9 /* ImageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageController.swift; sourceTree = "<group>"; };
-		0FB34FB61DAEFCC60016B2D8 /* TestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTableViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,7 +124,6 @@
 			children = (
 				0F2DBCE01DAE4BA80084AAD9 /* Custom Cells */,
 				0F2DBCDE1DAE488B0084AAD9 /* TopChartsViewController.swift */,
-				0FB34FB61DAEFCC60016B2D8 /* TestTableViewController.swift */,
 				0F2DBCDB1DADB5910084AAD9 /* AlbumViewController.swift */,
 			);
 			name = ViewControllers;
@@ -234,7 +231,6 @@
 				0F2DBCA01DAD68CE0084AAD9 /* AppDelegate.swift in Sources */,
 				0F2DBCD81DAD8BE50084AAD9 /* AlbumCoverCollection.swift in Sources */,
 				0F2DBCB81DAD79040084AAD9 /* StoreProtocol.swift in Sources */,
-				0FB34FB71DAEFCC60016B2D8 /* TestTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
