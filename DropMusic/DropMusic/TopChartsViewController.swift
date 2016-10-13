@@ -15,6 +15,7 @@ class TopChartsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView1.delegate = self
+        self.tableView1.dataSource = self
         
         TopChartsController.fetchSongs { (songs) in
             DispatchQueue.main.async {
@@ -25,7 +26,7 @@ class TopChartsViewController: UIViewController {
     
     var songs: [Song] = []{
         didSet{
-            self.tableView1.reloadData()
+           tableView1.reloadData()
         }
     }
     
@@ -43,7 +44,7 @@ extension TopChartsViewController: UITableViewDelegate, UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "topChartCell", for: indexPath) as? TopChartsTableViewCell
         
         let song = self.songs[indexPath.row]
-        cell?.updateWith(song: song)
+        cell?.updateWith(song: song, on: indexPath.row)
 //        cell.textLabel?.text = song.songName
 //        cell.detailTextLabel?.text = song.artistSong
         
