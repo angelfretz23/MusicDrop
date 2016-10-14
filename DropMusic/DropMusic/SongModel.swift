@@ -102,4 +102,19 @@ class Song: StoreProtocol {
             })
         }
     }
+    
+    init?(dictionaryItunesSearch: [String:Any]){
+        guard let songName = dictionaryItunesSearch["trackName"] as? String,
+        let artistSong = dictionaryItunesSearch["artistName"] as? String,
+        let storeID = dictionaryItunesSearch["trackId"] as? Double,
+        let trackTime = dictionaryItunesSearch["trackTimeMillis"] as? Double,
+        let albumName = dictionaryItunesSearch["collectionName"] as? String,
+            let genre = dictionaryItunesSearch["primaryGenreName"] as? String else { return nil }
+        self.songName = songName
+        self.artistSong = artistSong
+        self.storeID = "\(storeID)"
+        self.trackTime = "\(trackTime)"
+        self.albumName = albumName
+        self.genre = genre
+    }
 }

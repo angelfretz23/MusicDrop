@@ -35,53 +35,5 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DropMusic/TopChartsViewController.swift"
-            timestampString = "498015828.347198"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "TopChartsViewController"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "DropMusic.TopChartsViewController.init (nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; DropMusic.TopChartsViewController"
-                  moduleName = "DropMusic"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/AngelC/Dropbox/DevMountain_iOS%20Cohort%208/Capstone/DropMusic/DropMusic/TopChartsViewController.swift"
-                  timestampString = "498012874.87293"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "27"
-                  endingLineNumber = "27"
-                  offsetFromSymbolStart = "143">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "DropMusic.TopChartsViewController.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;DropMusic.TopChartsViewController&gt;"
-                  moduleName = "DropMusic"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/AngelC/Dropbox/DevMountain_iOS%20Cohort%208/Capstone/DropMusic/DropMusic/TopChartsViewController.swift"
-                  timestampString = "498012874.873963"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "27"
-                  endingLineNumber = "27"
-                  offsetFromSymbolStart = "76">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
