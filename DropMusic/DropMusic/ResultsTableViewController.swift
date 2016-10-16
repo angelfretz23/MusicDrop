@@ -39,8 +39,8 @@ class ResultsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let song = songs[indexPath.row]
-        playSongWith(ids: song.storeID)
+        let cell = tableView.cellForRow(at: indexPath)
+        self.presentingViewController?.performSegue(withIdentifier: "mediaSelectedFromSearchController", sender: cell)
     }
     
     func playSongWith(ids: String...){

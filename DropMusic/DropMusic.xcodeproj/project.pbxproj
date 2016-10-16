@@ -22,6 +22,7 @@
 		0F2DBCE71DAE5F8A0084AAD9 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2DBCE61DAE5F8A0084AAD9 /* NetworkController.swift */; };
 		0F2DBD0C1DAEAA5D0084AAD9 /* ImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2DBD0B1DAEAA5D0084AAD9 /* ImageController.swift */; };
 		0F3DD0FE1DB36A3B00E5224B /* DropSongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3DD0FD1DB36A3B00E5224B /* DropSongViewController.swift */; };
+		0F3DD1001DB3F91F00E5224B /* DataTypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3DD0FF1DB3F91F00E5224B /* DataTypeExtensions.swift */; };
 		0F685A201DAFFD8B001D4247 /* ResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F685A1F1DAFFD8B001D4247 /* ResultsTableViewController.swift */; };
 		0F685A221DAFFDA3001D4247 /* ResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F685A211DAFFDA3001D4247 /* ResultsTableViewCell.swift */; };
 		0FE1B97F1DB15AF500CD447F /* iTunesSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1B97E1DB15AF500CD447F /* iTunesSearchController.swift */; };
@@ -45,6 +46,7 @@
 		0F2DBCE61DAE5F8A0084AAD9 /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		0F2DBD0B1DAEAA5D0084AAD9 /* ImageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageController.swift; sourceTree = "<group>"; };
 		0F3DD0FD1DB36A3B00E5224B /* DropSongViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropSongViewController.swift; sourceTree = "<group>"; };
+		0F3DD0FF1DB3F91F00E5224B /* DataTypeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataTypeExtensions.swift; sourceTree = "<group>"; };
 		0F685A1F1DAFFD8B001D4247 /* ResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsTableViewController.swift; sourceTree = "<group>"; };
 		0F685A211DAFFDA3001D4247 /* ResultsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsTableViewCell.swift; sourceTree = "<group>"; };
 		0FE1B97E1DB15AF500CD447F /* iTunesSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTunesSearchController.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				0F2DBC9E1DAD68CE0084AAD9 /* DropMusic */,
+				0F2DBCB11DAD69B30084AAD9 /* Utilities */,
 				0F2DBC9D1DAD68CE0084AAD9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -84,7 +87,6 @@
 				0F2DBCB21DAD69C20084AAD9 /* View */,
 				0F2DBCB31DAD6ACB0084AAD9 /* Model */,
 				0F2DBCE31DAE4DF30084AAD9 /* Controllers */,
-				0F2DBCB11DAD69B30084AAD9 /* Utilities */,
 				0F2DBCDD1DADB5AD0084AAD9 /* ViewControllers */,
 			);
 			path = DropMusic;
@@ -99,6 +101,7 @@
 				0F2DBCAB1DAD68CE0084AAD9 /* Info.plist */,
 			);
 			name = Utilities;
+			path = DropMusic;
 			sourceTree = "<group>";
 		};
 		0F2DBCB21DAD69C20084AAD9 /* View */ = {
@@ -114,6 +117,7 @@
 			children = (
 				0F2DBCD71DAD8BE50084AAD9 /* AlbumCoverCollection.swift */,
 				0F2DBCB41DAD77C10084AAD9 /* SongModel.swift */,
+				0F3DD0FF1DB3F91F00E5224B /* DataTypeExtensions.swift */,
 				0F2DBCD91DAD9ABE0084AAD9 /* AlbumModel.swift */,
 			);
 			name = Model;
@@ -247,6 +251,7 @@
 				0F2DBCA01DAD68CE0084AAD9 /* AppDelegate.swift in Sources */,
 				0F2DBCD81DAD8BE50084AAD9 /* AlbumCoverCollection.swift in Sources */,
 				0F2DBCB81DAD79040084AAD9 /* StoreProtocol.swift in Sources */,
+				0F3DD1001DB3F91F00E5224B /* DataTypeExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

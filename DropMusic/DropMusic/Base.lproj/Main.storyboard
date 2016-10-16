@@ -117,6 +117,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="tlZ-ai-DfO" id="DjB-wb-vrj"/>
+                        <segue destination="fmp-a2-Ohk" kind="show" identifier="mediaSelectedFromSearchController" id="qJl-Q5-GRv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sym-Kd-vgK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -302,4 +303,7 @@
             <point key="canvasLocation" x="101.59999999999999" y="146.17691154422789"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="qJl-Q5-GRv"/>
+    </inferredMetricsTieBreakers>
 </document>

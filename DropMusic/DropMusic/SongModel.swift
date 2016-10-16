@@ -89,17 +89,24 @@ class Song: StoreProtocol {
             guard let urlString = imageDictionary["label"] as? String,
                 let attributesDictionary = imageDictionary["attributes"] as? [String: Any],
                 let height = attributesDictionary["height"] as? String else { return nil }
-            ImageController.fetchImage(withString: urlString, completion: { (image) in
-                switch height {
-                case "55":
-                    self.smallImage = image
-                case "60":
+//            ImageController.fetchImage(withString: urlString, completion: { (image) in
+//                switch height {
+//                case "55":
+//                    self.smallImage = image
+//                case "60":
+//                    self.mediumImage = image
+//                case "170":
+//                    self.largeImage = image
+//                default: ()
+//                }
+//            })
+            switch height {
+            case "60":
+                ImageController.fetchImage(withString: urlString, completion: { (image) in
                     self.mediumImage = image
-                case "170":
-                    self.largeImage = image
-                default: ()
-                }
-            })
+                })
+            default:()
+            }
         }
     }
     
@@ -113,11 +120,11 @@ class Song: StoreProtocol {
             let smallImageURL = dictionaryItunesSearch["artworkUrl30"] as? String,
             let mediumImageURL = dictionaryItunesSearch["artworkUrl60"] as? String,
             let lardgeImageURL = dictionaryItunesSearch["artworkUrl100"] as? String else { return nil }
-        let imageURLDictionary: [Int: String] = [30: smallImageURL, 60: mediumImageURL, 100: lardgeImageURL]
+        let imageURLDictionary: [Int: String] = [60: mediumImageURL] //[30: smallImageURL, 60: mediumImageURL, 100: lardgeImageURL]
         
         self.songName = songName
         self.artistSong = artistSong
-        self.storeID = "\(storeID)"
+        self.storeID = storeID.cleanValue
         self.trackTime = "\(trackTime)"
         self.albumName = albumName
         self.genre = genre

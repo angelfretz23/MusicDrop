@@ -42,6 +42,7 @@ class DropSongViewController: UIViewController {
     
     func playSongWith(id: String...){
         mediaPlayer.setQueueWithStoreIDs(id)
+        print(id)
         mediaPlayer.play()
     }
     

@@ -7,15 +7,15 @@
 //
 
 import UIKit
-//import StoreKit
-//import MediaPlayer
+import StoreKit
+import MediaPlayer
 
 class TopChartsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchAppleMusicSearchBar: UISearchBar!
     
-//    let musicPlayer = MPMusicPlayerController.systemMusicPlayer()
+    let musicPlayer = MPMusicPlayerController.systemMusicPlayer()
     var searchController: UISearchController?
     
     override func viewDidLoad() {
@@ -41,6 +41,8 @@ class TopChartsViewController: UIViewController {
         }
     }
     
+    var itunesSongs: [Song] = []
+    
     func setUpSearchController(){
         let resultsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "resultsTVC")
         searchController = UISearchController(searchResultsController: resultsController)
@@ -63,9 +65,17 @@ class TopChartsViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "mediaSelected"{
             guard let indexPath = tableView.indexPathForSelectedRow,
-                let dropMusicVC = segue.destination as? DropSongViewController else { return }
+                let dropSongVC = segue.destination as? DropSongViewController else { return }
             let song = self.songs[indexPath.row]
-            dropMusicVC.song = song
+            dropSongVC.song = song
+        }
+        
+        if segue.identifier == "mediaSelectedFromSearchController" {
+            guard let dropSongVC = segue.destination as? DropSongViewController else { return }
+            guard let sender = sender as? ResultsTableViewCell else { return }
+            let selectedIndexPath = (searchController?.searchResultsController as? ResultsTableViewController)?.tableView.indexPath(for: sender)
+            let song = itunesSongs[(selectedIndexPath?.row)!]
+            dropSongVC.song = song
         }
     }
 }
@@ -83,17 +93,17 @@ extension TopChartsViewController: UITableViewDelegate, UITableViewDataSource{
         
         return cell ?? TopChartsTableViewCell()
     }
-//    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let song = songs[indexPath.row]
-//        print(song.storeID)
-//        playSongWithID(id: song.storeID)
-//    }
-//    
-//    func playSongWithID(id: String...){
-//        musicPlayer.setQueueWithStoreIDs(id)
-//        musicPlayer.play()
-//    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let song = songs[indexPath.row]
+        print(song.storeID)
+        playSongWithID(id: song.storeID)
+    }
+    
+    func playSongWithID(id: String...){
+        musicPlayer.setQueueWithStoreIDs(id)
+        musicPlayer.play()
+    }
 }
 
 extension TopChartsViewController: UISearchResultsUpdating{
@@ -138,6 +148,7 @@ extension TopChartsViewController: UISearchBarDelegate{
         
         ItunesSearchControllers.fetchSongs(with: term) { (songs) in
             guard let songs = songs else { return }
+            self.itunesSongs = songs
             resultsController.songs = songs
             resultsController.tableView.reloadData()
         }
