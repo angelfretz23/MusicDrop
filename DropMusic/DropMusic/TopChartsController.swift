@@ -30,7 +30,9 @@ class TopChartsController{
             guard let topSongsArrayOfDictionaries = feedDictionary["entry"] as? [[String: Any]] else {completion([]); return }
             
             let songs = topSongsArrayOfDictionaries.flatMap{Song(dictionaryTopCharts: $0)}
-            completion(songs)
+            DispatchQueue.main.async {
+                completion(songs)
+            }
         }
     }
 }
