@@ -31,7 +31,7 @@ class Song: StoreProtocol {
     /// Music Genre
     let genre: String
     
-//let albumCoverSet: AlbumCoverCollection?
+    //let albumCoverSet: AlbumCoverCollection?
     var smallImage: UIImage?
     var mediumImage: UIImage?
     var largeImage: UIImage?
@@ -53,7 +53,7 @@ class Song: StoreProtocol {
         self.songName = songName
         self.artistSong = artistSong
         self.storeID = storeID
-//self.albumCoverSet = albumCoverSet
+        //self.albumCoverSet = albumCoverSet
         self.trackTime = trackTime
         self.albumName = albumName
         self.genre = genre
@@ -105,16 +105,34 @@ class Song: StoreProtocol {
     
     init?(dictionaryItunesSearch: [String:Any]){
         guard let songName = dictionaryItunesSearch["trackName"] as? String,
-        let artistSong = dictionaryItunesSearch["artistName"] as? String,
-        let storeID = dictionaryItunesSearch["trackId"] as? Double,
-        let trackTime = dictionaryItunesSearch["trackTimeMillis"] as? Double,
-        let albumName = dictionaryItunesSearch["collectionName"] as? String,
-            let genre = dictionaryItunesSearch["primaryGenreName"] as? String else { return nil }
+            let artistSong = dictionaryItunesSearch["artistName"] as? String,
+            let storeID = dictionaryItunesSearch["trackId"] as? Double,
+            let trackTime = dictionaryItunesSearch["trackTimeMillis"] as? Double,
+            let albumName = dictionaryItunesSearch["collectionName"] as? String,
+            let genre = dictionaryItunesSearch["primaryGenreName"] as? String,
+            let smallImageURL = dictionaryItunesSearch["artworkUrl30"] as? String,
+            let mediumImageURL = dictionaryItunesSearch["artworkUrl60"] as? String,
+            let lardgeImageURL = dictionaryItunesSearch["artworkUrl100"] as? String else { return nil }
+        let imageURLDictionary: [Int: String] = [30: smallImageURL, 60: mediumImageURL, 100: lardgeImageURL]
+        
         self.songName = songName
         self.artistSong = artistSong
         self.storeID = "\(storeID)"
         self.trackTime = "\(trackTime)"
         self.albumName = albumName
         self.genre = genre
+        for imageURL in imageURLDictionary{
+            ImageController.fetchImage(withString: imageURL.value, completion: { (image) in
+                switch imageURL.key{
+                case 30:
+                    self.smallImage = image
+                case 60:
+                    self.mediumImage = image
+                case 100:
+                    self.largeImage = image
+                default:()
+                }
+            })
+        }
     }
 }

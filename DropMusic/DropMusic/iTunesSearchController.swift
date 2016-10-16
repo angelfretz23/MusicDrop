@@ -10,7 +10,7 @@ import Foundation
 
 class ItunesSearchControllers{
     static let baseURL = URL(string: "https://itunes.apple.com/search?")
-    static var parameters = ["entity": "songs", "limit": "30"]
+    static var parameters = ["entity": "song", "limit": "30"]
     
     static func fetchSongs(with term: String, completion: @escaping (_ songs: [Song]?)-> Void){
         guard let url = baseURL else { completion(nil); return }

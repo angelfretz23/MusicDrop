@@ -7,13 +7,16 @@
 //
 
 import UIKit
-
+import StoreKit
+import MediaPlayer
 
 class ResultsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    let mediaPlayer = MPMusicPlayerController.systemMusicPlayer()
     
     var songs: [Song] = []{
         didSet{
@@ -27,11 +30,20 @@ class ResultsTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "resultCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "resultCell", for: indexPath) as? ResultsTableViewCell
 
         let song = songs[indexPath.row]
-        cell.textLabel?.text =  song.songName
+        cell?.updateWith(song: song)
 
-        return cell
+        return cell ?? UITableViewCell()
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let song = songs[indexPath.row]
+        playSongWith(ids: song.storeID)
+    }
+    
+    func playSongWith(ids: String...){
+        mediaPlayer.setQueueWithStoreIDs(ids)
     }
 }

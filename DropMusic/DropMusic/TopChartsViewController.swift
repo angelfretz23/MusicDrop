@@ -49,10 +49,11 @@ class TopChartsViewController: UIViewController {
         searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = true
         searchController.searchBar.placeholder = "Search iTunes"
-
+        searchController.obscuresBackgroundDuringPresentation = true
+        
         definesPresentationContext = true
-        tableView.tableHeaderView = searchController.searchBar
-        //view.addSubview(searchController.searchBar)
+        //tableView.tableHeaderView = searchController.searchBar
+        view.addSubview(searchController.searchBar)
     }
     
     func setupSearchBar(){
@@ -89,47 +90,48 @@ extension TopChartsViewController: UITableViewDelegate, UITableViewDataSource{
 
 extension TopChartsViewController: UISearchResultsUpdating{
     func updateSearchResults(for searchController: UISearchController) {
-        guard let resultsController = searchController.searchResultsController as? ResultsTableViewController else { return }
-        resultsController.songs = self.songs
-        resultsController.tableView.reloadData()
+        
     }
 }
 
 extension TopChartsViewController: UISearchControllerDelegate{
-//    func willPresentSearchController(_ searchController: UISearchController) {
-//        searchController.searchBar.frame.origin = CGPoint(x: 0, y: 0)
-//        searchController.searchBar.barTintColor = UIColor(red: 0.333, green: 0.333, blue: 0.333, alpha: 1.0)
-//        searchController.searchBar.tintColor = UIColor.white
-//        searchController.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
-//        
-//        //searchController.searchBar.backgroundImage = #imageLiteral(resourceName: "searchBar")
-//    }
-//    func didPresentSearchController(_ searchController: UISearchController) {
-//        //searchController.searchBar.barTintColor = UIColor(red: 0.333, green: 0.333, blue: 0.333, alpha: 1.0)
-//        searchController.searchBar.tintColor = UIColor.white
-//        searchController.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
-//        
-//        //searchController.searchBar.backgroundImage = #imageLiteral(resourceName: "searchBar")
-//    }
-//    func didDismissSearchController(_ searchController: UISearchController) {
-//        searchController.searchBar.tintColor = UIColor.white
-//        searchController.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
-//        
-//        setupSearchBar()
-//    }
-//    func willDismissSearchController(_ searchController: UISearchController) {
-//        searchController.searchBar.tintColor = UIColor.white
-//    }
-//    // TODO: make sure the cancel button is always white
+    func willPresentSearchController(_ searchController: UISearchController) {
+        searchController.searchBar.frame.origin = CGPoint(x: 0, y: 0)
+        searchController.searchBar.barTintColor = UIColor(red: 0.333, green: 0.333, blue: 0.333, alpha: 1.0)
+        searchController.searchBar.tintColor = UIColor.white
+        searchController.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+        
+        //searchController.searchBar.backgroundImage = #imageLiteral(resourceName: "searchBar")
+    }
+    func didPresentSearchController(_ searchController: UISearchController) {
+        //searchController.searchBar.barTintColor = UIColor(red: 0.333, green: 0.333, blue: 0.333, alpha: 1.0)
+        searchController.searchBar.tintColor = UIColor.white
+        searchController.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+        
+        //searchController.searchBar.backgroundImage = #imageLiteral(resourceName: "searchBar")
+    }
+    func didDismissSearchController(_ searchController: UISearchController) {
+        searchController.searchBar.tintColor = UIColor.white
+        searchController.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+        
+        setupSearchBar()
+    }
+    func willDismissSearchController(_ searchController: UISearchController) {
+        guard let resultsController = searchController.searchResultsController as? ResultsTableViewController else { return }
+        resultsController.songs = []
+    }
+    // TODO: make sure the cancel button is always white
 }
 
 extension TopChartsViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-       
-//        TopChartsController.fetchSongs { (songs) in
-//            resultsController.songs = songs
-//            resultsController.tableView.reloadData()
-            self.updateSearchResults(for: self.searchController!)
-//        }
+        guard let term = searchBar.text,
+        let resultsController = searchController?.searchResultsController as? ResultsTableViewController else { return }
+        
+        ItunesSearchControllers.fetchSongs(with: term) { (songs) in
+            guard let songs = songs else { return }
+            resultsController.songs = songs
+            resultsController.tableView.reloadData()
+        }
     }
 }
