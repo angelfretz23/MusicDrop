@@ -21,6 +21,7 @@
 		0F2DBCE51DAE4FB00084AAD9 /* TopChartsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2DBCE41DAE4FB00084AAD9 /* TopChartsController.swift */; };
 		0F2DBCE71DAE5F8A0084AAD9 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2DBCE61DAE5F8A0084AAD9 /* NetworkController.swift */; };
 		0F2DBD0C1DAEAA5D0084AAD9 /* ImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2DBD0B1DAEAA5D0084AAD9 /* ImageController.swift */; };
+		0F3DD0FE1DB36A3B00E5224B /* DropSongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3DD0FD1DB36A3B00E5224B /* DropSongViewController.swift */; };
 		0F685A201DAFFD8B001D4247 /* ResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F685A1F1DAFFD8B001D4247 /* ResultsTableViewController.swift */; };
 		0F685A221DAFFDA3001D4247 /* ResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F685A211DAFFDA3001D4247 /* ResultsTableViewCell.swift */; };
 		0FE1B97F1DB15AF500CD447F /* iTunesSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1B97E1DB15AF500CD447F /* iTunesSearchController.swift */; };
@@ -43,6 +44,7 @@
 		0F2DBCE41DAE4FB00084AAD9 /* TopChartsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopChartsController.swift; sourceTree = "<group>"; };
 		0F2DBCE61DAE5F8A0084AAD9 /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		0F2DBD0B1DAEAA5D0084AAD9 /* ImageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageController.swift; sourceTree = "<group>"; };
+		0F3DD0FD1DB36A3B00E5224B /* DropSongViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropSongViewController.swift; sourceTree = "<group>"; };
 		0F685A1F1DAFFD8B001D4247 /* ResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsTableViewController.swift; sourceTree = "<group>"; };
 		0F685A211DAFFDA3001D4247 /* ResultsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsTableViewCell.swift; sourceTree = "<group>"; };
 		0FE1B97E1DB15AF500CD447F /* iTunesSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTunesSearchController.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				0F2DBCE01DAE4BA80084AAD9 /* Custom Cells */,
 				0F2DBCDE1DAE488B0084AAD9 /* TopChartsViewController.swift */,
 				0F685A1F1DAFFD8B001D4247 /* ResultsTableViewController.swift */,
+				0F3DD0FD1DB36A3B00E5224B /* DropSongViewController.swift */,
 				0F2DBCDB1DADB5910084AAD9 /* AlbumViewController.swift */,
 			);
 			name = ViewControllers;
@@ -235,6 +238,7 @@
 				0F2DBCDC1DADB5910084AAD9 /* AlbumViewController.swift in Sources */,
 				0F2DBCE51DAE4FB00084AAD9 /* TopChartsController.swift in Sources */,
 				0F2DBCDF1DAE488B0084AAD9 /* TopChartsViewController.swift in Sources */,
+				0F3DD0FE1DB36A3B00E5224B /* DropSongViewController.swift in Sources */,
 				0F2DBCE21DAE4BCD0084AAD9 /* TopChartsTableViewCell.swift in Sources */,
 				0FE1B97F1DB15AF500CD447F /* iTunesSearchController.swift in Sources */,
 				0F2DBCB51DAD77C10084AAD9 /* SongModel.swift in Sources */,

@@ -7,15 +7,15 @@
 //
 
 import UIKit
-import StoreKit
-import MediaPlayer
+//import StoreKit
+//import MediaPlayer
 
 class TopChartsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchAppleMusicSearchBar: UISearchBar!
     
-    let musicPlayer = MPMusicPlayerController.systemMusicPlayer()
+//    let musicPlayer = MPMusicPlayerController.systemMusicPlayer()
     var searchController: UISearchController?
     
     override func viewDidLoad() {
@@ -52,13 +52,21 @@ class TopChartsViewController: UIViewController {
         searchController.obscuresBackgroundDuringPresentation = true
         
         definesPresentationContext = true
-        //tableView.tableHeaderView = searchController.searchBar
         view.addSubview(searchController.searchBar)
     }
     
     func setupSearchBar(){
         searchController?.searchBar.frame.origin = CGPoint(x: 0, y: 64)
         searchController?.searchBar.backgroundImage = #imageLiteral(resourceName: "searchBar")
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "mediaSelected"{
+            guard let indexPath = tableView.indexPathForSelectedRow,
+                let dropMusicVC = segue.destination as? DropSongViewController else { return }
+            let song = self.songs[indexPath.row]
+            dropMusicVC.song = song
+        }
     }
 }
 
@@ -75,17 +83,17 @@ extension TopChartsViewController: UITableViewDelegate, UITableViewDataSource{
         
         return cell ?? TopChartsTableViewCell()
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let song = songs[indexPath.row]
-        print(song.storeID)
-        playSongWithID(id: song.storeID)
-    }
-    
-    func playSongWithID(id: String...){
-        musicPlayer.setQueueWithStoreIDs(id)
-        musicPlayer.play()
-    }
+//    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let song = songs[indexPath.row]
+//        print(song.storeID)
+//        playSongWithID(id: song.storeID)
+//    }
+//    
+//    func playSongWithID(id: String...){
+//        musicPlayer.setQueueWithStoreIDs(id)
+//        musicPlayer.play()
+//    }
 }
 
 extension TopChartsViewController: UISearchResultsUpdating{

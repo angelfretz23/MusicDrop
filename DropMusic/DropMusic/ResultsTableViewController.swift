@@ -45,5 +45,6 @@ class ResultsTableViewController: UITableViewController {
     
     func playSongWith(ids: String...){
         mediaPlayer.setQueueWithStoreIDs(ids)
+        mediaPlayer.play()
     }
 }
