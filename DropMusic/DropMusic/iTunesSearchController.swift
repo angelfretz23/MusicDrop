@@ -12,6 +12,14 @@ class ItunesSearchControllers{
     static let baseURL = URL(string: "https://itunes.apple.com/search?")
     static var parameters = ["entity": "song", "limit": "30"]
     
+    static var songs: [Song] = []{
+        didSet{
+            makeAlbumsFromSongs()
+        }
+    }
+    
+    static var arrayOfiTunesMedia: [StoreProtocol] = []
+    
     static func fetchSongs(with term: String, completion: @escaping (_ songs: [Song]?)-> Void){
         guard let url = baseURL else { completion(nil); return }
         
@@ -33,8 +41,30 @@ class ItunesSearchControllers{
             let songs = resultsDictinary.flatMap{ Song(dictionaryItunesSearch: $0) }
             
             DispatchQueue.main.async {
+                self.songs = songs
                 completion(songs)
             }
         }
     }
+    
+    static func makeAlbumsFromSongs(){
+        for song in songs{
+            let albumFromSong = Album(withSong: song) as StoreProtocol
+            if !arrayOfiTunesMedia.contains(where: {$0 == albumFromSong}) {
+                arrayOfiTunesMedia.append(albumFromSong)
+            }
+        }
+        
+        if songs.count > 10 {
+            for x in 0...9{
+                let song = songs[x]
+                arrayOfiTunesMedia.append(song as StoreProtocol)
+            }
+        } else {
+            for song in songs{
+                arrayOfiTunesMedia.append(song as StoreProtocol)
+            }
+        }
+    }
+    
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 /**
  Album class
  
@@ -17,24 +18,51 @@ import Foundation
  - storeID: Apple iTunes Store ID (Store Protocol)
  - songs: Array of songs objects
  */
-class Album: StoreProtocol{
+class Album: StoreProtocol, Equatable{
     /// Name of the collection
     let albumName: String
     /// Date of album release
-    let releaseDate: Date
+    let releaseDate: Date?
+    /// Artist Name of the album
+    let artistName: String
     /// Copyright information
-    let copyrights: String
+    let copyrights: String?
     /// Apple iTunes Store ID (Store Protocol)
     var storeID: String
+    /// Album Cover
+    let albumCover: UIImage?
     /// Array of songs objects
-    let songs: [Song]
+    let songs: [Song]?
+    
+    var mediaType: String = "collection"
 
     
-    init(albumName: String, releaseDate: Date, copyrights: String, storeID: String, songs: [Song]){
-        self.albumName = albumName
-        self.releaseDate = releaseDate
-        self.copyrights = copyrights
-        self.songs = songs
-        self.storeID = storeID
+//    init(albumName: String, artistName: String, storeID: String, songs: [Song]? = nil, releaseDate: Date? = nil, copyrights: String? = nil){
+//        self.albumName = albumName
+//        self.artistName = artistName
+//        self.releaseDate = releaseDate
+//        self.copyrights = copyrights
+//        self.songs = songs
+//        self.storeID = storeID
+//    }
+    
+    init(withSong song: Song){
+        self.albumName = song.albumName
+        self.artistName = song.artistSong
+        self.releaseDate = nil
+        self.copyrights = nil
+        self.songs = nil
+        self.albumCover = song.mediumImage!
+        guard let collectionID = song.collectionID else {self.storeID = ""; return}
+        self.storeID = collectionID
     }
+    
+    func isEqualTo(other: StoreProtocol) -> Bool {
+        guard let other = other as? Album else { return false }
+        return self.storeID == other.storeID
+    }
+}
+
+func ==(left: Album, right: Album) -> Bool{
+    return left.storeID == right.storeID
 }

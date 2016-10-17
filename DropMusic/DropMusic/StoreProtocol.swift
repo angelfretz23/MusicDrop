@@ -12,6 +12,13 @@ import Foundation
  - Parameters:
  - storeID: Apple iTunes Store ID
  */
-protocol StoreProtocol {
+protocol StoreProtocol{
     var storeID: String { get }
+    var mediaType: String { get }
+    
+    func isEqualTo(other: StoreProtocol) -> Bool
+}
+
+func ==(left: StoreProtocol, right: StoreProtocol) -> Bool{
+    return left.isEqualTo(other: right)
 }

@@ -38,6 +38,10 @@ class Song: StoreProtocol {
     /// Track time duration in milliseconds
     let trackTime: String
     
+    let collectionID: String?
+    
+    var mediaType: String = "track"
+    
     struct keys{
         static let kSongName = "label"
         static let kArtistSong = "label"
@@ -57,6 +61,7 @@ class Song: StoreProtocol {
         self.trackTime = trackTime
         self.albumName = albumName
         self.genre = genre
+        self.collectionID = nil
     }
     
     init?(dictionaryTopCharts: [String: Any]){
@@ -84,6 +89,7 @@ class Song: StoreProtocol {
         let attributesDictinary = genreDictionary["attributes"] as? [String: String]
         self.genre = (attributesDictinary?[keys.kGenre])!
         
+        self.collectionID = nil
         
         for imageDictionary in arrayOfImageDictionary {
             guard let urlString = imageDictionary["label"] as? String,
@@ -119,7 +125,8 @@ class Song: StoreProtocol {
             let genre = dictionaryItunesSearch["primaryGenreName"] as? String,
 //            let smallImageURL = dictionaryItunesSearch["artworkUrl30"] as? String,
 //            let mediumImageURL = dictionaryItunesSearch["artworkUrl60"] as? String,
-            let largeImageURL = dictionaryItunesSearch["artworkUrl100"] as? String else { return nil }
+            let largeImageURL = dictionaryItunesSearch["artworkUrl100"] as? String,
+        let collectionID = dictionaryItunesSearch["collectionId"] as? Double else { return nil }
         let imageURLDictionary: [Int: String] = [100: largeImageURL] //[30: smallImageURL, 60: mediumImageURL, 100: lardgeImageURL]
         
         self.songName = songName
@@ -128,6 +135,7 @@ class Song: StoreProtocol {
         self.trackTime = "\(trackTime)"
         self.albumName = albumName
         self.genre = genre
+        self.collectionID = collectionID.cleanValue
         for imageURL in imageURLDictionary{
             ImageController.fetchImage(withString: imageURL.value, completion: { (image) in
                 switch imageURL.key{
@@ -141,5 +149,9 @@ class Song: StoreProtocol {
                 }
             })
         }
+    }
+    func isEqualTo(other: StoreProtocol) -> Bool {
+        guard let other = other as? Song else { return false }
+        return self.storeID == other.storeID
     }
 }
