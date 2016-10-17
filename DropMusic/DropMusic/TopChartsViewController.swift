@@ -78,6 +78,10 @@ class TopChartsViewController: UIViewController {
             dropSongVC.song = song
         }
     }
+    
+    @IBAction func cancelBarButtonPressed(_ sender: UIBarButtonItem) {
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
 }
 
 extension TopChartsViewController: UITableViewDelegate, UITableViewDataSource{
@@ -108,7 +112,6 @@ extension TopChartsViewController: UITableViewDelegate, UITableViewDataSource{
 
 extension TopChartsViewController: UISearchResultsUpdating{
     func updateSearchResults(for searchController: UISearchController) {
-        
     }
 }
 

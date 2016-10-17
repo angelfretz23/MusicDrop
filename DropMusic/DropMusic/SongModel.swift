@@ -101,7 +101,7 @@ class Song: StoreProtocol {
 //                }
 //            })
             switch height {
-            case "60":
+            case "170":
                 ImageController.fetchImage(withString: urlString, completion: { (image) in
                     self.mediumImage = image
                 })
@@ -117,10 +117,10 @@ class Song: StoreProtocol {
             let trackTime = dictionaryItunesSearch["trackTimeMillis"] as? Double,
             let albumName = dictionaryItunesSearch["collectionName"] as? String,
             let genre = dictionaryItunesSearch["primaryGenreName"] as? String,
-            let smallImageURL = dictionaryItunesSearch["artworkUrl30"] as? String,
-            let mediumImageURL = dictionaryItunesSearch["artworkUrl60"] as? String,
-            let lardgeImageURL = dictionaryItunesSearch["artworkUrl100"] as? String else { return nil }
-        let imageURLDictionary: [Int: String] = [60: mediumImageURL] //[30: smallImageURL, 60: mediumImageURL, 100: lardgeImageURL]
+//            let smallImageURL = dictionaryItunesSearch["artworkUrl30"] as? String,
+//            let mediumImageURL = dictionaryItunesSearch["artworkUrl60"] as? String,
+            let largeImageURL = dictionaryItunesSearch["artworkUrl100"] as? String else { return nil }
+        let imageURLDictionary: [Int: String] = [100: largeImageURL] //[30: smallImageURL, 60: mediumImageURL, 100: lardgeImageURL]
         
         self.songName = songName
         self.artistSong = artistSong
@@ -133,10 +133,10 @@ class Song: StoreProtocol {
                 switch imageURL.key{
                 case 30:
                     self.smallImage = image
-                case 60:
-                    self.mediumImage = image
                 case 100:
-                    self.largeImage = image
+                    self.mediumImage = image
+//                case 100:
+//                    self.largeImage = image
                 default:()
                 }
             })

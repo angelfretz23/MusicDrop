@@ -23,6 +23,10 @@ class ResultsTableViewController: UITableViewController {
             tableView.reloadData()
         }
     }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return songs.count
