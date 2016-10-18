@@ -227,7 +227,7 @@
         <!--Album-->
         <scene sceneID="N4X-yN-YW9">
             <objects>
-                <viewController id="OHp-ps-lSh" sceneMemberID="viewController">
+                <viewController id="OHp-ps-lSh" customClass="AlbumViewController" customModule="DropMusic" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jiD-Mh-BDU"/>
                         <viewControllerLayoutGuide type="bottom" id="zLG-cm-3Pd"/>
@@ -345,6 +345,13 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Album" id="Oz5-yG-Qek"/>
+                    <connections>
+                        <outlet property="albumCoverImageView" destination="CyX-G3-Sfw" id="nKD-zS-EJN"/>
+                        <outlet property="albumNameLabel" destination="1ve-Cd-fsq" id="qxt-9a-frx"/>
+                        <outlet property="artistNameLabel" destination="zem-FI-N20" id="J7C-J8-5p1"/>
+                        <outlet property="copyrightLabel" destination="ATR-1Z-WGf" id="Leu-S8-MZv"/>
+                        <outlet property="yearLabel" destination="6SI-rj-nG7" id="GWl-f2-zzp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gLI-KQ-bm8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -363,7 +370,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="07Q-hc-1Gj" id="3m7-Zg-m3v">
-                                    <frame key="frameInset" width="375" height="44"/>
+                                    <frame key="frameInset" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b27-dG-dY4">

@@ -73,10 +73,24 @@ class TopChartsViewController: UIViewController {
         if segue.identifier == "mediaSelectedFromSearchController" {
             guard let dropSongVC = segue.destination as? DropSongViewController else { return }
             guard let sender = sender as? ResultsTableViewCell else { return }
-            let selectedIndexPath = (searchController?.searchResultsController as? ResultsTableViewController)?.tableView.indexPath(for: sender)
-            let song = itunesSongs[(selectedIndexPath?.row)!]
+            guard let indexPath = (searchController?.searchResultsController as? ResultsTableViewController)?.tableView.indexPath(for: sender) else { return }
+            let index = (indexPath.section * ItunesSearchControllers.arrayOfItuneObjects.filter{$0.mediaType == "track"}.count) + indexPath.row
+            guard let song = ItunesSearchControllers.arrayOfItuneObjects[index] as? Song else { return }
             dropSongVC.song = song
         }
+        
+        if segue.identifier == "albumDetailFromSearchController" {
+            guard let albumVC = segue.destination as? AlbumViewController else { return }
+            guard let sender = sender as? ResultsTableViewCell else { return }
+            guard let indexPath = (searchController?.searchResultsController as? ResultsTableViewController)?.tableView.indexPath(for: sender) else { return }
+            let index = (indexPath.section * ItunesSearchControllers.arrayOfItuneObjects.filter{$0.mediaType == "track"}.count) + indexPath.row
+            guard let albumFromSong = ItunesSearchControllers.arrayOfItuneObjects[index] as? Album else { return }
+            AlbumController.fetchSongsWithAlbum(ID: albumFromSong.storeID, completion: { (album) in
+                guard let album = album else { albumVC.album = albumFromSong; return }
+                albumVC.album = album
+            })
+        }
+        
     }
     
     @IBAction func cancelBarButtonPressed(_ sender: UIBarButtonItem) {
@@ -147,12 +161,12 @@ extension TopChartsViewController: UISearchControllerDelegate{
 extension TopChartsViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let term = searchBar.text,
-        let resultsController = searchController?.searchResultsController as? ResultsTableViewController else { return }
+            let resultsController = searchController?.searchResultsController as? ResultsTableViewController else { return }
         
         ItunesSearchControllers.fetchSongs(with: term) { (songs) in
             guard let songs = songs else { return }
             self.itunesSongs = songs
-            resultsController.songs = songs
+            resultsController.songs = ItunesSearchControllers.arrayOfItuneObjects
             resultsController.tableView.reloadData()
         }
     }

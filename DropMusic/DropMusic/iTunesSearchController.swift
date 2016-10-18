@@ -10,7 +10,7 @@ import Foundation
 
 class ItunesSearchControllers{
     static let baseURL = URL(string: "https://itunes.apple.com/search?")
-    static var parameters = ["entity": "song", "limit": "30"]
+    static var parameters = ["entity": "song", "limit": "25"]
     
     static var songs: [Song] = []{
         didSet{
@@ -18,7 +18,7 @@ class ItunesSearchControllers{
         }
     }
     
-    static var arrayOfiTunesMedia: [StoreProtocol] = []
+    static var arrayOfItuneObjects: [StoreProtocol] = []
     
     static func fetchSongs(with term: String, completion: @escaping (_ songs: [Song]?)-> Void){
         guard let url = baseURL else { completion(nil); return }
@@ -48,23 +48,28 @@ class ItunesSearchControllers{
     }
     
     static func makeAlbumsFromSongs(){
-        for song in songs{
-            let albumFromSong = Album(withSong: song) as StoreProtocol
-            if !arrayOfiTunesMedia.contains(where: {$0 == albumFromSong}) {
-                arrayOfiTunesMedia.append(albumFromSong)
-            }
-        }
+        arrayOfItuneObjects = []
         
         if songs.count > 10 {
             for x in 0...9{
                 let song = songs[x]
-                arrayOfiTunesMedia.append(song as StoreProtocol)
+                arrayOfItuneObjects.append(song as StoreProtocol)
             }
         } else {
             for song in songs{
-                arrayOfiTunesMedia.append(song as StoreProtocol)
+                arrayOfItuneObjects.append(song as StoreProtocol)
             }
         }
+        
+        for song in songs{
+            let albumFromSong = Album(withSong: song) as StoreProtocol
+            if !arrayOfItuneObjects.contains(where: {$0 == albumFromSong}) {
+                arrayOfItuneObjects.append(albumFromSong)
+            }
+        }
+        
+        print(arrayOfItuneObjects.flatMap{$0.mediaType})
+        print(arrayOfItuneObjects.flatMap{$0.storeID})
     }
     
 }

@@ -15,10 +15,11 @@ import UIKit
  - songName: Name of the song track
  - artistName: Name of the song's artist
  - storeID: Apple iTunes Store ID (Store Protocol)
- - image55x55: Image data for album cover of 55x55 pixels
  - image170x170: Image data for album cover of 170x170 pixels
  - trackTime: Track time duration in milliseconds
  */
+
+// TODO: Add streamable property
 class Song: StoreProtocol {
     /// Name of the song track
     let songName: String
@@ -33,7 +34,7 @@ class Song: StoreProtocol {
     
     //let albumCoverSet: AlbumCoverCollection?
     var smallImage: UIImage?
-    var mediumImage: UIImage?
+    var albumCover: UIImage?
     var largeImage: UIImage?
     /// Track time duration in milliseconds
     let trackTime: String
@@ -57,7 +58,6 @@ class Song: StoreProtocol {
         self.songName = songName
         self.artistSong = artistSong
         self.storeID = storeID
-        //self.albumCoverSet = albumCoverSet
         self.trackTime = trackTime
         self.albumName = albumName
         self.genre = genre
@@ -95,21 +95,10 @@ class Song: StoreProtocol {
             guard let urlString = imageDictionary["label"] as? String,
                 let attributesDictionary = imageDictionary["attributes"] as? [String: Any],
                 let height = attributesDictionary["height"] as? String else { return nil }
-//            ImageController.fetchImage(withString: urlString, completion: { (image) in
-//                switch height {
-//                case "55":
-//                    self.smallImage = image
-//                case "60":
-//                    self.mediumImage = image
-//                case "170":
-//                    self.largeImage = image
-//                default: ()
-//                }
-//            })
             switch height {
             case "170":
                 ImageController.fetchImage(withString: urlString, completion: { (image) in
-                    self.mediumImage = image
+                    self.albumCover = image
                 })
             default:()
             }
@@ -117,17 +106,19 @@ class Song: StoreProtocol {
     }
     
     init?(dictionaryItunesSearch: [String:Any]){
+        if dictionaryItunesSearch["kind"] as? String == "music-video"{
+            return nil
+        }
+        
         guard let songName = dictionaryItunesSearch["trackName"] as? String,
             let artistSong = dictionaryItunesSearch["artistName"] as? String,
             let storeID = dictionaryItunesSearch["trackId"] as? Double,
             let trackTime = dictionaryItunesSearch["trackTimeMillis"] as? Double,
             let albumName = dictionaryItunesSearch["collectionName"] as? String,
             let genre = dictionaryItunesSearch["primaryGenreName"] as? String,
-//            let smallImageURL = dictionaryItunesSearch["artworkUrl30"] as? String,
-//            let mediumImageURL = dictionaryItunesSearch["artworkUrl60"] as? String,
             let largeImageURL = dictionaryItunesSearch["artworkUrl100"] as? String,
         let collectionID = dictionaryItunesSearch["collectionId"] as? Double else { return nil }
-        let imageURLDictionary: [Int: String] = [100: largeImageURL] //[30: smallImageURL, 60: mediumImageURL, 100: lardgeImageURL]
+        let imageURLDictionary: [Int: String] = [100: largeImageURL]
         
         self.songName = songName
         self.artistSong = artistSong
@@ -139,17 +130,14 @@ class Song: StoreProtocol {
         for imageURL in imageURLDictionary{
             ImageController.fetchImage(withString: imageURL.value, completion: { (image) in
                 switch imageURL.key{
-                case 30:
-                    self.smallImage = image
                 case 100:
-                    self.mediumImage = image
-//                case 100:
-//                    self.largeImage = image
+                    self.albumCover = image
                 default:()
                 }
             })
         }
     }
+    
     func isEqualTo(other: StoreProtocol) -> Bool {
         guard let other = other as? Song else { return false }
         return self.storeID == other.storeID

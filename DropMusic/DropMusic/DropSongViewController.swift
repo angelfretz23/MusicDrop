@@ -56,7 +56,7 @@ class DropSongViewController: UIViewController {
     }
     */
     func updateWith(song: Song){
-        albumCover.image = song.mediumImage
+        albumCover.image = song.albumCover
         songNameLabel.text = song.songName
         artistNameLabel.text = song.artistSong
         albumNameLabel.text = song.albumName

@@ -30,31 +30,42 @@ class Album: StoreProtocol, Equatable{
     /// Apple iTunes Store ID (Store Protocol)
     var storeID: String
     /// Album Cover
-    let albumCover: UIImage?
+    var albumCover: UIImage?
     /// Array of songs objects
-    let songs: [Song]?
+    var songs: [Song]?
     
     var mediaType: String = "collection"
 
-    
-//    init(albumName: String, artistName: String, storeID: String, songs: [Song]? = nil, releaseDate: Date? = nil, copyrights: String? = nil){
-//        self.albumName = albumName
-//        self.artistName = artistName
-//        self.releaseDate = releaseDate
-//        self.copyrights = copyrights
-//        self.songs = songs
-//        self.storeID = storeID
-//    }
-    
     init(withSong song: Song){
         self.albumName = song.albumName
         self.artistName = song.artistSong
         self.releaseDate = nil
         self.copyrights = nil
         self.songs = nil
-        self.albumCover = song.mediumImage!
+        self.albumCover = song.albumCover ?? UIImage()
         guard let collectionID = song.collectionID else {self.storeID = ""; return}
         self.storeID = collectionID
+    }
+    
+    init?(dictionary: [String: Any]){
+        guard let albumName = dictionary["collectionName"] as? String,
+        let releaseDate = dictionary["releaseDate"] as? Date,
+        let artistName = dictionary["artistName"] as? String,
+        let copyrights = dictionary["copyright"] as? String,
+        let storeID = dictionary["collectionId"] as? String,
+        let albumCoverURL = dictionary["artworkUrl100"] as? String
+            else { return nil }
+        self.albumName = albumName
+        self.artistName = artistName
+        self.releaseDate = releaseDate
+        self.copyrights = copyrights
+        self.storeID = storeID
+        self.songs = []
+        
+        ImageController.fetchImage(withString: albumCoverURL) { (image) in
+            let image = image ?? UIImage()
+            self.albumCover = image
+        }
     }
     
     func isEqualTo(other: StoreProtocol) -> Bool {

@@ -13,10 +13,18 @@ class ResultsTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var artistNameLabel: UILabel!
     
-    func updateWith(song: Song){
-        collectionImageView.image = song.mediumImage
-        titleLabel.text = song.songName
-        artistNameLabel.text = song.artistSong
+    func updateWith(media: StoreProtocol){
+        if media.mediaType == "track"{
+            guard let song = media as? Song else { return }
+            collectionImageView.image = song.albumCover
+            titleLabel.text = song.songName
+            artistNameLabel.text = song.artistSong
+        } else if media.mediaType == "collection"{
+            guard let album = media as? Album else { return }
+            collectionImageView.image = album.albumCover
+            titleLabel.text = album.albumName
+            artistNameLabel.text = album.artistName
+        }
     }
-
+    
 }
