@@ -20,11 +20,12 @@ class DropSongViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     
     var song: Song?
+    
     let mediaPlayer = MPMusicPlayerController.systemMusicPlayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let song = self.song{
+        if let song = song{
             updateWith(song: song)
         }
 

@@ -85,10 +85,14 @@ class TopChartsViewController: UIViewController {
             guard let indexPath = (searchController?.searchResultsController as? ResultsTableViewController)?.tableView.indexPath(for: sender) else { return }
             let index = (indexPath.section * ItunesSearchControllers.arrayOfItuneObjects.filter{$0.mediaType == "track"}.count) + indexPath.row
             guard let albumFromSong = ItunesSearchControllers.arrayOfItuneObjects[index] as? Album else { return }
-            AlbumController.fetchSongsWithAlbum(ID: albumFromSong.storeID, completion: { (album) in
-                guard let album = album else { albumVC.album = albumFromSong; return }
-                albumVC.album = album
+            
+            AlbumController.fetchSongsWithAlbum(ID: albumFromSong.storeID, completion: { (newAlbum) in
+                guard let newAlbum = newAlbum else { print("albumIsNil"); return }
+                DispatchQueue.main.async {
+                    albumVC.album = newAlbum
+                }
             })
+            
         }
         
     }
@@ -154,6 +158,7 @@ extension TopChartsViewController: UISearchControllerDelegate{
     func willDismissSearchController(_ searchController: UISearchController) {
         guard let resultsController = searchController.searchResultsController as? ResultsTableViewController else { return }
         resultsController.songs = []
+        resultsController.tableView.reloadData()
     }
     // TODO: make sure the cancel button is always white
 }

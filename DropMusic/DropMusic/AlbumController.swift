@@ -13,6 +13,8 @@ class AlbumController{
     static let baseURL = URL(string: "https://itunes.apple.com/lookup?")
     static var parameters = ["entity": "song"]
     
+    static var album: Album?
+    
     static func fetchSongsWithAlbum(ID: String, completion: @escaping (_ album: Album?) ->Void){
         guard let url = baseURL else { completion(nil); return }
         parameters["id"] = ID
@@ -34,8 +36,9 @@ class AlbumController{
             
             let songs = resultsArrayofDictionaries.flatMap{Song(dictionaryItunesSearch: $0)}
             album.songs = songs
-            
+            self.album = album
             DispatchQueue.main.async {
+                print(album)
                 completion(album)
             }
         }

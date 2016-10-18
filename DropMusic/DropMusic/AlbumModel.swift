@@ -22,7 +22,7 @@ class Album: StoreProtocol, Equatable{
     /// Name of the collection
     let albumName: String
     /// Date of album release
-    let releaseDate: Date?
+    let releaseDate: String?
     /// Artist Name of the album
     let artistName: String
     /// Copyright information
@@ -49,17 +49,17 @@ class Album: StoreProtocol, Equatable{
     
     init?(dictionary: [String: Any]){
         guard let albumName = dictionary["collectionName"] as? String,
-        let releaseDate = dictionary["releaseDate"] as? Date,
+        let releaseDate = dictionary["releaseDate"] as? String,
         let artistName = dictionary["artistName"] as? String,
         let copyrights = dictionary["copyright"] as? String,
-        let storeID = dictionary["collectionId"] as? String,
+        let storeID = dictionary["collectionId"] as? Double,
         let albumCoverURL = dictionary["artworkUrl100"] as? String
             else { return nil }
         self.albumName = albumName
         self.artistName = artistName
         self.releaseDate = releaseDate
         self.copyrights = copyrights
-        self.storeID = storeID
+        self.storeID = storeID.cleanValue
         self.songs = []
         
         ImageController.fetchImage(withString: albumCoverURL) { (image) in
