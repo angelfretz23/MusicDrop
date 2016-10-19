@@ -33,11 +33,9 @@ class Song: StoreProtocol {
     let genre: String
     
     //let albumCoverSet: AlbumCoverCollection?
-    var smallImage: UIImage?
     var albumCover: UIImage?
-    var largeImage: UIImage?
     /// Track time duration in milliseconds
-    let trackTime: String
+    let trackTime: String?
     
     let collectionID: String?
     
@@ -54,13 +52,14 @@ class Song: StoreProtocol {
     }
     
     /// Initialize with songName, artistSong, storeID, Images, and TrackTime.
-    init(songName: String, artistSong: String, storeID: String,  trackTime: String, albumName: String, genre: String){
+    init(songName: String, artistSong: String, storeID: String,  trackTime: String? = nil, albumName: String, genre: String, albumCover: UIImage){
         self.songName = songName
         self.artistSong = artistSong
         self.storeID = storeID
         self.trackTime = trackTime
         self.albumName = albumName
         self.genre = genre
+        self.albumCover = albumCover
         self.collectionID = nil
     }
     

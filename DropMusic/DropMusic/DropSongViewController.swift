@@ -28,7 +28,6 @@ class DropSongViewController: UIViewController {
         if let song = song{
             updateWith(song: song)
         }
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,19 +42,10 @@ class DropSongViewController: UIViewController {
     
     func playSongWith(id: String...){
         mediaPlayer.setQueueWithStoreIDs(id)
-        print(id)
+        print()
         mediaPlayer.play()
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     func updateWith(song: Song){
         albumCover.image = song.albumCover
         songNameLabel.text = song.songName
