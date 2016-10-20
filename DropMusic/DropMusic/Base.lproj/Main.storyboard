@@ -212,7 +212,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Drop Song" id="H3u-Fs-rcs">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="oZn-oE-ul2">
+                        <barButtonItem key="rightBarButtonItem" title="Drop" id="oZn-oE-ul2">
                             <connections>
                                 <action selector="doneBarButtonPressed:" destination="fmp-a2-Ohk" id="9no-Hp-3SI"/>
                             </connections>
@@ -542,7 +542,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Drop Music" id="W1O-vP-7hT">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="mW8-y2-Jcw">
+                        <barButtonItem key="rightBarButtonItem" title="New" id="mW8-y2-Jcw">
                             <connections>
                                 <segue destination="EjR-mL-DME" kind="presentation" id="xX5-v9-oli"/>
                             </connections>
