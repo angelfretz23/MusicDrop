@@ -79,6 +79,28 @@ extension DropSongViewController: MKMapViewDelegate{
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius, regionRadius)
         mapView.setRegion(coordinateRegion, animated: false)
     }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        guard let ann = annotation as? SongAnnotation else { return MKAnnotationView() }
+        guard let song = song else { print("Song is nil"); return MKAnnotationView() }
+        guard let albumCover = song.albumCover else { print("AlbumCover was nil"); return MKAnnotationView() }
+        
+        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "dropSong")
+        
+        if !annotation.isKind(of: MKUserLocation.self){
+            annotationView.image = ImageController.getNewAnnotation(albumCover: albumCover.circle)
+            annotationView.bounds.size.height /= 2
+            annotationView.bounds.size.width /= 2
+            annotationView.layer.shadowColor = UIColor.gray.cgColor
+            annotationView.layer.shadowOpacity = 0.7
+            annotationView.layer.shadowRadius = 5.0
+            annotationView.layer.shadowOffset = CGSize(width: 5, height: 5)
+        } else {
+            return MKAnnotationView(annotation: annotation, reuseIdentifier: "dropSong")
+        }
+        
+        return annotationView
+    }
 }
 
 extension DropSongViewController: UITextViewDelegate{
