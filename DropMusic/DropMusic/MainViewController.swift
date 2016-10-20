@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import StoreKit
+import MediaPlayer
 import MapKit
 
 class MainViewController: UIViewController {
@@ -22,22 +24,36 @@ class MainViewController: UIViewController {
     
     var locationManager = CLLocationManager()
     var arrayOfDropSongs:[DropSong] = []
+    var updated = false
+    
+    
+    let musicPlayer = MPMusicPlayerController.systemMusicPlayer()
+    
+    var songID:String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         annotationDetailView.isHidden = true
         mapView.delegate = self
-
-        createMOCAnnotations()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        guard let location = locationManager.location else { return }
+        centerMapOnLocation(location: location)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         authenticatePermissionToUseCurrentPostion()
+        createMOCAnnotations()
     }
     
-    @IBAction func itemButtonPressed(_ sender: AnyObject) {
-        
+    
+    @IBAction func playButtonPressed(_ sender: UIButton) {
+        guard let songID = self.songID else { return }
+        musicPlayer.setQueueWithStoreIDs([songID])
+        musicPlayer.play()
     }
     
     func createMOCAnnotations(){
@@ -57,8 +73,10 @@ extension MainViewController: MKMapViewDelegate{
     }
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        if let location = userLocation.location{
+        if !updated{
+            guard let location = userLocation.location else { return }
             centerMapOnLocation(location: location)
+            updated = true
         }
     }
     
@@ -77,6 +95,7 @@ extension MainViewController: MKMapViewDelegate{
         albumNameLabel.text = annotation.dropSong?.song.albumName
         droppedByLabel.text = annotation.dropSong?.postedBy
         discriptionTextView.text = annotation.dropSong?.description
+        songID = annotation.dropSong?.song.storeID
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
@@ -86,6 +105,20 @@ extension MainViewController: MKMapViewDelegate{
                 !(self.annotationDetailView.isHidden) ? (self.annotationDetailView.alpha = 1.0) : (self.annotationDetailView.alpha = 0.0)
             }
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let ann = annotation as? SongAnnotation else { return MKAnnotationView() }
+        let albumCover = ann.dropSong?.song.albumCover
+        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "dropSong")
+        
+        if !annotation.isKind(of: MKUserLocation.self){
+            annotationView.image = albumCover
+            annotationView.bounds.size.height /= 3.0
+            annotationView.bounds.size.width /= 3.0
+        }
+        
+        return annotationView
     }
     
     func centerMapOnLocation(location: CLLocation){

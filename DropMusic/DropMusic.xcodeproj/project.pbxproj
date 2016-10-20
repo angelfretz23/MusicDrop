@@ -152,8 +152,8 @@
 				0F3DD1241DB52CF300E5224B /* MainViewController.swift */,
 				0F2DBCDE1DAE488B0084AAD9 /* TopChartsViewController.swift */,
 				0F685A1F1DAFFD8B001D4247 /* ResultsTableViewController.swift */,
-				0F3DD0FD1DB36A3B00E5224B /* DropSongViewController.swift */,
 				0F2DBCDB1DADB5910084AAD9 /* AlbumViewController.swift */,
+				0F3DD0FD1DB36A3B00E5224B /* DropSongViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";

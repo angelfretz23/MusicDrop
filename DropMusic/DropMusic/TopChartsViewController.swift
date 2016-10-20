@@ -116,16 +116,16 @@ extension TopChartsViewController: UITableViewDelegate, UITableViewDataSource{
         return cell ?? TopChartsTableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let song = songs[indexPath.row]
-        print(song.storeID)
-        playSongWithID(id: song.storeID)
-    }
-    
-    func playSongWithID(id: String...){
-        musicPlayer.setQueueWithStoreIDs(id)
-        musicPlayer.play()
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let song = songs[indexPath.row]
+//        print(song.storeID)
+//        playSongWithID(id: song.storeID)
+//    }
+//    
+//    func playSongWithID(id: String...){
+//        musicPlayer.setQueueWithStoreIDs(id)
+//        musicPlayer.play()
+//    }
 }
 
 extension TopChartsViewController: UISearchResultsUpdating{
