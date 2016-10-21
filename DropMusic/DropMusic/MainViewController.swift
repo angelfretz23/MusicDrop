@@ -93,6 +93,10 @@ extension MainViewController: MKMapViewDelegate{
         }
     }
     
+    func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
+        print(mapView.region)
+    }
+    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         musicPlayer.pause()
         playButton.setImage(#imageLiteral(resourceName: "Play"), for: .normal)
