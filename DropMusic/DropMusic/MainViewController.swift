@@ -112,7 +112,7 @@ extension MainViewController: MKMapViewDelegate{
         centerMapOnLocation(location: annotation.coordinate)
         albumCover.image = annotation.dropSong?.song.albumCover
         songNameLabel.text = annotation.dropSong?.song.songName
-        artistNameLabel.text = annotation.dropSong?.song.artistSong
+        artistNameLabel.text = annotation.dropSong?.song.artistName
         albumNameLabel.text = annotation.dropSong?.song.albumName
         droppedByLabel.text = annotation.dropSong?.postedBy
         discriptionTextView.text = annotation.dropSong?.description

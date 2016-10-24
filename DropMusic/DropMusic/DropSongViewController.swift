@@ -39,7 +39,7 @@ class DropSongViewController: UIViewController {
     @IBAction func doneBarButtonPressed(_ sender: UIBarButtonItem) {
         guard let location = locationManager.location else { return }
         let dropsong = DropSong(postCoordinates: location, song: self.song!, description: descriptionTextView.text)
-        DropSongController.sharedController.add(dropSong: dropsong)
+        DropSongController.sharedController.post(dropSong: dropsong)
         
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
@@ -58,7 +58,7 @@ class DropSongViewController: UIViewController {
     func updateWith(song: Song){
         albumCover.image = song.albumCover
         songNameLabel.text = song.songName
-        artistNameLabel.text = song.artistSong
+        artistNameLabel.text = song.artistName
         albumNameLabel.text = song.albumName
     }
     

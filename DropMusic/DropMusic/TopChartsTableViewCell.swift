@@ -16,7 +16,7 @@ class TopChartsTableViewCell: UITableViewCell {
     
     func updateWith(song: Song, on index: Int){
         self.songNameLabel.text = song.songName
-        self.artistNameLabel.text = song.artistSong
+        self.artistNameLabel.text = song.artistName
         self.indexLabel.text = "\(index + 1)"
         collectinImage.image = song.albumCover
     } 

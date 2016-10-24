@@ -18,7 +18,7 @@ class ResultsTableViewCell: UITableViewCell {
             guard let song = media as? Song else { return }
             collectionImageView.image = song.albumCover
             titleLabel.text = song.songName
-            artistNameLabel.text = song.artistSong
+            artistNameLabel.text = song.artistName
         } else if media.mediaType == "collection"{
             guard let album = media as? Album else { return }
             collectionImageView.image = album.albumCover

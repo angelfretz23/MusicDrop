@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CloudKit
 /**
  Song class:
  A class containing all the necessary information to play a song from Apple Music.
@@ -24,7 +25,7 @@ class Song: StoreProtocol {
     /// Name of the song track
     let songName: String
     /// Name of the song's artist
-    let artistSong: String
+    let artistName: String
     /// Apple iTunes Store ID (Store Protocol)
     var storeID: String
     /// Name of the album in which the song pertains to
@@ -35,7 +36,7 @@ class Song: StoreProtocol {
     //let albumCoverSet: AlbumCoverCollection?
     var albumCover: UIImage?
     /// Track time duration in milliseconds
-    let trackTime: String?
+    var trackTime: String?
     
     let collectionID: String?
     
@@ -52,15 +53,16 @@ class Song: StoreProtocol {
     }
     
     /// Initialize with songName, artistSong, storeID, Images, and TrackTime.
-    init(songName: String, artistSong: String, storeID: String,  trackTime: String? = nil, albumName: String, genre: String, albumCover: UIImage){
+    init(songName: String, artistName: String, storeID: String,  albumName: String, genre: String, albumCover: UIImage?, trackTime: String?, collectionID: String?){
         self.songName = songName
-        self.artistSong = artistSong
+        self.artistName = artistName
         self.storeID = storeID
         self.trackTime = trackTime
         self.albumName = albumName
         self.genre = genre
         self.albumCover = albumCover
-        self.collectionID = nil
+        self.collectionID = collectionID
+        self.trackTime = trackTime
     }
     
     init?(dictionaryTopCharts: [String: Any]){
@@ -73,7 +75,7 @@ class Song: StoreProtocol {
             let genreDictionary = dictionaryTopCharts["category"] as? [String: Any] else { return nil }
         
         self.songName = songNameDictionary[keys.kSongName]!
-        self.artistSong = artistDictionary[keys.kArtistSong] as! String
+        self.artistName = artistDictionary[keys.kArtistSong] as! String
         
         guard let storeIDDictionary = idDictionary["attributes"] as? [String: String] else { return nil }
         self.storeID = storeIDDictionary[keys.kStoreID]!
@@ -120,12 +122,13 @@ class Song: StoreProtocol {
         let imageURLDictionary: [Int: String] = [100: largeImageURL]
         
         self.songName = songName
-        self.artistSong = artistSong
+        self.artistName = artistSong
         self.storeID = storeID.cleanValue
         self.trackTime = "\(trackTime)"
         self.albumName = albumName
         self.genre = genre
         self.collectionID = collectionID.cleanValue
+
         for imageURL in imageURLDictionary{
             ImageController.fetchImage(withString: imageURL.value, completion: { (image) in
                 switch imageURL.key{
@@ -136,6 +139,8 @@ class Song: StoreProtocol {
             })
         }
     }
+    
+    
     
     func isEqualTo(other: StoreProtocol) -> Bool {
         guard let other = other as? Song else { return false }

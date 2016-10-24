@@ -38,7 +38,7 @@ class Album: StoreProtocol, Equatable{
 
     init(withSong song: Song){
         self.albumName = song.albumName
-        self.artistName = song.artistSong
+        self.artistName = song.artistName
         self.releaseDate = nil
         self.copyrights = nil
         self.songs = nil
