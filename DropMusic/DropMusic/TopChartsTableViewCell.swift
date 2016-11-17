@@ -18,7 +18,9 @@ class TopChartsTableViewCell: UITableViewCell {
         self.songNameLabel.text = song.songName
         self.artistNameLabel.text = song.artistName
         self.indexLabel.text = "\(index + 1)"
-        collectinImage.image = song.albumCover
-    } 
+        ImageController.fetchImage(withString: song.imageURL!) { (image) in
+            self.collectinImage.image = image
+        }
+    }
 }
 

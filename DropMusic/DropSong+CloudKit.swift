@@ -13,11 +13,12 @@ extension DropSong{
     struct SongKeys{
         static let songNameKey = "SongName"
         static let artistNameKey = "ArtistName"
-        static let storeIDKey = "StorerID"
+        static let storeIDKey = "StoreID"
         static let albumName = "AlbumName"
         static let genreKey = "Genre"
         static let collectionIDKey = "CollectionID"
         static let trackTimeKey = "TrackTime"
+        static let imageURLKey = "ImageURL"
     }
     
     struct DropSongKeys{
@@ -30,19 +31,21 @@ extension DropSong{
     
     var cloudKitRecord: CKRecord{
         let record = CKRecord(recordType: DropSongKeys.recordType)
-        record[DropSongKeys.postCoordinatesKey] = postCoordinates as CLLocation
-        record[DropSongKeys.postedByKey] = postedBy as NSString?
-        record[DropSongKeys.descriptionKey] = description as NSString?
-        record[DropSongKeys.postedDateKey] = postedDate as NSDate
         
-        record[SongKeys.songNameKey] = song.songName as NSString
-        record[SongKeys.artistNameKey] = song.artistName as NSString
-        record[SongKeys.storeIDKey] = song.storeID as NSString
-        record[SongKeys.albumName] = song.albumName as NSString
-        record[SongKeys.genreKey] = song.genre as NSString
-        record[SongKeys.collectionIDKey] = song.collectionID as NSString?
-        record[SongKeys.trackTimeKey] = song.trackTime as NSString?
+        record.setValue(postCoordinates, forKey: DropSongKeys.postCoordinatesKey)
+        record.setValue(postedBy, forKey: DropSongKeys.postedByKey)
+        record.setValue(description, forKey: DropSongKeys.descriptionKey)
+        record.setValue(postedDate, forKey: DropSongKeys.postedDateKey)
         
+        record.setValue(song.songName, forKey: SongKeys.songNameKey)
+        record.setValue(song.artistName, forKey: SongKeys.artistNameKey)
+        record.setValue(song.storeID, forKey: SongKeys.storeIDKey)
+        record.setValue(song.albumName, forKey: SongKeys.albumName)
+        record.setValue(song.genre, forKey: SongKeys.genreKey)
+        record.setValue(song.collectionID, forKey: SongKeys.collectionIDKey)
+        record.setValue(song.trackTime, forKey: SongKeys.trackTimeKey)
+        record.setValue(song.imageURL, forKey: SongKeys.imageURLKey)
+         
         return record
     }
 }

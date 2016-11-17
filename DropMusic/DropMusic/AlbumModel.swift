@@ -35,25 +35,30 @@ class Album: StoreProtocol, Equatable{
     var songs: [Song]?
     
     var mediaType: String = "collection"
-
+    
     init(withSong song: Song){
         self.albumName = song.albumName
         self.artistName = song.artistName
         self.releaseDate = nil
         self.copyrights = nil
         self.songs = nil
-        self.albumCover = song.albumCover ?? UIImage()
         guard let collectionID = song.collectionID else {self.storeID = ""; return}
         self.storeID = collectionID
+        
+        ImageController.fetchImage(withString: song.imageURL!) { (image) in
+            DispatchQueue.main.async {
+                self.albumCover = image
+            }
+        }
     }
     
     init?(dictionary: [String: Any]){
         guard let albumName = dictionary["collectionName"] as? String,
-        let releaseDate = dictionary["releaseDate"] as? String,
-        let artistName = dictionary["artistName"] as? String,
-        let copyrights = dictionary["copyright"] as? String,
-        let storeID = dictionary["collectionId"] as? Double,
-        let albumCoverURL = dictionary["artworkUrl100"] as? String
+            let releaseDate = dictionary["releaseDate"] as? String,
+            let artistName = dictionary["artistName"] as? String,
+            let copyrights = dictionary["copyright"] as? String,
+            let storeID = dictionary["collectionId"] as? Double,
+            let albumCoverURL = dictionary["artworkUrl100"] as? String
             else { return nil }
         self.albumName = albumName
         self.artistName = artistName

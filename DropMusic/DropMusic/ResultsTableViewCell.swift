@@ -16,7 +16,9 @@ class ResultsTableViewCell: UITableViewCell {
     func updateWith(media: StoreProtocol){
         if media.mediaType == "track"{
             guard let song = media as? Song else { return }
-            collectionImageView.image = song.albumCover
+            ImageController.fetchImage(withString: song.imageURL!, completion: { (image) in
+                self.collectionImageView.image = image
+            })
             titleLabel.text = song.songName
             artistNameLabel.text = song.artistName
         } else if media.mediaType == "collection"{

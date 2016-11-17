@@ -21,19 +21,29 @@ class DropSongViewController: UIViewController {
     @IBOutlet weak var descriptionTextView: UITextView!
     
     var song: Song?
+    let gcdController = GCDController()
+    
+    var collectionImage: UIImage?
     
     let mediaPlayer = MPMusicPlayerController.systemMusicPlayer()
     let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("the imageURL is: \(song?.imageURL)")
         if let song = song{
             updateWith(song: song)
+            
         }
         loadMapView()
-        addAnnotationOnLoad()
         descriptionTextView.delegate = self
         mapView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getQuickLocationUpdate()
+        addAnnotationOnLoad()
     }
     
     @IBAction func doneBarButtonPressed(_ sender: UIBarButtonItem) {
@@ -56,7 +66,10 @@ class DropSongViewController: UIViewController {
     }
     
     func updateWith(song: Song){
-        albumCover.image = song.albumCover
+        ImageController.fetchImage(withString: (song.imageURL)!, with: 50) { (image) in
+            self.albumCover.image = image
+            self.collectionImage = image
+        }
         songNameLabel.text = song.songName
         artistNameLabel.text = song.artistName
         albumNameLabel.text = song.albumName
@@ -64,7 +77,8 @@ class DropSongViewController: UIViewController {
     
     func addAnnotationOnLoad(){
         guard let location = locationManager.location else { return }
-        mapView.addAnnotation(SongAnnotation(coordinate: location.coordinate))
+        let songAnnotation = SongAnnotation(coordinate: location.coordinate)
+        mapView.addAnnotation(songAnnotation)
     }
 }
 
@@ -81,23 +95,15 @@ extension DropSongViewController: MKMapViewDelegate{
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        guard let ann = annotation as? SongAnnotation else { return MKAnnotationView() }
-        guard let song = song else { print("Song is nil"); return MKAnnotationView() }
-        guard let albumCover = song.albumCover else { print("AlbumCover was nil"); return MKAnnotationView() }
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "dropSong") ?? MKAnnotationView(annotation: annotation, reuseIdentifier: "dropSong")
         
-        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "dropSong")
-        
-        if !annotation.isKind(of: MKUserLocation.self){
-            annotationView.image = ImageController.getNewAnnotation(albumCover: albumCover.circle)
-            annotationView.bounds.size.height /= 2
-            annotationView.bounds.size.width /= 2
-            annotationView.layer.shadowColor = UIColor.gray.cgColor
-            annotationView.layer.shadowOpacity = 0.7
-            annotationView.layer.shadowRadius = 5.0
-            annotationView.layer.shadowOffset = CGSize(width: 5, height: 5)
-        } else {
-            return MKAnnotationView(annotation: annotation, reuseIdentifier: "dropSong")
-        }
+        annotationView.image = collectionImage
+        annotationView.bounds.size.height = 50
+        annotationView.bounds.size.width = 50
+        annotationView.layer.shadowColor = UIColor.gray.cgColor
+        annotationView.layer.shadowOpacity = 0.7
+        annotationView.layer.shadowRadius = 5.0
+        annotationView.layer.shadowOffset = CGSize(width: 5, height: 5)
         
         return annotationView
     }
@@ -110,6 +116,28 @@ extension DropSongViewController: UITextViewDelegate{
             textView.textColor = UIColor.black
         }
         return true
+    }
+}
+
+extension DropSongViewController: CLLocationManagerDelegate{
+    func getQuickLocationUpdate(){
+        print(#function)
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse{
+            mapView.showsUserLocation = true
+        } else {
+            locationManager.requestWhenInUseAuthorization()
+        }
+        
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+        
+        self.locationManager.startUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print(#function)
+        loadMapView()
+        
+        self.locationManager.stopUpdatingLocation()
     }
 }
 

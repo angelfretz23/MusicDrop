@@ -11,6 +11,7 @@
 		0F1271691DB6698C00F54D90 /* SongTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1271681DB6698C00F54D90 /* SongTableViewCell.swift */; };
 		0F2472B61DB7E83F00F3C0F2 /* SongAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2472B51DB7E83F00F3C0F2 /* SongAnnotation.swift */; };
 		0F2472B81DB7EC6000F3C0F2 /* DropSongController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2472B71DB7EC6000F3C0F2 /* DropSongController.swift */; };
+		0F285E751DD92314006974B6 /* GCDController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F285E741DD92314006974B6 /* GCDController.swift */; };
 		0F2DBCA01DAD68CE0084AAD9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2DBC9F1DAD68CE0084AAD9 /* AppDelegate.swift */; };
 		0F2DBCA51DAD68CE0084AAD9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F2DBCA31DAD68CE0084AAD9 /* Main.storyboard */; };
 		0F2DBCA71DAD68CE0084AAD9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F2DBCA61DAD68CE0084AAD9 /* Assets.xcassets */; };
@@ -42,6 +43,7 @@
 		0F1271681DB6698C00F54D90 /* SongTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTableViewCell.swift; sourceTree = "<group>"; };
 		0F2472B51DB7E83F00F3C0F2 /* SongAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongAnnotation.swift; sourceTree = "<group>"; };
 		0F2472B71DB7EC6000F3C0F2 /* DropSongController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropSongController.swift; sourceTree = "<group>"; };
+		0F285E741DD92314006974B6 /* GCDController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDController.swift; sourceTree = "<group>"; };
 		0F2DBC9C1DAD68CE0084AAD9 /* DropMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DropMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F2DBC9F1DAD68CE0084AAD9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0F2DBCA41DAD68CE0084AAD9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 		0F2DBCE31DAE4DF30084AAD9 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0F285E741DD92314006974B6 /* GCDController.swift */,
 				0F2472B71DB7EC6000F3C0F2 /* DropSongController.swift */,
 				0F2DBCE41DAE4FB00084AAD9 /* TopChartsController.swift */,
 				0FE1B97E1DB15AF500CD447F /* iTunesSearchController.swift */,
@@ -300,6 +303,7 @@
 				0F2DBCDC1DADB5910084AAD9 /* AlbumViewController.swift in Sources */,
 				0F2DBCE51DAE4FB00084AAD9 /* TopChartsController.swift in Sources */,
 				0F1271691DB6698C00F54D90 /* SongTableViewCell.swift in Sources */,
+				0F285E751DD92314006974B6 /* GCDController.swift in Sources */,
 				0FA801CC1DBC2FC900AE6B16 /* DropSong+CloudKit.swift in Sources */,
 				0F2DBCDF1DAE488B0084AAD9 /* TopChartsViewController.swift in Sources */,
 				0F2472B61DB7E83F00F3C0F2 /* SongAnnotation.swift in Sources */,

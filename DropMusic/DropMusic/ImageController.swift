@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MapKit
 
 extension UIImage{
     var circle: UIImage? {
@@ -31,42 +32,49 @@ extension UIImage{
 
 class ImageController{
     
-    static func fetchImage(withString url: String, completion: @escaping (_ image: UIImage?) -> Void){
-        guard let url = URL(string: url) else {completion(nil); return }
-        guard let data = (try? Data(contentsOf: url)) else {completion(nil); return }
-        
-        DispatchQueue.main.async {
-            completion(UIImage(data: data))
+    static private let gcdController = GCDController()
+    
+    static func fetchImage(withString url: String, with size: Int = 100, completion: @escaping (_ image: UIImage?) -> Void){
+        guard let url = URL(string: url) else { return }
+        NetworkController.performRequest(for: url, httpMethodString: "GET") { (data, error) in
+            guard let data = data else {completion(nil); return }
+            
+            let image = imageWith(image: UIImage(data:data), scaleToSize: CGSize(width: size, height: size))
+            DispatchQueue.main.async {
+                completion(image)
+            }
         }
     }
+
+    static func getNewAnnotation(albumCover: UIImage?,with annotation: UIImage? = #imageLiteral(resourceName: "Annotation1x"), completion: @escaping (_ annotationImage: UIImage?)->Void) {
+        
+        gcdController.backgroundThread(background: {
+            guard let albumCover = albumCover else {completion(nil); print("album cover was nil"); return}
+            guard let annotation = annotation else { completion(nil); print("annotation was nil"); return}
+            
+            let size = annotation.size
+            UIGraphicsBeginImageContext(size)
+            
+            let areaSize = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+            annotation.draw(in: areaSize)
+            
+            let albumCoverSize = CGRect(x: 11, y: 11, width: 79, height: 79)
+            albumCover.draw(in: albumCoverSize)
+            
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            let resizedImage = imageWith(image: newImage, scaleToSize: CGSize(width: 100, height: 100))
+            
+            DispatchQueue.main.async {
+                completion(resizedImage)
+            }
+        })
+    }
     
-//    private static func resize(image: UIImage?, scaleToSize newSize: CGSize) -> UIImage?{
-//        guard let image = image else { return nil }
-//        
-//        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
-//        image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
-//        
-//        let newImage:UIImage? = UIGraphicsGetImageFromCurrentImageContext()
-//        UIGraphicsEndImageContext()
-//        
-//        return newImage
-//    }
-//    
-    static func getNewAnnotation(albumCover: UIImage?,with annotation: UIImage? = #imageLiteral(resourceName: "Annotation1x")) -> UIImage?{
-        guard let albumCover = albumCover else { print("album cover was nil"); return nil}
-        guard let annotation = annotation else { print("annotation was nil"); return nil}
-        
-        let size = annotation.size
-        UIGraphicsBeginImageContext(size)
-        
-        let areaSize = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-        annotation.draw(in: areaSize)
-        
-        let albumCoverSize = CGRect(x: 11, y: 11, width: 79, height: 79)
-        albumCover.draw(in: albumCoverSize)
-        
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        
+    static func imageWith(image: UIImage?, scaleToSize newSize: CGSize) -> UIImage?{
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        image?.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
         return newImage
     }
 }

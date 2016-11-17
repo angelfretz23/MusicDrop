@@ -33,8 +33,8 @@ class Song: StoreProtocol {
     /// Music Genre
     let genre: String
     
-    //let albumCoverSet: AlbumCoverCollection?
-    var albumCover: UIImage?
+    var imageURL: String?
+    
     /// Track time duration in milliseconds
     var trackTime: String?
     
@@ -53,14 +53,14 @@ class Song: StoreProtocol {
     }
     
     /// Initialize with songName, artistSong, storeID, Images, and TrackTime.
-    init(songName: String, artistName: String, storeID: String,  albumName: String, genre: String, albumCover: UIImage?, trackTime: String?, collectionID: String?){
+    init(songName: String, artistName: String, storeID: String,  albumName: String, genre: String, imageURL: String, trackTime: String?, collectionID: String?){
         self.songName = songName
         self.artistName = artistName
         self.storeID = storeID
         self.trackTime = trackTime
         self.albumName = albumName
         self.genre = genre
-        self.albumCover = albumCover
+        self.imageURL = imageURL
         self.collectionID = collectionID
         self.trackTime = trackTime
     }
@@ -98,9 +98,7 @@ class Song: StoreProtocol {
                 let height = attributesDictionary["height"] as? String else { return nil }
             switch height {
             case "170":
-                ImageController.fetchImage(withString: urlString, completion: { (image) in
-                    self.albumCover = image
-                })
+               self.imageURL = urlString
             default:()
             }
         }
@@ -118,8 +116,7 @@ class Song: StoreProtocol {
             let albumName = dictionaryItunesSearch["collectionName"] as? String,
             let genre = dictionaryItunesSearch["primaryGenreName"] as? String,
             let largeImageURL = dictionaryItunesSearch["artworkUrl100"] as? String,
-        let collectionID = dictionaryItunesSearch["collectionId"] as? Double else { return nil }
-        let imageURLDictionary: [Int: String] = [100: largeImageURL]
+            let collectionID = dictionaryItunesSearch["collectionId"] as? Double else { return nil }
         
         self.songName = songName
         self.artistName = artistSong
@@ -128,16 +125,7 @@ class Song: StoreProtocol {
         self.albumName = albumName
         self.genre = genre
         self.collectionID = collectionID.cleanValue
-
-        for imageURL in imageURLDictionary{
-            ImageController.fetchImage(withString: imageURL.value, completion: { (image) in
-                switch imageURL.key{
-                case 100:
-                    self.albumCover = image
-                default:()
-                }
-            })
-        }
+        self.imageURL = largeImageURL
     }
     
     

@@ -62,14 +62,12 @@ class ItunesSearchControllers{
         }
         
         for song in songs{
+            print(song.imageURL)
             let albumFromSong = Album(withSong: song) as StoreProtocol
             if !arrayOfItuneObjects.contains(where: {$0 == albumFromSong}) {
                 arrayOfItuneObjects.append(albumFromSong)
             }
         }
-        
-        print(arrayOfItuneObjects.flatMap{$0.mediaType})
-        print(arrayOfItuneObjects.flatMap{$0.storeID})
     }
     
 }
