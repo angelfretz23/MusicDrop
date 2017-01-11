@@ -30,7 +30,7 @@ class Album: StoreProtocol, Equatable{
     /// Apple iTunes Store ID (Store Protocol)
     var storeID: String
     /// Album Cover
-    var albumCover: UIImage?
+    let imageURL: String?
     /// Array of songs objects
     var songs: [Song]?
     
@@ -41,15 +41,10 @@ class Album: StoreProtocol, Equatable{
         self.artistName = song.artistName
         self.releaseDate = nil
         self.copyrights = nil
-        self.songs = nil
+        self.songs = []
+        self.imageURL = song.imageURL
         guard let collectionID = song.collectionID else {self.storeID = ""; return}
         self.storeID = collectionID
-        
-        ImageController.fetchImage(withString: song.imageURL!) { (image) in
-            DispatchQueue.main.async {
-                self.albumCover = image
-            }
-        }
     }
     
     init?(dictionary: [String: Any]){
@@ -66,11 +61,7 @@ class Album: StoreProtocol, Equatable{
         self.copyrights = copyrights
         self.storeID = storeID.cleanValue
         self.songs = []
-        
-        ImageController.fetchImage(withString: albumCoverURL) { (image) in
-            let image = image ?? UIImage()
-            self.albumCover = image
-        }
+        self.imageURL = albumCoverURL
     }
     
     func isEqualTo(other: StoreProtocol) -> Bool {

@@ -31,10 +31,6 @@ class DropSongViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("the imageURL is: \(song?.imageURL)")
-        if let song = song{
-            updateWith(song: song)
-            
-        }
         loadMapView()
         descriptionTextView.delegate = self
         mapView.delegate = self
@@ -42,6 +38,9 @@ class DropSongViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if let song = song{
+            updateWith(song: song)
+        }
         getQuickLocationUpdate()
         addAnnotationOnLoad()
     }
@@ -61,7 +60,7 @@ class DropSongViewController: UIViewController {
     
     func playSongWith(id: String...){
         mediaPlayer.setQueueWithStoreIDs(id)
-        print()
+        
         mediaPlayer.play()
     }
     
@@ -95,16 +94,18 @@ extension DropSongViewController: MKMapViewDelegate{
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "dropSong") ?? MKAnnotationView(annotation: annotation, reuseIdentifier: "dropSong")
-        
-        annotationView.image = collectionImage
-        annotationView.bounds.size.height = 50
-        annotationView.bounds.size.width = 50
-        annotationView.layer.shadowColor = UIColor.gray.cgColor
-        annotationView.layer.shadowOpacity = 0.7
-        annotationView.layer.shadowRadius = 5.0
-        annotationView.layer.shadowOffset = CGSize(width: 5, height: 5)
-        
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "newDropSong") ?? MKAnnotationView(annotation: annotation, reuseIdentifier: "newDropSong")
+        if !annotation.isKind(of: MKUserLocation.self){
+            annotationView.image = collectionImage
+            annotationView.bounds.size.height = 50
+            annotationView.bounds.size.width = 50
+            annotationView.layer.shadowColor = UIColor.gray.cgColor
+            annotationView.layer.shadowOpacity = 0.7
+            annotationView.layer.shadowRadius = 5.0
+            annotationView.layer.shadowOffset = CGSize(width: 5, height: 5)
+        } else {
+            return nil
+        }
         return annotationView
     }
 }
@@ -121,7 +122,6 @@ extension DropSongViewController: UITextViewDelegate{
 
 extension DropSongViewController: CLLocationManagerDelegate{
     func getQuickLocationUpdate(){
-        print(#function)
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse{
             mapView.showsUserLocation = true
         } else {
@@ -134,9 +134,7 @@ extension DropSongViewController: CLLocationManagerDelegate{
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print(#function)
         loadMapView()
-        
         self.locationManager.stopUpdatingLocation()
     }
 }

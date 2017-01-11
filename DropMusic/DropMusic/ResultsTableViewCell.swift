@@ -23,7 +23,10 @@ class ResultsTableViewCell: UITableViewCell {
             artistNameLabel.text = song.artistName
         } else if media.mediaType == "collection"{
             guard let album = media as? Album else { return }
-            collectionImageView.image = album.albumCover
+            
+            ImageController.fetchImage(withString: (album.imageURL)!, completion: { (image) in
+                self.collectionImageView.image = image
+            })
             titleLabel.text = album.albumName
             artistNameLabel.text = album.artistName
         }

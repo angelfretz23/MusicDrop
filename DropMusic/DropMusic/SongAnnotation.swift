@@ -12,7 +12,8 @@ import MapKit
 class SongAnnotation: NSObject, MKAnnotation{
     var coordinate: CLLocationCoordinate2D
     let dropSong: DropSong?
-//    var annotationImage:UIImage?
+    var title: String?
+    var subtitle: String?
     
     init(coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate
@@ -22,14 +23,9 @@ class SongAnnotation: NSObject, MKAnnotation{
     init(dropSong: DropSong){
         self.coordinate = dropSong.postCoordinates.coordinate
         self.dropSong = dropSong
+        self.title =  dropSong.song.songName
+        self.subtitle = dropSong.song.artistName
         super.init()
     }
-    
-//    func makeAnnotationImage(){
-//        ImageController.fetchImage(withString: (dropSong?.song.imageURL)!) { (image) in
-//            ImageController.getNewAnnotation(albumCover: image?.circle, completion: { (annotationImage) in
-//                self.annotationImage = annotationImage
-//            })
-//        }
-//    }
+
 }

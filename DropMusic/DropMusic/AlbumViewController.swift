@@ -32,12 +32,14 @@ class AlbumViewController: UIViewController {
     }
     
     func updateWith(album: Album){
-        self.albumCoverImageView.image = album.albumCover
         self.albumNameLabel.text = album.albumName
         self.artistNameLabel.text = album.artistName
         self.copyrightLabel.text = album.copyrights
         let year = album.releaseDate?.components(separatedBy: "-").first
         self.yearLabel.text = year
+        ImageController.fetchImage(withString: (album.imageURL)!) { (image) in
+            self.albumCoverImageView.image = image
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
