@@ -23,7 +23,7 @@ class AlbumController{
             guard let data = data, let responseDataString = String.init(data: data, encoding: String.Encoding.utf8) else { completion(nil); return }
             
             if error != nil {
-                print(error?.localizedDescription)
+                print(error?.localizedDescription ?? "")
             } else if responseDataString.contains("error") {
                 print("Error: \(responseDataString)")
             }

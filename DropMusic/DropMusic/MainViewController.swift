@@ -12,15 +12,14 @@ import MediaPlayer
 import MapKit
 
 class MainViewController: UIViewController {
-    @IBOutlet weak var albumCover: UIImageView!
+
     @IBOutlet weak var songNameLabel: UILabel!
     @IBOutlet weak var artistNameLabel: UILabel!
-    @IBOutlet weak var albumNameLabel: UILabel!
     @IBOutlet weak var droppedByLabel: UILabel!
-    @IBOutlet weak var discriptionTextView: UITextView!
-    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var albumArtworkImageView: UIImageView!
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var annotationDetailView: UIView!
+    @IBOutlet weak var infoContainerView: UIView!
+
     
     var locationManager = CLLocationManager()
     var updated = false
@@ -35,10 +34,8 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        annotationDetailView.isHidden = true
         mapView.delegate = self
         locationManager.delegate = self
-        mapViewHeightConstraint = NSLayoutConstraint(item: self.mapView, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: 0.6, constant: 0)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -55,25 +52,8 @@ class MainViewController: UIViewController {
         getQuickLocationUpdate()
     }
     
-    
-    @IBAction func playButtonPressed(_ sender: UIButton) {
+    @IBAction func songDescriptionCellPressed(_ sender: Any) {
         
-        guard let songID = self.songID else { return }
-        
-        if !(musicPlayer.playbackState == MPMusicPlaybackState.playing){
-            musicPlayer.setQueueWithStoreIDs([songID])
-            playButton.setImage(#imageLiteral(resourceName: "Pause"), for: .normal)
-            musicPlayer.play()
-        } else {
-            musicPlayer.pause()
-            playButton.setImage(#imageLiteral(resourceName: "Play"), for: .normal)
-            if !annotationDetailView.isHidden{
-                UIView.animate(withDuration: 0.3) {
-                    self.annotationDetailView.isHidden = !self.annotationDetailView.isHidden
-                    !(self.annotationDetailView.isHidden) ? (self.annotationDetailView.alpha = 1.0) : (self.annotationDetailView.alpha = 0.0)
-                }
-            }
-        }
     }
     
     func createMOCAnnotations(){
@@ -85,38 +65,18 @@ class MainViewController: UIViewController {
 
 extension MainViewController: MKMapViewDelegate{
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        
-        musicPlayer.pause()
-        playButton.setImage(#imageLiteral(resourceName: "Play"), for: .normal)
-        
-        if annotationDetailView.isHidden && !(view.annotation?.isKind(of: MKUserLocation.self))!{
-            UIView.animate(withDuration: 0.3) {
-                self.annotationDetailView.isHidden = !self.annotationDetailView.isHidden
-                if !(self.annotationDetailView.isHidden) {
-                    self.annotationDetailView.alpha = 1.0
-                    guard let mapViewHeightConstraint = self.mapViewHeightConstraint else{ print("Constraint is empty"); return }
-                    self.view.addConstraint(mapViewHeightConstraint)
-                } else {
-                    self.annotationDetailView.alpha = 0.0
-                }
-            }
-        }
-        UIView.animate(withDuration: 0.3) {
-            view.bounds.size = CGSize(width: 50, height: 50)
-        }
-        guard let annotation = view.annotation as? SongAnnotation else { return }
+        guard let annotation = view.annotation as? SongAnnotation,
+            let dropSong = annotation.dropSong else { return }
         
         centerMapOnLocation(location: annotation.coordinate)
         
-        ImageController.fetchImage(withString: (annotation.dropSong?.song.imageURL)!) { (image) in
-            self.albumCover.image = image
+        ImageController.fetchImage(withString: (dropSong.song.imageURL)!) { (image) in
+            self.albumArtworkImageView.image = image
         }
-        songNameLabel.text = annotation.dropSong?.song.songName
-        artistNameLabel.text = annotation.dropSong?.song.artistName
-        albumNameLabel.text = annotation.dropSong?.song.albumName
-        droppedByLabel.text = annotation.dropSong?.postedBy
-        discriptionTextView.text = annotation.dropSong?.description
-        songID = annotation.dropSong?.song.storeID
+        songNameLabel.text = dropSong.song.songName
+        artistNameLabel.text = dropSong.song.artistName
+        droppedByLabel.text = dropSong.postedBy
+        songID = dropSong.song.storeID
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
@@ -144,12 +104,6 @@ extension MainViewController: MKMapViewDelegate{
                 annotationView.layer.shadowRadius = 5.0
                 annotationView.layer.shadowOffset = CGSize(width: 5, height: 5)
                 annotationView.canShowCallout = false
-                
-//                let textView = UITextView()
-//                textView.text = ann.dropSong?.description
-//                annotationView.detailCalloutAccessoryView = textView
-//                
-//                let stackView = UIStackView()
             }
         })
         return annotationView
@@ -168,13 +122,7 @@ extension MainViewController: MKMapViewDelegate{
     }
     
     func centerMapOnLocation(location: CLLocationCoordinate2D){
-        
-        let regionRadius: CLLocationDistance = 200
-        
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location, regionRadius, regionRadius)
-        //        mapView.camera = MKMapCamera(lookingAtCenter: location.coordinate, fromDistance: 15, pitch: 90, heading: 0)
-        
-        mapView.setRegion(coordinateRegion, animated: true)
+        mapView.setCenter(location, animated: true)
     }
     
     func createAnnotationFrom(dropSong: DropSong){
@@ -193,9 +141,7 @@ extension MainViewController: CLLocationManagerDelegate{
         } else {
             locationManager.requestWhenInUseAuthorization()
         }
-        
         self.locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
-        
         self.locationManager.startUpdatingLocation()
     }
     
