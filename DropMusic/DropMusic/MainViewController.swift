@@ -12,17 +12,19 @@ import MediaPlayer
 import MapKit
 
 class MainViewController: UIViewController {
-
+    
     @IBOutlet weak var songNameLabel: UILabel!
     @IBOutlet weak var artistNameLabel: UILabel!
     @IBOutlet weak var droppedByLabel: UILabel!
     @IBOutlet weak var albumArtworkImageView: UIImageView!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var infoContainerView: UIView!
-
+    @IBOutlet weak var bottomLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var lockImageView: UIImageView!
     
     var locationManager = CLLocationManager()
-    var updated = false
+    var isLocked = true
+    var infoContainerViewDisplayed = true
     
     let gcdController = GCDController()
     
@@ -32,10 +34,14 @@ class MainViewController: UIViewController {
     var mapViewHeightConstraint: NSLayoutConstraint?
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         mapView.delegate = self
         locationManager.delegate = self
+        hideInfoContainer()
+        infoContainerView.layer.borderWidth = 2.0
+        infoContainerView.layer.borderColor = UIColor.darkGray.cgColor
+        infoContainerView.layer.cornerRadius = 10
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -50,63 +56,131 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getQuickLocationUpdate()
+        CLLocationManager.headingAvailable() ? locationManager.startUpdatingHeading() : ()
+        toggleMapViewProperties(bool: false)
     }
     
-    @IBAction func songDescriptionCellPressed(_ sender: Any) {
-        
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.locationManager.stopUpdatingLocation()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "songDropDetail"{
+            guard let songAnnotation = mapView.selectedAnnotations.first as? SongAnnotation else { return }
+        }
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == "songDropDetail"{
+            if mapView.selectedAnnotations.count <= 0 {
+                return false
+            }
+        }
+        return true
+    }
     func createMOCAnnotations(){
         for dropSong in DropSongController.sharedController.dropSongs {
             createAnnotationFrom(dropSong: dropSong)
         }
     }
+    
+    func showInfoContainer(){
+        if !infoContainerViewDisplayed{
+            infoContainerView.isHidden = false
+            UIView.animate(withDuration: 0.5, animations: {
+                self.infoContainerView.center.y -= self.view.bounds.height / 2
+                self.infoContainerViewDisplayed = true
+            })
+        }
+    }
+    
+    func hideInfoContainer() {
+        if infoContainerViewDisplayed{
+            self.infoContainerView.center.y += self.view.bounds.height / 2
+            self.infoContainerViewDisplayed = false
+            infoContainerView.isHidden = true
+        }
+    }
+    @IBAction private func lockImageViewPressed(_ sender: Any) {
+        if lockImageView.tag == 0 {
+            toggleMapViewProperties(bool: true)
+            lockImageView.tag = 1
+            lockImageView.image = #imageLiteral(resourceName: "unlock")
+            self.locationManager.stopUpdatingLocation()
+            isLocked = false
+        } else if lockImageView.tag == 1{
+            toggleMapViewProperties(bool: false)
+            lockImageView.tag = 0
+            lockImageView.image = #imageLiteral(resourceName: "lock")
+            self.locationManager.startUpdatingLocation()
+            isLocked = true
+        }
+        
+    }
+    
+    private func toggleMapViewProperties(bool: Bool){
+        mapView.isZoomEnabled = bool
+        mapView.isPitchEnabled = bool
+        mapView.isRotateEnabled = bool
+        mapView.isScrollEnabled = bool
+    }
 }
 
 extension MainViewController: MKMapViewDelegate{
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard let annotation = view.annotation as? SongAnnotation,
-            let dropSong = annotation.dropSong else { return }
-        
-        centerMapOnLocation(location: annotation.coordinate)
-        
-        ImageController.fetchImage(withString: (dropSong.song.imageURL)!) { (image) in
-            self.albumArtworkImageView.image = image
+        if view.annotation is SongAnnotation{
+            UIView.animate(withDuration: 0.1) {
+                view.bounds.size = CGSize(width: 50, height: 50)
+            }
+            
+            guard let annotation = view.annotation as? SongAnnotation,
+                let dropSong = annotation.dropSong else { return }
+            
+            //        centerMapOnLocation(location: annotation.coordinate)
+            showInfoContainer()
+            ImageController.fetchImage(withString: (dropSong.song.imageURL)!) { (image) in
+                self.albumArtworkImageView.image = image
+            }
+            songNameLabel.text = dropSong.song.songName
+            artistNameLabel.text = dropSong.song.artistName
+            droppedByLabel.text = "Dropped by \(dropSong.postedBy ?? "")"
+            songID = dropSong.song.storeID
         }
-        songNameLabel.text = dropSong.song.songName
-        artistNameLabel.text = dropSong.song.artistName
-        droppedByLabel.text = dropSong.postedBy
-        songID = dropSong.song.storeID
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        UIView.animate(withDuration: 0.3) {
-            view.bounds.size = CGSize(width: 30, height: 30)
+        if view.annotation is SongAnnotation{
+            UIView.animate(withDuration: 0.1) {
+                view.bounds.size = CGSize(width: 30, height: 30)
+                if mapView.selectedAnnotations.count == 0 {
+                    self.hideInfoContainer()
+                }
+            }
         }
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        guard let ann = annotation as? SongAnnotation else { return MKAnnotationView() }
-        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "dropSong") ?? MKAnnotationView(annotation: annotation, reuseIdentifier: "dropSong")
-        
-        if annotation.isKind(of: MKUserLocation.self) {
-            return nil
+        if annotation is SongAnnotation{
+            guard let ann = annotation as? SongAnnotation else { return MKAnnotationView() }
+            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "dropSong") ?? MKAnnotationView(annotation: annotation, reuseIdentifier: "dropSong")
+            
+            gcdController.backgroundThread(background: {
+                if !annotation.isKind(of: MKUserLocation.self){
+                    ImageController.fetchImage(withString: (ann.dropSong?.song.imageURL)!, with: 30, completion: { (image) in
+                        annotationView.image = image
+                    })
+                    annotationView.bounds.size = CGSize(width: 30, height: 30)
+                    annotationView.layer.shadowColor = UIColor.gray.cgColor
+                    annotationView.layer.shadowOpacity = 0.7
+                    annotationView.layer.shadowRadius = 5.0
+                    annotationView.layer.shadowOffset = CGSize(width: 5, height: 5)
+                    annotationView.canShowCallout = false
+                }
+            })
+            return annotationView
         }
-        gcdController.backgroundThread(background: {
-            if !annotation.isKind(of: MKUserLocation.self){
-                ImageController.fetchImage(withString: (ann.dropSong?.song.imageURL)!, with: 30, completion: { (image) in
-                    annotationView.image = image
-                })
-                annotationView.bounds.size = CGSize(width: 30, height: 30)
-                annotationView.layer.shadowColor = UIColor.gray.cgColor
-                annotationView.layer.shadowOpacity = 0.7
-                annotationView.layer.shadowRadius = 5.0
-                annotationView.layer.shadowOffset = CGSize(width: 5, height: 5)
-                annotationView.canShowCallout = false
-            }
-        })
-        return annotationView
+        return nil
     }
     
     func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
@@ -122,7 +196,10 @@ extension MainViewController: MKMapViewDelegate{
     }
     
     func centerMapOnLocation(location: CLLocationCoordinate2D){
-        mapView.setCenter(location, animated: true)
+        if isLocked {
+            let camera = MKMapCamera(lookingAtCenter: location, fromDistance: 10, pitch: 45, heading: locationManager.heading?.trueHeading ?? 0)
+            mapView.setCamera(camera, animated: true)
+        }
     }
     
     func createAnnotationFrom(dropSong: DropSong){
@@ -146,11 +223,20 @@ extension MainViewController: CLLocationManagerDelegate{
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        guard let location = self.locationManager.location else { return }
-        centerMapOnLocation(location: location.coordinate)
-        
-        
-        self.locationManager.stopUpdatingLocation()
+        if isLocked {
+            guard let location = self.locationManager.location else { return }
+            centerMapOnLocation(location: location.coordinate)
+            manager.distanceFilter = 10
+        }
+    }
+    
+    func locationManagerShouldDisplayHeadingCalibration(_ manager: CLLocationManager) -> Bool {
+        return true
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        if isLocked{
+            mapView.camera.heading = newHeading.trueHeading
+        }
     }
 }

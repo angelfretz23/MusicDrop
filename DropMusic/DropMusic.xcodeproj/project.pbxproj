@@ -35,6 +35,7 @@
 		0F8260801DB6F26900D9F916 /* DropSongModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F82607F1DB6F26900D9F916 /* DropSongModel.swift */; };
 		0FA801CC1DBC2FC900AE6B16 /* DropSong+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA801CB1DBC2FC900AE6B16 /* DropSong+CloudKit.swift */; };
 		0FBD9A8C1DBDCD2500EB9892 /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBD9A8B1DBDCD2500EB9892 /* CloudKitManager.swift */; };
+		0FCC2FBB1F1B122C00F246A0 /* MusicDropDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCC2FBA1F1B122C00F246A0 /* MusicDropDetailViewController.swift */; };
 		0FE1B97F1DB15AF500CD447F /* iTunesSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1B97E1DB15AF500CD447F /* iTunesSearchController.swift */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +71,7 @@
 		0F82607F1DB6F26900D9F916 /* DropSongModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropSongModel.swift; sourceTree = "<group>"; };
 		0FA801CB1DBC2FC900AE6B16 /* DropSong+CloudKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DropSong+CloudKit.swift"; sourceTree = "<group>"; };
 		0FBD9A8B1DBDCD2500EB9892 /* CloudKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
+		0FCC2FBA1F1B122C00F246A0 /* MusicDropDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicDropDetailViewController.swift; sourceTree = "<group>"; };
 		0FE1B97E1DB15AF500CD447F /* iTunesSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTunesSearchController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -167,6 +169,7 @@
 				0F685A1F1DAFFD8B001D4247 /* ResultsTableViewController.swift */,
 				0F2DBCDB1DADB5910084AAD9 /* AlbumViewController.swift */,
 				0F3DD0FD1DB36A3B00E5224B /* DropSongViewController.swift */,
+				0FCC2FBA1F1B122C00F246A0 /* MusicDropDetailViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				0F2DBCE21DAE4BCD0084AAD9 /* TopChartsTableViewCell.swift in Sources */,
 				0FE1B97F1DB15AF500CD447F /* iTunesSearchController.swift in Sources */,
 				0F2DBCB51DAD77C10084AAD9 /* SongModel.swift in Sources */,
+				0FCC2FBB1F1B122C00F246A0 /* MusicDropDetailViewController.swift in Sources */,
 				0F2DBD0C1DAEAA5D0084AAD9 /* ImageController.swift in Sources */,
 				0F2DBCDA1DAD9ABE0084AAD9 /* AlbumModel.swift in Sources */,
 				0F2472B81DB7EC6000F3C0F2 /* DropSongController.swift in Sources */,
