@@ -57,7 +57,7 @@ class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         getQuickLocationUpdate()
         CLLocationManager.headingAvailable() ? locationManager.startUpdatingHeading() : ()
-        toggleMapViewProperties(bool: false)
+        toggleMapViewProperties(bool: !isLocked)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

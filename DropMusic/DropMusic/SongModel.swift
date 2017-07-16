@@ -37,9 +37,7 @@ class Song: StoreProtocol {
     
     /// Track time duration in milliseconds
     var trackTime: String?
-    
     let collectionID: String?
-    
     var mediaType: String = "track"
     
     struct keys{

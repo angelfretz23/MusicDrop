@@ -538,7 +538,7 @@
                                     <constraint firstAttribute="trailing" secondItem="mlf-ez-UgY" secondAttribute="trailing" id="tcH-JJ-Tpd"/>
                                 </constraints>
                             </view>
-                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock" translatesAutoresizingMaskIntoConstraints="NO" id="KJH-l6-xtO">
+                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock" translatesAutoresizingMaskIntoConstraints="NO" id="KJH-l6-xtO">
                                 <rect key="frame" x="16" y="81" width="25" height="25"/>
                                 <gestureRecognizers/>
                                 <constraints>

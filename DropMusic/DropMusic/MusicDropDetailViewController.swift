@@ -14,7 +14,7 @@ class MusicDropDetailViewController: UIViewController{
         super.viewDidLoad()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationItem.leftBarButtonItem?.action = #selector(dismissMe)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(dismissMe))
     }
     
     override func viewDidAppear(_ animated: Bool) {

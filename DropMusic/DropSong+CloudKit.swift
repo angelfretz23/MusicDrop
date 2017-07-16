@@ -27,6 +27,7 @@ extension DropSong{
         static let postedByKey = "PostedBy"
         static let descriptionKey = "Description"
         static let postedDateKey = "PostedDate"
+        static let coverImageKey = "CoverImage"
     }
     
     var cloudKitRecord: CKRecord{
@@ -36,6 +37,8 @@ extension DropSong{
         record.setValue(postedBy, forKey: DropSongKeys.postedByKey)
         record.setValue(description, forKey: DropSongKeys.descriptionKey)
         record.setValue(postedDate, forKey: DropSongKeys.postedDateKey)
+        record.setValue(CKAsset(fileURL: temporaryPhotoURL), forKey: DropSongKeys.coverImageKey)
+
         
         record.setValue(song.songName, forKey: SongKeys.songNameKey)
         record.setValue(song.artistName, forKey: SongKeys.artistNameKey)
@@ -45,7 +48,7 @@ extension DropSong{
         record.setValue(song.collectionID, forKey: SongKeys.collectionIDKey)
         record.setValue(song.trackTime, forKey: SongKeys.trackTimeKey)
         record.setValue(song.imageURL, forKey: SongKeys.imageURLKey)
-         
+        
         return record
     }
 }
