@@ -27,7 +27,7 @@ class DropSong{
         return fileURL
     }
     
-    init(postCoordinates: CLLocation, song: Song, postedBy: String? = nil, description: String?, coverImage: Data?, postedDate: Date = Date()){
+    init(postCoordinates: CLLocation, song: Song, postedBy: String? = nil, description: String?, coverImage: Data? = nil, postedDate: Date = Date()){
         self.postCoordinates = postCoordinates
         self.song = song
         self.postedBy = postedBy

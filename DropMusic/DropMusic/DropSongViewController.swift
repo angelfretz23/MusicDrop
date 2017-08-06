@@ -30,7 +30,6 @@ class DropSongViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("the imageURL is: \(song?.imageURL)")
         loadMapView()
         descriptionTextView.delegate = self
         mapView.delegate = self
@@ -48,7 +47,7 @@ class DropSongViewController: UIViewController {
     @IBAction func doneBarButtonPressed(_ sender: UIBarButtonItem) {
         guard let location = locationManager.location else { return }
         let dropsong = DropSong(postCoordinates: location, song: self.song!, description: descriptionTextView.text)
-        DropSongController.sharedController.post(dropSong: dropsong)
+        DropSongController.shared.post(dropSong: dropsong)
         
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
@@ -103,10 +102,8 @@ extension DropSongViewController: MKMapViewDelegate{
             annotationView.layer.shadowOpacity = 0.7
             annotationView.layer.shadowRadius = 5.0
             annotationView.layer.shadowOffset = CGSize(width: 5, height: 5)
-        } else {
-            return nil
         }
-        return annotationView
+        return MKAnnotationView()
     }
 }
 
@@ -127,9 +124,7 @@ extension DropSongViewController: CLLocationManagerDelegate{
         } else {
             locationManager.requestWhenInUseAuthorization()
         }
-        
         self.locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
-        
         self.locationManager.startUpdatingLocation()
     }
     

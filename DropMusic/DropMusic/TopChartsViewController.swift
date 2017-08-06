@@ -15,7 +15,6 @@ class TopChartsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchAppleMusicSearchBar: UISearchBar!
     
-    let musicPlayer = MPMusicPlayerController.systemMusicPlayer()
     var searchController: UISearchController?
     
     override func viewDidLoad() {

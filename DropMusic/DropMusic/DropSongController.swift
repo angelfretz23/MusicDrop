@@ -11,7 +11,7 @@ import MapKit
 
 class DropSongController{
     
-    static let sharedController = DropSongController()
+    static let shared = DropSongController()
     let cloudKitManager = CloudKitManager()
     
     var dropSongs:[DropSong] = []{

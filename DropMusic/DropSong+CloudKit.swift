@@ -47,7 +47,7 @@ extension DropSong{
         record.setValue(song.genre, forKey: SongKeys.genreKey)
         record.setValue(song.collectionID, forKey: SongKeys.collectionIDKey)
         record.setValue(song.trackTime, forKey: SongKeys.trackTimeKey)
-        record.setValue(song.imageURL, forKey: SongKeys.imageURLKey)
+//        record.setValue(song.imageURL, forKey: SongKeys.imageURLKey)
         
         return record
     }
