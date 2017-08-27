@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import StoreKit
-import MediaPlayer
 import MapKit
 
 class MainViewController: UIViewController {
@@ -19,15 +17,10 @@ class MainViewController: UIViewController {
     var locationManager = CLLocationManager()
     var isLocked = true
     let cellID = "dropSongCell"
-    
-    let musicPlayer = MPMusicPlayerController.systemMusicPlayer()
-    
-    var songID:String?
-    
-    lazy var infoViewController: InfoViewController = {
-        let iVC = InfoViewController()
-        return iVC
-    }()
+        
+    var songAnnotations: [SongAnnotation]{
+        return mapView.annotations.filter{ ($0 is MKUserLocation) == false} as! [SongAnnotation]
+    }
     
     lazy var collectionView: UICollectionView = {
         let layout = SnappingCollectionViewLayout()
@@ -40,14 +33,18 @@ class MainViewController: UIViewController {
         return cv
     }()
     
+    lazy var descriptionViewController = DescriptionViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
         locationManager.delegate = self
-        infoViewController.delegate = self
         setupCollectionView()
         let notificationName = Notification.Name(rawValue: "newDropSongAdded")
+        let deselectAnnotations = Notification.Name(rawValue: "delectAllAnnotations")
+        
         NotificationCenter.default.addObserver(self, selector: #selector(createAnnotation), name: notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(delectAllAnnotations), name: deselectAnnotations, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -88,13 +85,12 @@ class MainViewController: UIViewController {
     private func setupCollectionView(){
         view.addSubview(collectionView)
         collectionView.register(DropSongCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
-//        collectionView.isPagingEnabled = true
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         view.addConstraintsWithFormat(format: "H:|[v0]|", views: collectionView)
-        view.addConstraintsWithFormat(format: "V:[v0(100)]-|", views: collectionView)
+        view.addConstraintsWithFormat(format: "V:[v0(100)]-15-|", views: collectionView)
     }
     
     private func toggleMapViewProperties(bool: Bool){
@@ -105,8 +101,32 @@ class MainViewController: UIViewController {
     }
     
     @objc private func createAnnotation(){
-        for dropSong in DropSongController.shared.dropSongs {
-            createAnnotationFrom(dropSong: dropSong)
+        for songAnnotation in DropSongController.shared.songAnnotations {
+            self.mapView.addAnnotation(songAnnotation)
+            self.collectionView.reloadData()
+            
+        }
+    }
+    
+    @objc private func delectAllAnnotations(){
+        if mapView.selectedAnnotations.count > 0 {
+            mapView.selectedAnnotations.forEach({ (ann) in
+                mapView.deselectAnnotation(ann, animated: false)
+            })
+            
+            DispatchQueue.main.async {
+                self.selectCurrentCollectionViewItamOnMapView()
+            }
+        }
+    }
+    
+    private func selectCurrentCollectionViewItamOnMapView(){
+        let count = mapView.annotations.filter{ ($0 is MKUserLocation) == false}.count
+        if count > 0 {
+            let x = collectionView.contentOffset.x
+            if let indexPath = collectionView.indexPathForItem(at: CGPoint(x: x, y: 10)), let item = collectionView.cellForItem(at: indexPath) as? DropSongCollectionViewCell, let songAnnotation = item.songAnnotation {
+                mapView.selectAnnotation(songAnnotation, animated: false)
+            }
         }
     }
 }
@@ -114,13 +134,10 @@ class MainViewController: UIViewController {
 extension MainViewController: MKMapViewDelegate{
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if view.annotation is SongAnnotation{
-            guard let annotation = view.annotation as? SongAnnotation,
-                let dropSong = annotation.dropSong else { return }
             UIView.animate(withDuration: 0.1) {
-                view.frame = CGRect(origin: view.frame.origin, size: CGSize(width: 50, height: 50))
+                view.frame.size = CGSize(width: 50, height: 50)
+                view.superview?.bringSubview(toFront: view)
             }
-            infoViewController.showDetailsWith(dropSong: dropSong)
-            songID = dropSong.song.storeID
         }
     }
     
@@ -147,6 +164,7 @@ extension MainViewController: MKMapViewDelegate{
                 annotationView.layer.shadowRadius = 5.0
                 annotationView.layer.shadowOffset = CGSize(width: 5, height: 5)
                 annotationView.canShowCallout = false
+                annotationView.isEnabled = false
             }
             return annotationView
         }
@@ -169,13 +187,13 @@ extension MainViewController: MKMapViewDelegate{
             mapView.setCamera(camera, animated: true)
         }
     }
+
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        collectionView.reloadData()
+    }
     
-    func createAnnotationFrom(dropSong: DropSong){
-        DispatchQueue.main.async {
-            let songAnnotation = SongAnnotation(dropSong: dropSong)
-            self.mapView.addAnnotation(songAnnotation)
-            self.collectionView.reloadData()
-        }
+    func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
+        collectionView.reloadData()
     }
 }
 
@@ -223,21 +241,37 @@ extension MainViewController: InfoViewControllerDelegate {
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! DropSongCollectionViewCell
-        cell.backgroundColor = UIColor(white: 0.95, alpha: 1)
-        cell.layer.borderColor = UIColor.darkGray.cgColor
+        cell.backgroundColor = UIColor(red: 67/255, green: 67/255, blue: 67/255, alpha: 1)
+        cell.layer.borderColor = UIColor.white.cgColor
         cell.layer.borderWidth = 1
-        let dropSong = DropSongController.shared.dropSongs[indexPath.row]
-        cell.updateWith(dropSong: dropSong)
+        let songAnnotation = songAnnotations[indexPath.row]
+        cell.songAnnotation = songAnnotation
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mapView.annotations.filter {$0.isMember(of: SongAnnotation.self) == true}
+        return mapView.annotations.filter{ ($0 is MKUserLocation) == false}.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = view.frame.width - 30
         let height = collectionView.frame.height - 20
         return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! DropSongCollectionViewCell
+        guard let dropSong = cell.songAnnotation?.dropSong else { return }
+        descriptionViewController.showDetailsWith(dropSong: dropSong)
+    }
+}
+
+extension MainViewController: UIScrollViewDelegate{
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let x = scrollView.contentOffset.x + 15 // adding inset
+        guard let indexPath = collectionView.indexPathForItem(at: CGPoint(x: x, y: 10)), let cell = collectionView.cellForItem(at: indexPath) as? DropSongCollectionViewCell else { return }
+        if let selectedAnnotation = cell.songAnnotation {
+            self.mapView.selectAnnotation(selectedAnnotation, animated: true)
+        }
     }
 }

@@ -32,23 +32,31 @@ extension UIImage{
 
 class ImageController{
     
-    static private let gcdController = GCDController()
+    static private let cache = NSCache<NSString, UIImage>()
     
-    static func fetchImage(withString url: String, with size: Int = 100, completion: @escaping (_ image: UIImage?) -> Void){
-        guard let url = URL(string: url) else { return }
-        NetworkController.performRequest(for: url, httpMethodString: "GET") { (data, error) in
-            guard let data = data else {completion(nil); return }
+    static func fetchImage(withString url: String, with size: Double = 100, completion: @escaping (UIImage?) -> Void){
+        if let imageFromCache = cache.object(forKey: NSString(string: url)) {
+            completion(imageFromCache)
+        } else {
+            let urlNSString = NSString(string: url)
+            guard let url = URL(string: url) else { return }
             
-            let image = imageWith(image: UIImage(data:data), scaleToSize: CGSize(width: size, height: size))
-            DispatchQueue.main.async {
-                completion(image)
+            NetworkController.performRequest(for: url, httpMethodString: "GET") { (data, error) in
+                guard let data = data else {completion(nil); return }
+                if let image = UIImage(data: data){
+                    let resizedImage = imageWith(image: UIImage(data: data), scaleToSize: CGSize(width: size, height: size))
+                    self.cache.setObject(image, forKey: urlNSString)
+                    DispatchQueue.main.async {
+                        completion(resizedImage)
+                    }
+                } else {
+                    completion(nil)
+                }
             }
         }
     }
 
     static func getNewAnnotation(albumCover: UIImage?,with annotation: UIImage? = #imageLiteral(resourceName: "Annotation1x"), completion: @escaping (_ annotationImage: UIImage?)->Void) {
-        
-        gcdController.backgroundThread(background: {
             guard let albumCover = albumCover else {completion(nil); print("album cover was nil"); return}
             guard let annotation = annotation else { completion(nil); print("annotation was nil"); return}
             
@@ -67,7 +75,6 @@ class ImageController{
             DispatchQueue.main.async {
                 completion(resizedImage)
             }
-        })
     }
     
     static func imageWith(image: UIImage?, scaleToSize newSize: CGSize) -> UIImage?{

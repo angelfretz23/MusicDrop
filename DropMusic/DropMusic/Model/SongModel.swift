@@ -96,7 +96,7 @@ class Song: StoreProtocol {
                 let height = attributesDictionary["height"] as? String else { return nil }
             switch height {
             case "170":
-               self.imageURL = urlString
+               self.imageURL = urlString.replacingOccurrences(of: "170", with: "500")
             default:()
             }
         }
@@ -123,7 +123,7 @@ class Song: StoreProtocol {
         self.albumName = albumName
         self.genre = genre
         self.collectionID = collectionID.cleanValue
-        self.imageURL = largeImageURL
+        self.imageURL = largeImageURL.replacingOccurrences(of: "100", with: "500")
     }
     
     

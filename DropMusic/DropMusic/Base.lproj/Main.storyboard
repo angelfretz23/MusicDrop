@@ -476,7 +476,7 @@
         <!--Map-->
         <scene sceneID="5gO-Wc-355">
             <objects>
-                <viewController id="BVP-YB-Ore" customClass="MainViewController" customModule="DropMusic" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mainVC" id="BVP-YB-Ore" customClass="MainViewController" customModule="DropMusic" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="O4h-RN-hIF"/>
                         <viewControllerLayoutGuide type="bottom" id="yIz-8v-AQo"/>

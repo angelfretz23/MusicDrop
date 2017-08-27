@@ -20,3 +20,9 @@ extension UIView{
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary))
     }
 }
+
+extension UIColor{
+    var projectBlue: UIColor{
+        return UIColor(red: 67/255, green: 191/255, blue: 254/255, alpha: 0.90)
+    }
+}

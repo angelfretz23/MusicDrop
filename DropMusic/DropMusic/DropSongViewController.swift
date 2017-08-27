@@ -48,7 +48,8 @@ class DropSongViewController: UIViewController {
         guard let location = locationManager.location else { return }
         let dropsong = DropSong(postCoordinates: location, song: self.song!, description: descriptionTextView.text)
         DropSongController.shared.post(dropSong: dropsong)
-        
+        let deselectNotification = Notification.Name("delectAllAnnotations")
+        NotificationCenter.default.post(name: deselectNotification, object: MainViewController.self)
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
     

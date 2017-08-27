@@ -14,7 +14,7 @@ class DropSongController{
     static let shared = DropSongController()
     let cloudKitManager = CloudKitManager()
     
-    var dropSongs:[DropSong] = []{
+    var songAnnotations:[SongAnnotation] = []{
         didSet{
             let notificationName = Notification.Name(rawValue: "newDropSongAdded")
             NotificationCenter.default.post(name: notificationName, object: nil)
@@ -35,7 +35,8 @@ class DropSongController{
             }
             completion(error)
         }
-        self.dropSongs.append(dropSong)
+        let songAnnotation = SongAnnotation(dropSong: dropSong)
+        self.songAnnotations.append(songAnnotation)
     }
 
     
@@ -50,7 +51,10 @@ class DropSongController{
             }
             guard let records = records else { return }
             DispatchQueue.main.async {
-                self.dropSongs = records.flatMap({DropSong(cloudKitRecord: $0)})
+                let dropSongs = records.flatMap({ DropSong(cloudKitRecord: $0)})
+                dropSongs.forEach({ (dropSong) in
+                    self.songAnnotations.append(SongAnnotation(dropSong: dropSong))
+                })
             }
             completion(error)
         }

@@ -20,7 +20,7 @@ class DropSongCollectionViewCell: BaseCell{
     
     let songTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "The Stage"
+        label.textColor = UIColor().projectBlue
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -28,7 +28,7 @@ class DropSongCollectionViewCell: BaseCell{
     
     let artistTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Avenged Sevenfold"
+        label.textColor = UIColor().projectBlue
         label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -36,17 +36,24 @@ class DropSongCollectionViewCell: BaseCell{
     
     let droppedByTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Dropped by angelC"
+        label.textColor = UIColor().projectBlue
         label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
+    var songAnnotation: SongAnnotation?{
+        didSet{
+            guard let dropSong = songAnnotation?.dropSong else { return }
+            updateWith(dropSong: dropSong)
+        }
+    }
+    
     let descriptionTextView: UITextView = {
         let textView = UITextView()
+        textView.textColor = UIColor().projectBlue
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.font = UIFont.systemFont(ofSize: 14)
-        textView.text = "This is where i kissed my beautiful girl Chandi"
         textView.isEditable = false
         return textView
     }()
@@ -67,10 +74,10 @@ class DropSongCollectionViewCell: BaseCell{
 //        addConstraintsWithFormat(format: "V:[v0]-[v1]-|", views: albumImageView, descriptionTextView)
     }
     
-    final public func updateWith(dropSong:DropSong){
+    private func updateWith(dropSong:DropSong){
         songTitleLabel.text = dropSong.song.songName
         artistTitleLabel.text = dropSong.song.artistName
-        droppedByTitleLabel.text = dropSong.postedBy ?? ""
+        droppedByTitleLabel.text = "Dropped by \(dropSong.postedBy ?? "Anonymous")"
         ImageController.fetchImage(withString: dropSong.song.imageURL!) { (image) in
             self.albumImageView.image = image
         }

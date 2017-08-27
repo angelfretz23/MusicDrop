@@ -11,6 +11,7 @@
 		0F1271691DB6698C00F54D90 /* SongTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1271681DB6698C00F54D90 /* SongTableViewCell.swift */; };
 		0F2472B61DB7E83F00F3C0F2 /* SongAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2472B51DB7E83F00F3C0F2 /* SongAnnotation.swift */; };
 		0F2472B81DB7EC6000F3C0F2 /* DropSongController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2472B71DB7EC6000F3C0F2 /* DropSongController.swift */; };
+		0F26ADB91F4B72E200210998 /* DescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F26ADB81F4B72E200210998 /* DescriptionView.swift */; };
 		0F285E751DD92314006974B6 /* GCDController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F285E741DD92314006974B6 /* GCDController.swift */; };
 		0F2DBCA01DAD68CE0084AAD9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2DBC9F1DAD68CE0084AAD9 /* AppDelegate.swift */; };
 		0F2DBCA51DAD68CE0084AAD9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F2DBCA31DAD68CE0084AAD9 /* Main.storyboard */; };
@@ -42,6 +43,7 @@
 		0FA801CC1DBC2FC900AE6B16 /* DropSong+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA801CB1DBC2FC900AE6B16 /* DropSong+CloudKit.swift */; };
 		0FBD9A8C1DBDCD2500EB9892 /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBD9A8B1DBDCD2500EB9892 /* CloudKitManager.swift */; };
 		0FE1B97F1DB15AF500CD447F /* iTunesSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1B97E1DB15AF500CD447F /* iTunesSearchController.swift */; };
+		69C316A91F50FD800099BAD9 /* DescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C316A81F50FD800099BAD9 /* DescriptionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +51,7 @@
 		0F1271681DB6698C00F54D90 /* SongTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTableViewCell.swift; sourceTree = "<group>"; };
 		0F2472B51DB7E83F00F3C0F2 /* SongAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongAnnotation.swift; sourceTree = "<group>"; };
 		0F2472B71DB7EC6000F3C0F2 /* DropSongController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropSongController.swift; sourceTree = "<group>"; };
+		0F26ADB81F4B72E200210998 /* DescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionView.swift; sourceTree = "<group>"; };
 		0F285E741DD92314006974B6 /* GCDController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDController.swift; sourceTree = "<group>"; };
 		0F2DBC9C1DAD68CE0084AAD9 /* DropMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DropMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F2DBC9F1DAD68CE0084AAD9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +86,7 @@
 		0FA801CB1DBC2FC900AE6B16 /* DropSong+CloudKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DropSong+CloudKit.swift"; sourceTree = "<group>"; };
 		0FBD9A8B1DBDCD2500EB9892 /* CloudKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
 		0FE1B97E1DB15AF500CD447F /* iTunesSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTunesSearchController.swift; sourceTree = "<group>"; };
+		69C316A81F50FD800099BAD9 /* DescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				0F2DBC9E1DAD68CE0084AAD9 /* DropMusic */,
-				0F772A4F1F30456900CC2078 /* Helpers */,
+				69D9D3BB1F52596E00E8DA55 /* Helpers */,
 				0F2DBCB11DAD69B30084AAD9 /* Utilities */,
 				0F2DBC9D1DAD68CE0084AAD9 /* Products */,
 				0F631E1D1DBA7CA200BE6A10 /* Frameworks */,
@@ -119,11 +123,13 @@
 		0F2DBC9E1DAD68CE0084AAD9 /* DropMusic */ = {
 			isa = PBXGroup;
 			children = (
+				69D9D3BC1F5259AB00E8DA55 /* OnBoarding */,
 				0F631E1C1DBA7C9A00BE6A10 /* DropMusic.entitlements */,
 				0F2DBCB61DAD78E40084AAD9 /* Protocols */,
 				0F2DBCB21DAD69C20084AAD9 /* View */,
-				0F2DBCB31DAD6ACB0084AAD9 /* Model */,
-				0F2DBCE31DAE4DF30084AAD9 /* Controllers */,
+				69D9D3B91F52592400E8DA55 /* Model */,
+				69D9D3BA1F52594C00E8DA55 /* CloudKit */,
+				69D9D3B71F5258F500E8DA55 /* Controllers */,
 				0F2DBCDD1DADB5AD0084AAD9 /* ViewControllers */,
 			);
 			path = DropMusic;
@@ -146,21 +152,9 @@
 			children = (
 				0F2DBCA31DAD68CE0084AAD9 /* Main.storyboard */,
 				0F772A4D1F303F1500CC2078 /* InfoView.swift */,
+				0F26ADB81F4B72E200210998 /* DescriptionView.swift */,
 			);
 			name = View;
-			sourceTree = "<group>";
-		};
-		0F2DBCB31DAD6ACB0084AAD9 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				0F2472B51DB7E83F00F3C0F2 /* SongAnnotation.swift */,
-				0F82607F1DB6F26900D9F916 /* DropSongModel.swift */,
-				0F2DBCB41DAD77C10084AAD9 /* SongModel.swift */,
-				0F3DD0FF1DB3F91F00E5224B /* DataTypeExtensions.swift */,
-				0F2DBCD91DAD9ABE0084AAD9 /* AlbumModel.swift */,
-				0F631E201DBA833700BE6A10 /* CloudKit */,
-			);
-			name = Model;
 			sourceTree = "<group>";
 		};
 		0F2DBCB61DAD78E40084AAD9 /* Protocols */ = {
@@ -197,7 +191,15 @@
 			name = "Custom Cells";
 			sourceTree = "<group>";
 		};
-		0F2DBCE31DAE4DF30084AAD9 /* Controllers */ = {
+		0F631E1D1DBA7CA200BE6A10 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0F631E1E1DBA7CA200BE6A10 /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		69D9D3B71F5258F500E8DA55 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				0F772A521F304E7A00CC2078 /* InfoViewController.swift */,
@@ -208,35 +210,47 @@
 				0F2DBCE61DAE5F8A0084AAD9 /* NetworkController.swift */,
 				0F2DBD0B1DAEAA5D0084AAD9 /* ImageController.swift */,
 				0F1271461DB5CC5800F54D90 /* AlbumController.swift */,
+				69C316A81F50FD800099BAD9 /* DescriptionViewController.swift */,
 			);
-			name = Controllers;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
-		0F631E1D1DBA7CA200BE6A10 /* Frameworks */ = {
+		69D9D3B91F52592400E8DA55 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0F631E1E1DBA7CA200BE6A10 /* CloudKit.framework */,
+				0F2472B51DB7E83F00F3C0F2 /* SongAnnotation.swift */,
+				0F82607F1DB6F26900D9F916 /* DropSongModel.swift */,
+				0F2DBCB41DAD77C10084AAD9 /* SongModel.swift */,
+				0F3DD0FF1DB3F91F00E5224B /* DataTypeExtensions.swift */,
+				0F2DBCD91DAD9ABE0084AAD9 /* AlbumModel.swift */,
 			);
-			name = Frameworks;
+			path = Model;
 			sourceTree = "<group>";
 		};
-		0F631E201DBA833700BE6A10 /* CloudKit */ = {
+		69D9D3BA1F52594C00E8DA55 /* CloudKit */ = {
 			isa = PBXGroup;
 			children = (
 				0FBD9A8B1DBDCD2500EB9892 /* CloudKitManager.swift */,
 				0FA801CB1DBC2FC900AE6B16 /* DropSong+CloudKit.swift */,
 			);
-			name = CloudKit;
-			path = ..;
+			path = CloudKit;
 			sourceTree = "<group>";
 		};
-		0F772A4F1F30456900CC2078 /* Helpers */ = {
+		69D9D3BB1F52596E00E8DA55 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				0F772A501F30458000CC2078 /* Extensions.swift */,
 				0F81DE9B1F36A7810083FBBB /* SnappingCollectionViewLayout.swift */,
 			);
-			path = Helpers;
+			name = Helpers;
+			path = Helpers/Helpers;
+			sourceTree = "<group>";
+		};
+		69D9D3BC1F5259AB00E8DA55 /* OnBoarding */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = OnBoarding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -266,7 +280,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Angel Contreras";
 				TargetAttributes = {
 					0F2DBC9B1DAD68CE0084AAD9 = {
@@ -335,6 +349,7 @@
 				0FA801CC1DBC2FC900AE6B16 /* DropSong+CloudKit.swift in Sources */,
 				0F2DBCDF1DAE488B0084AAD9 /* TopChartsViewController.swift in Sources */,
 				0F2472B61DB7E83F00F3C0F2 /* SongAnnotation.swift in Sources */,
+				0F26ADB91F4B72E200210998 /* DescriptionView.swift in Sources */,
 				0F3DD0FE1DB36A3B00E5224B /* DropSongViewController.swift in Sources */,
 				0F3DD1251DB52CF300E5224B /* MainViewController.swift in Sources */,
 				0F2DBCE21DAE4BCD0084AAD9 /* TopChartsTableViewCell.swift in Sources */,
@@ -349,6 +364,7 @@
 				0F3DD1001DB3F91F00E5224B /* DataTypeExtensions.swift in Sources */,
 				0F8260561DB68C3200D9F916 /* MapProtocol.swift in Sources */,
 				0F772A511F30458000CC2078 /* Extensions.swift in Sources */,
+				69C316A91F50FD800099BAD9 /* DescriptionViewController.swift in Sources */,
 				0F81DE9A1F3681770083FBBB /* BaseCell.swift in Sources */,
 				0F772A531F304E7A00CC2078 /* InfoViewController.swift in Sources */,
 			);
@@ -385,7 +401,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -393,7 +411,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -436,7 +458,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -444,7 +468,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
