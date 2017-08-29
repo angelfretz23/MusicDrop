@@ -34,9 +34,14 @@ class ImageController{
     
     static private let cache = NSCache<NSString, UIImage>()
     
-    static func fetchImage(withString url: String, with size: Double = 100, completion: @escaping (UIImage?) -> Void){
-        if let imageFromCache = cache.object(forKey: NSString(string: url)) {
-            completion(imageFromCache)
+    static func fetchImage(withString url: String, with size: Double = 500, completion: @escaping (UIImage?) -> Void){
+        if var imageFromCache = cache.object(forKey: NSString(string: url)) {
+            if size != 500 {
+                imageFromCache = imageWith(image: imageFromCache, scaleToSize: CGSize(width: size, height: size))!
+            }
+            DispatchQueue.main.async {
+                completion(imageFromCache)
+            }
         } else {
             let urlNSString = NSString(string: url)
             guard let url = URL(string: url) else { return }

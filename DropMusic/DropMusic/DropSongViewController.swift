@@ -12,16 +12,66 @@ import StoreKit
 import MediaPlayer
 
 class DropSongViewController: UIViewController {
+    // MARK: - SubViews
+    let mapView: MKMapView = {
+        let mv = MKMapView()
+        mv.isZoomEnabled = false
+        mv.isRotateEnabled = false
+        mv.isScrollEnabled = false
+        mv.showsTraffic = false
+        mv.showsScale = false
+        mv.showsUserLocation = false
+        mv.translatesAutoresizingMaskIntoConstraints = false
+        return mv
+    }()
     
-    @IBOutlet weak var albumCover: UIImageView!
-    @IBOutlet weak var songNameLabel: UILabel!
-    @IBOutlet weak var artistNameLabel: UILabel!
-    @IBOutlet weak var albumNameLabel: UILabel!
-    @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var descriptionTextView: UITextView!
+    let songNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightSemibold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .black
+        return label
+    }()
     
+    let artistNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .black
+        return label
+    }()
+    
+    let albumNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .black
+        return label
+    }()
+    
+    let writeDescriptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .black
+        label.text = "Write a Description"
+        return label
+    }()
+    
+    let albumCover: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFit
+        return iv
+    }()
+    
+    let descriptionTextView: UITextView = {
+        let tv = UITextView()
+        return tv
+    }()
+    
+    let blackView = UIView()
+
     var song: Song?
-    let gcdController = GCDController()
     
     var collectionImage: UIImage?
     
@@ -30,9 +80,11 @@ class DropSongViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadMapView()
-        descriptionTextView.delegate = self
-        mapView.delegate = self
+        setupSubViews()
+//        loadMapView()
+//        descriptionTextView.delegate = self
+//        mapView.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(notification:)), name: .UIKeyboardDidShow, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,8 +92,33 @@ class DropSongViewController: UIViewController {
         if let song = song{
             updateWith(song: song)
         }
-        getQuickLocationUpdate()
-        addAnnotationOnLoad()
+//        getQuickLocationUpdate()
+//        addAnnotationOnLoad()
+    }
+    
+    private func setupSubViews() {
+        [mapView, songNameLabel, artistNameLabel, albumNameLabel, writeDescriptionLabel, descriptionTextView, albumCover].forEach { (subview) in
+            self.view.addSubview(subview)
+        }
+        
+        // Mapview Constraints
+        view.addConstraintsWithFormat(format: "H:|[v0]|", views: mapView)
+        view.addConstraintsWithFormat(format: "V:|[v0(300)]", views: mapView)
+        
+        // Album Cover
+        view.addConstraintsWithFormat(format: "H:[v0(75)]-|", views: albumCover)
+        view.addConstraintsWithFormat(format: "V:[v0]-[v1(75)]", views: mapView, albumCover)
+        
+        // Labels
+        view.addConstraintsWithFormat(format: "H:|-[v0]-[v1]", views: songNameLabel, albumCover)
+        view.addConstraintsWithFormat(format: "H:|-[v0]-[v1]", views: artistNameLabel, albumCover)
+        view.addConstraintsWithFormat(format: "H:|-[v0]-[v1]", views: albumNameLabel, albumCover)
+        view.addConstraintsWithFormat(format: "V:[v0]-[v1(20)][v2(20)][v3(20)]", views: mapView, songNameLabel, artistNameLabel, albumNameLabel)
+        
+        // Description Label and Text View
+        view.addConstraintsWithFormat(format: "H:|-[v0]", views: writeDescriptionLabel)
+        view.addConstraintsWithFormat(format: "H:|-[v0]-|", views: descriptionTextView)
+        view.addConstraintsWithFormat(format: "V:[v0]-[v1(25)][v2(100)]", views: albumCover, writeDescriptionLabel, descriptionTextView)
     }
     
     @IBAction func doneBarButtonPressed(_ sender: UIBarButtonItem) {
@@ -75,9 +152,33 @@ class DropSongViewController: UIViewController {
     }
     
     func addAnnotationOnLoad(){
-        guard let location = locationManager.location else { return }
-        let songAnnotation = SongAnnotation(coordinate: location.coordinate)
+        guard let location = locationManager.location, let song = song else { return }
+        let dropSong = DropSong(postCoordinates: location, song: song, description: nil)
+        let songAnnotation = SongAnnotation(dropSong: dropSong)
         mapView.addAnnotation(songAnnotation)
+    }
+    
+    @objc private func keyboardDidShow(notification: Notification){
+        view.bringSubview(toFront: descriptionTextView)
+        let x = view.frame.origin.x
+        let width = view.frame.width
+        let height = view.frame.height
+        view.frame = CGRect(x: x, y: -110, width: width, height: height)
+        if let window = UIApplication.shared.keyWindow{
+            view.insertSubview(blackView, belowSubview: descriptionTextView)
+            blackView.frame = window.frame
+            blackView.backgroundColor = UIColor(white: 0, alpha: 0.3)
+            blackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+        }
+    }
+    
+    @objc private func dismissKeyboard(){
+        descriptionTextView.resignFirstResponder()
+        blackView.removeFromSuperview()
+        let x = view.frame.origin.x
+        let width = view.frame.width
+        let height = view.frame.height
+        view.frame = CGRect(x: x, y: 0, width: width, height: height)
     }
 }
 
@@ -95,7 +196,8 @@ extension DropSongViewController: MKMapViewDelegate{
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "newDropSong") ?? MKAnnotationView(annotation: annotation, reuseIdentifier: "newDropSong")
-        if !annotation.isKind(of: MKUserLocation.self){
+        if !(annotation is MKUserLocation){
+            
             annotationView.image = collectionImage
             annotationView.bounds.size.height = 50
             annotationView.bounds.size.width = 50
@@ -103,19 +205,14 @@ extension DropSongViewController: MKMapViewDelegate{
             annotationView.layer.shadowOpacity = 0.7
             annotationView.layer.shadowRadius = 5.0
             annotationView.layer.shadowOffset = CGSize(width: 5, height: 5)
+            return annotationView
         }
         return MKAnnotationView()
     }
 }
 
 extension DropSongViewController: UITextViewDelegate{
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        if textView.text == "Write a Description..."{
-            textView.text = nil
-            textView.textColor = UIColor.black
-        }
-        return true
-    }
+    
 }
 
 extension DropSongViewController: CLLocationManagerDelegate{

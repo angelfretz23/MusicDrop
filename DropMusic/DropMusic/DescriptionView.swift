@@ -86,7 +86,7 @@ final class DescriptionView: UIView {
         addConstraintsWithFormat(format: "H:|-[v0]-|", views: artistNameLabel)
         addConstraintsWithFormat(format: "H:|-[v0]-|", views: droppedByLabel)
         addConstraintsWithFormat(format: "H:|-[v0]-|", views: descriptionTextView)
-        addConstraintsWithFormat(format: "V:|-[v0][v1(20)][v2(v1)][v3(v1)][v4]-|", views: albumCoverImageView, songTitleLabel, artistNameLabel, droppedByLabel, descriptionTextView)
+        addConstraintsWithFormat(format: "V:|-[v0]-[v1(20)][v2(v1)][v3(v1)][v4]-|", views: albumCoverImageView, songTitleLabel, artistNameLabel, droppedByLabel, descriptionTextView)
     }
     
     public func update(with dropSong: DropSong) {
@@ -94,7 +94,6 @@ final class DescriptionView: UIView {
         artistNameLabel.text = dropSong.song.artistName
         droppedByLabel.text = dropSong.postedBy ?? "Posted by Anonymous"
         descriptionTextView.text = dropSong.description ?? ""
-        let newImageURL = 
         ImageController.fetchImage(withString: dropSong.song.imageURL!) { (image) in
             self.albumCoverImageView.image = image
         }
