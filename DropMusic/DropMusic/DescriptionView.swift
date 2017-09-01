@@ -87,15 +87,30 @@ final class DescriptionView: UIView {
         addConstraintsWithFormat(format: "H:|-[v0]-|", views: droppedByLabel)
         addConstraintsWithFormat(format: "H:|-[v0]-|", views: descriptionTextView)
         addConstraintsWithFormat(format: "V:|-[v0]-[v1(20)][v2(v1)][v3(v1)][v4]-|", views: albumCoverImageView, songTitleLabel, artistNameLabel, droppedByLabel, descriptionTextView)
+        descriptionTextView.isHidden = true
     }
     
     public func update(with dropSong: DropSong) {
         songTitleLabel.text = dropSong.song.songName
         artistNameLabel.text = dropSong.song.artistName
         droppedByLabel.text = dropSong.postedBy ?? "Posted by Anonymous"
-        descriptionTextView.text = dropSong.description ?? ""
+        if dropSong.description == "" {
+            descriptionTextView.removeFromSuperview()
+        } else {
+            descriptionTextView.text = dropSong.description
+        }
+        
         ImageController.fetchImage(withString: dropSong.song.imageURL!) { (image) in
             self.albumCoverImageView.image = image
         }
+    }
+    
+    public func calculateFrameSize() -> CGSize{
+        var frameSize = frame.size
+        if descriptionTextView.isHidden {
+            frameSize.height = frameSize.height - descriptionTextView.frame.height
+        }
+        
+        return frameSize
     }
 }

@@ -22,8 +22,7 @@ final class DescriptionViewController: NSObject {
     private func showdescriptionView() {
         if let window = UIApplication.shared.keyWindow{
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
-                let y =  window.frame.height - (window.frame.height - 50)
-                self.descritionView.frame.origin = CGPoint(x: 30, y: y)
+                self.descritionView.center = window.center
             }, completion: nil)
         }
     }
@@ -39,10 +38,9 @@ final class DescriptionViewController: NSObject {
             window.addSubview(descritionView)
             blackView.alpha = 1
             blackView.frame = window.frame
-            let height = window.frame.height - 100
-            let width = window.frame.width - 60
-            descritionView.frame = CGRect(x: 30, y: window.frame.height, width: width, height: height)
+            descritionView.frame = CGRect(x: 40, y: window.frame.height, width: window.frame.width - 80, height: window.frame.height - 140)
             descritionView.update(with: dropSong)
+            descritionView.sizeToFit()
             showdescriptionView()
         }
     }
@@ -51,7 +49,7 @@ final class DescriptionViewController: NSObject {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
             self.blackView.alpha = 0
             if let window = UIApplication.shared.keyWindow{
-                self.descritionView.frame.origin = CGPoint(x: 30, y: window.frame.height)
+                self.descritionView.frame.origin = CGPoint(x: 40, y: window.frame.height)
             }
         }) { (completed) in
             
@@ -64,11 +62,11 @@ final class DescriptionViewController: NSObject {
         let translation = sender.translation(in: superView)
         let percentThreshold:CGFloat = 0.15
         let progress = descritionView.frame.origin.y / superView.frame.size.height
-        let threshold = superView.frame.height - (superView.frame.height - 50)
+        let threshold = superView.frame.height - (superView.frame.height - 70)
         switch sender.state{
         case .changed:
             if descritionView.frame.origin.y + translation.y > threshold {
-                descritionView.frame.origin = CGPoint(x: 30, y: descritionView.frame.origin.y + translation.y)
+                descritionView.frame.origin = CGPoint(x: 40, y: descritionView.frame.origin.y + translation.y)
             }
         case .ended:
             progress > percentThreshold ? dismiss() : showdescriptionView()

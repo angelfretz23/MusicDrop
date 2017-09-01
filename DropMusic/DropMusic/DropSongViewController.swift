@@ -81,9 +81,9 @@ class DropSongViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubViews()
-//        loadMapView()
-//        descriptionTextView.delegate = self
-//        mapView.delegate = self
+        loadMapView()
+        descriptionTextView.delegate = self
+        mapView.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(notification:)), name: .UIKeyboardDidShow, object: nil)
     }
     
@@ -92,8 +92,8 @@ class DropSongViewController: UIViewController {
         if let song = song{
             updateWith(song: song)
         }
-//        getQuickLocationUpdate()
-//        addAnnotationOnLoad()
+        getQuickLocationUpdate()
+        addAnnotationOnLoad()
     }
     
     private func setupSubViews() {
@@ -160,25 +160,44 @@ class DropSongViewController: UIViewController {
     
     @objc private func keyboardDidShow(notification: Notification){
         view.bringSubview(toFront: descriptionTextView)
-        let x = view.frame.origin.x
-        let width = view.frame.width
-        let height = view.frame.height
-        view.frame = CGRect(x: x, y: -110, width: width, height: height)
+        
+        let size = (notification.userInfo![UIKeyboardFrameBeginUserInfoKey] as? CGRect)?.size
+        let keyboardHeight = size?.height ?? 258
+        print(descriptionTextView.frame)
+        
+        let padding: CGFloat = 15
+        let descriptionViewBottomY = descriptionTextView.frame.maxY
+        let displacementValue: CGFloat = descriptionViewBottomY - (view.frame.height - keyboardHeight) + padding
+
         if let window = UIApplication.shared.keyWindow{
             view.insertSubview(blackView, belowSubview: descriptionTextView)
             blackView.frame = window.frame
             blackView.backgroundColor = UIColor(white: 0, alpha: 0.3)
             blackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+            blackView.alpha = 0.0
+            
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 2, options: .curveEaseOut, animations: {
+                self.blackView.alpha = 1.0
+                self.view.frame.origin = CGPoint(x: 0, y: -151)
+            }, completion: { (completed) in
+                
+            })
         }
     }
     
     @objc private func dismissKeyboard(){
-        descriptionTextView.resignFirstResponder()
-        blackView.removeFromSuperview()
+//        blackView.removeFromSuperview()
+        self.descriptionTextView.resignFirstResponder()
         let x = view.frame.origin.x
         let width = view.frame.width
         let height = view.frame.height
-        view.frame = CGRect(x: x, y: 0, width: width, height: height)
+        
+        UIView.animate(withDuration: 0.9, delay: 0.5, usingSpringWithDamping: 2, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.blackView.alpha = 0
+            self.view.frame = CGRect(x: x, y: 0, width: width, height: height)
+        }, completion: { (completed) in
+            
+        })
     }
 }
 
