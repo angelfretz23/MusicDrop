@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        }()
 //        window?.rootViewController = instructionsPageViewController
 //
-        DropSongController.shared.fetchDropSongs()
+//        DropSongController.shared.fetchDropSongs()
         return true
     }
 

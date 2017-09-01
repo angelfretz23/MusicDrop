@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import MapKit
+import CoreLocation
 
 class DropSongController{
     
@@ -21,13 +21,10 @@ class DropSongController{
         }
     }
     
-    init(){
-    }
-    
     func post(dropSong: DropSong, completion: @escaping ((Error?) -> Void) = { _ in }){
         let record = dropSong.cloudKitRecord
         
-        cloudKitManager.save(record) { (error) in
+        cloudKitManager.saveRecord(record) { (_, error) in
             if let error = error{
                 NSLog("Error saving \(dropSong) to CloudKit: \(error)")
                 completion(error)
@@ -42,7 +39,7 @@ class DropSongController{
     
     func fetchDropSongs(completion: @escaping ((Error?) -> Void) = { _ in }){
         
-        cloudKitManager.fetchRecords(ofType: DropSong.DropSongKeys.recordType, sortDescriptors: nil) { (records, error) in
+        cloudKitManager.fetchRecordsWithType(DropSong.DropSongKeys.recordType) { (records, error) in
             defer { completion(error) }
             
             if let error = error {
@@ -58,5 +55,14 @@ class DropSongController{
             }
             completion(error)
         }
+    }
+    
+    func fetchDropSongsWith(location: CLLocation, radiusInMeters: CLLocationDistance, completion: @escaping (Error?) -> () = { _ in }) {
+        let radiusInKilometers = radiusInMeters / 1000.0
+        let locationPredicate = NSPredicate(format: "distanceToLocation:fromLocation:(%K,%@) < %f", "PostCoordinate", location, radiusInKilometers)
+        cloudKitManager.fetchRecordsWithType(DropSong.DropSongKeys.recordType, predicate: locationPredicate, sortDescriptors: nil, recordFetchedBlock: { (record) in
+            let dropSong = DropSong(cloudKitRecord: record)!
+            self.songAnnotations.append(SongAnnotation(dropSong: dropSong))
+        }, completion: nil)
     }
 }

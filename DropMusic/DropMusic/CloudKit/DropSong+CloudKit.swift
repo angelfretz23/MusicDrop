@@ -37,7 +37,7 @@ extension DropSong{
         record.setValue(postedBy, forKey: DropSongKeys.postedByKey)
         record.setValue(description, forKey: DropSongKeys.descriptionKey)
         record.setValue(postedDate, forKey: DropSongKeys.postedDateKey)
-        record.setValue(CKAsset(fileURL: temporaryPhotoURL), forKey: DropSongKeys.coverImageKey)
+//        record.setValue(CKAsset(fileURL: temporaryPhotoURL), forKey: DropSongKeys.coverImageKey)
 
         
         record.setValue(song.songName, forKey: SongKeys.songNameKey)

@@ -86,6 +86,7 @@
 		0FA801CB1DBC2FC900AE6B16 /* DropSong+CloudKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DropSong+CloudKit.swift"; sourceTree = "<group>"; };
 		0FBD9A8B1DBDCD2500EB9892 /* CloudKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
 		0FE1B97E1DB15AF500CD447F /* iTunesSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTunesSearchController.swift; sourceTree = "<group>"; };
+		691EBED51F596DA60003463B /* InstructionsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsPageViewController.swift; sourceTree = "<group>"; };
 		69C316A81F50FD800099BAD9 /* DescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -123,14 +124,15 @@
 		0F2DBC9E1DAD68CE0084AAD9 /* DropMusic */ = {
 			isa = PBXGroup;
 			children = (
+				691EBEDA1F596E7D0003463B /* CustomViews */,
+				691EBED81F596E390003463B /* Protocols */,
+				691EBED61F596DDE0003463B /* ViewControllers */,
 				69D9D3BC1F5259AB00E8DA55 /* OnBoarding */,
 				0F631E1C1DBA7C9A00BE6A10 /* DropMusic.entitlements */,
-				0F2DBCB61DAD78E40084AAD9 /* Protocols */,
 				0F2DBCB21DAD69C20084AAD9 /* View */,
 				69D9D3B91F52592400E8DA55 /* Model */,
 				69D9D3BA1F52594C00E8DA55 /* CloudKit */,
 				69D9D3B71F5258F500E8DA55 /* Controllers */,
-				0F2DBCDD1DADB5AD0084AAD9 /* ViewControllers */,
 			);
 			path = DropMusic;
 			sourceTree = "<group>";
@@ -151,44 +153,8 @@
 			isa = PBXGroup;
 			children = (
 				0F2DBCA31DAD68CE0084AAD9 /* Main.storyboard */,
-				0F772A4D1F303F1500CC2078 /* InfoView.swift */,
-				0F26ADB81F4B72E200210998 /* DescriptionView.swift */,
 			);
 			name = View;
-			sourceTree = "<group>";
-		};
-		0F2DBCB61DAD78E40084AAD9 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				0F2DBCB71DAD79040084AAD9 /* StoreProtocol.swift */,
-				0F8260551DB68C3200D9F916 /* MapProtocol.swift */,
-			);
-			name = Protocols;
-			sourceTree = "<group>";
-		};
-		0F2DBCDD1DADB5AD0084AAD9 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				0F2DBCE01DAE4BA80084AAD9 /* Custom Cells */,
-				0F3DD1241DB52CF300E5224B /* MainViewController.swift */,
-				0F2DBCDE1DAE488B0084AAD9 /* TopChartsViewController.swift */,
-				0F685A1F1DAFFD8B001D4247 /* ResultsTableViewController.swift */,
-				0F2DBCDB1DADB5910084AAD9 /* AlbumViewController.swift */,
-				0F3DD0FD1DB36A3B00E5224B /* DropSongViewController.swift */,
-			);
-			name = ViewControllers;
-			sourceTree = "<group>";
-		};
-		0F2DBCE01DAE4BA80084AAD9 /* Custom Cells */ = {
-			isa = PBXGroup;
-			children = (
-				0F1271681DB6698C00F54D90 /* SongTableViewCell.swift */,
-				0F685A211DAFFDA3001D4247 /* ResultsTableViewCell.swift */,
-				0F2DBCE11DAE4BCD0084AAD9 /* TopChartsTableViewCell.swift */,
-				0F81DE971F3670D80083FBBB /* DropSongCollectionViewCell.swift */,
-				0F81DE991F3681770083FBBB /* BaseCell.swift */,
-			);
-			name = "Custom Cells";
 			sourceTree = "<group>";
 		};
 		0F631E1D1DBA7CA200BE6A10 /* Frameworks */ = {
@@ -197,6 +163,49 @@
 				0F631E1E1DBA7CA200BE6A10 /* CloudKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		691EBED61F596DDE0003463B /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				0F3DD1241DB52CF300E5224B /* MainViewController.swift */,
+				0F2DBCDE1DAE488B0084AAD9 /* TopChartsViewController.swift */,
+				0F685A1F1DAFFD8B001D4247 /* ResultsTableViewController.swift */,
+				0F2DBCDB1DADB5910084AAD9 /* AlbumViewController.swift */,
+				0F3DD0FD1DB36A3B00E5224B /* DropSongViewController.swift */,
+				691EBED71F596DF90003463B /* CustomCells */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		691EBED71F596DF90003463B /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+				0F1271681DB6698C00F54D90 /* SongTableViewCell.swift */,
+				0F685A211DAFFDA3001D4247 /* ResultsTableViewCell.swift */,
+				0F2DBCE11DAE4BCD0084AAD9 /* TopChartsTableViewCell.swift */,
+				0F81DE971F3670D80083FBBB /* DropSongCollectionViewCell.swift */,
+				0F81DE991F3681770083FBBB /* BaseCell.swift */,
+			);
+			path = CustomCells;
+			sourceTree = "<group>";
+		};
+		691EBED81F596E390003463B /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				0F2DBCB71DAD79040084AAD9 /* StoreProtocol.swift */,
+				0F8260551DB68C3200D9F916 /* MapProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		691EBEDA1F596E7D0003463B /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				0F772A4D1F303F1500CC2078 /* InfoView.swift */,
+				0F26ADB81F4B72E200210998 /* DescriptionView.swift */,
+			);
+			path = CustomViews;
 			sourceTree = "<group>";
 		};
 		69D9D3B71F5258F500E8DA55 /* Controllers */ = {
@@ -249,6 +258,7 @@
 		69D9D3BC1F5259AB00E8DA55 /* OnBoarding */ = {
 			isa = PBXGroup;
 			children = (
+				691EBED51F596DA60003463B /* InstructionsPageViewController.swift */,
 			);
 			path = OnBoarding;
 			sourceTree = "<group>";

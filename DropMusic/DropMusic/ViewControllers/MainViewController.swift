@@ -186,6 +186,11 @@ extension MainViewController: MKMapViewDelegate{
             let camera = MKMapCamera(lookingAtCenter: location, fromDistance: 10, pitch: 45, heading: locationManager.heading?.trueHeading ?? 0)
             mapView.setCamera(camera, animated: true)
         }
+        
+        DropSongController.shared.songAnnotations.removeAll()
+        let userLocation = locationManager.location!
+        let radiusInMeters: CLLocationDistance = 1000
+        DropSongController.shared.fetchDropSongsWith(location: userLocation, radiusInMeters: radiusInMeters)
     }
 
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
@@ -225,17 +230,9 @@ extension MainViewController: CLLocationManagerDelegate{
         if isLocked{
             mapView.camera.heading = newHeading.trueHeading
         }
+        
     }
 }
-
-extension MainViewController: InfoViewControllerDelegate {
-    func infoViewDidDisappear() {
-        if let currentSelectedAnnotation = mapView.selectedAnnotations.first{
-            mapView.deselectAnnotation(currentSelectedAnnotation, animated: true)
-        }
-    }
-}
-
 
 // MARK: - Collection View Delegate
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
