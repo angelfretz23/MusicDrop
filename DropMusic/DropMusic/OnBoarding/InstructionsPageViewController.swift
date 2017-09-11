@@ -8,7 +8,25 @@
 
 import UIKit
 
-class RedViewController: UIViewController{}
+class RedViewController: UIViewController{
+    
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFit
+        iv.backgroundColor = .red
+        return iv
+    }()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupSubViews()
+    }
+    
+    private func setupSubViews(){
+        view.addSubview(imageView)
+        view.addConstraintsWithFormat(format: "H:|[v0]|", views: imageView)
+        view.addConstraintsWithFormat(format: "V:|[v0]|", views: imageView)
+    }
+}
 class BlueViewController: UIViewController{}
 
 class InstructionsPageViewController: UIPageViewController {
@@ -26,7 +44,7 @@ class InstructionsPageViewController: UIPageViewController {
     let redVC: RedViewController  = {
         let vc = RedViewController()
         vc.view.frame = UIScreen.main.bounds
-        vc.view.backgroundColor = .red
+        vc.view.backgroundColor = .white
         return vc
     }()
     
@@ -50,6 +68,7 @@ class InstructionsPageViewController: UIPageViewController {
             }
             else if view is UIPageControl {
                 pageControl = view as? UIPageControl
+                pageControl?.isEnabled = false
             }
         }
         

@@ -12,10 +12,9 @@ import MapKit
 class MainViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var lockImageView: UIImageView!
     
     var locationManager = CLLocationManager()
-    var isLocked = true
+    var isLocked = false
     let cellID = "dropSongCell"
         
     var songAnnotations: [SongAnnotation]{
@@ -38,6 +37,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
+        mapView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(mapViewTapped(sender:))))
         locationManager.delegate = self
         setupCollectionView()
         let notificationName = Notification.Name(rawValue: "newDropSongAdded")
@@ -58,32 +58,17 @@ class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         getQuickLocationUpdate()
         CLLocationManager.headingAvailable() ? locationManager.startUpdatingHeading() : ()
-        toggleMapViewProperties(bool: !isLocked)
+//        toggleMapViewProperties(bool: !isLocked)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.locationManager.stopUpdatingLocation()
     }
-
-    @IBAction private func lockImageViewPressed(_ sender: Any) {
-        if lockImageView.tag == 0 {
-            toggleMapViewProperties(bool: true)
-            lockImageView.tag = 1
-            lockImageView.image = #imageLiteral(resourceName: "unlock")
-            self.locationManager.stopUpdatingLocation()
-            isLocked = false
-        } else if lockImageView.tag == 1{
-            toggleMapViewProperties(bool: false)
-            lockImageView.tag = 0
-            lockImageView.image = #imageLiteral(resourceName: "lock")
-            self.locationManager.startUpdatingLocation()
-            isLocked = true
-        }
-    }
     
     private func setupCollectionView(){
         view.addSubview(collectionView)
+        
         collectionView.register(DropSongCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
@@ -93,18 +78,19 @@ class MainViewController: UIViewController {
         view.addConstraintsWithFormat(format: "V:[v0(100)]-15-|", views: collectionView)
     }
     
-    private func toggleMapViewProperties(bool: Bool){
-        mapView.isZoomEnabled = bool
-        mapView.isPitchEnabled = bool
-        mapView.isRotateEnabled = bool
-        mapView.isScrollEnabled = bool
-    }
+//    private func toggleMapViewProperties(bool: Bool){
+//        mapView.isZoomEnabled = bool
+//        mapView.isPitchEnabled = bool
+//        mapView.isRotateEnabled = bool
+//        mapView.isScrollEnabled = bool
+//    }
     
     @objc private func createAnnotation(){
         for songAnnotation in DropSongController.shared.songAnnotations {
             self.mapView.addAnnotation(songAnnotation)
-            self.collectionView.reloadData()
-            
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
         }
     }
     
@@ -116,6 +102,21 @@ class MainViewController: UIViewController {
             
             DispatchQueue.main.async {
                 self.selectCurrentCollectionViewItamOnMapView()
+            }
+        }
+    }
+    
+    @objc private func mapViewTapped(sender: UILongPressGestureRecognizer) {
+        if sender.state == .began{
+            let tappedCoordinates = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
+            let CLLocationFromCoordinates = CLLocation(latitude: tappedCoordinates.latitude, longitude: tappedCoordinates.longitude)
+            let annotaions = self.mapView.annotations
+            self.mapView.removeAnnotations(annotaions)
+            DropSongController.shared.fetchDropSongsWith(location: CLLocationFromCoordinates, radiusInMeters: 10000) { (songAnnotation) in
+                DispatchQueue.main.async {
+                    self.mapView.addAnnotation(songAnnotation)
+                    self.collectionView.reloadData()
+                }
             }
         }
     }
@@ -144,7 +145,7 @@ extension MainViewController: MKMapViewDelegate{
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         if view.annotation is SongAnnotation{
             UIView.animate(withDuration: 0.1) {
-                view.bounds.size = CGSize(width: 30, height: 30)
+                view.frame.size = CGSize(width: 30, height: 30)
             }
         }
     }
@@ -160,8 +161,10 @@ extension MainViewController: MKMapViewDelegate{
                 })
                 annotationView.bounds.size = CGSize(width: 30, height: 30)
                 annotationView.layer.shadowColor = UIColor.gray.cgColor
-                annotationView.layer.shadowOpacity = 0.7
+                annotationView.layer.shadowOpacity = 0.3
                 annotationView.layer.shadowRadius = 5.0
+                annotationView.layer.cornerRadius = annotationView.frame.height / 2
+                annotationView.clipsToBounds = true
                 annotationView.layer.shadowOffset = CGSize(width: 5, height: 5)
                 annotationView.canShowCallout = false
                 annotationView.isEnabled = false
@@ -178,19 +181,20 @@ extension MainViewController: MKMapViewDelegate{
             UIView.animate(withDuration: 0.5, animations: {
                 annotationView.frame = endFrame
             })
+            
+            if annotationView.annotation is MKUserLocation{
+                annotationView.canShowCallout = false
+                annotationView.isEnabled = false
+            }
         }
     }
     
     func centerMapOnLocation(location: CLLocationCoordinate2D){
-        if isLocked {
-            let camera = MKMapCamera(lookingAtCenter: location, fromDistance: 10, pitch: 45, heading: locationManager.heading?.trueHeading ?? 0)
+            let camera = MKMapCamera(lookingAtCenter: location, fromDistance: 10, pitch: 0, heading: locationManager.heading?.trueHeading ?? 0)
             mapView.setCamera(camera, animated: true)
-        }
         
         DropSongController.shared.songAnnotations.removeAll()
-        let userLocation = locationManager.location!
-        let radiusInMeters: CLLocationDistance = 1000
-        DropSongController.shared.fetchDropSongsWith(location: userLocation, radiusInMeters: radiusInMeters)
+//        DropSongController.shared.fetchDropSongsWith(location: userLocation, radiusInMeters: radiusInMeters)
     }
 
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
@@ -199,6 +203,7 @@ extension MainViewController: MKMapViewDelegate{
     
     func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
         collectionView.reloadData()
+//        centerMapOnLocation(location: (locationManager.location?.coordinate)!)
     }
 }
 
@@ -210,28 +215,24 @@ extension MainViewController: CLLocationManagerDelegate{
         } else {
             locationManager.requestWhenInUseAuthorization()
         }
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         self.locationManager.startUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if isLocked {
-            guard let location = self.locationManager.location else { return }
-            centerMapOnLocation(location: location.coordinate)
-            manager.distanceFilter = 10
-        }
+        manager.stopUpdatingLocation()
     }
     
-    func locationManagerShouldDisplayHeadingCalibration(_ manager: CLLocationManager) -> Bool {
-        return true
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        if isLocked{
-            mapView.camera.heading = newHeading.trueHeading
-        }
-        
-    }
+//    func locationManagerShouldDisplayHeadingCalibration(_ manager: CLLocationManager) -> Bool {
+//        return true
+//    }
+//    
+//    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+//        if isLocked{
+//            mapView.camera.heading = newHeading.trueHeading
+//        }
+//        
+//    }
 }
 
 // MARK: - Collection View Delegate

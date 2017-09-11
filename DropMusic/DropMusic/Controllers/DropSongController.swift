@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import CoreGraphics
 
 class DropSongController{
     
@@ -57,12 +58,12 @@ class DropSongController{
         }
     }
     
-    func fetchDropSongsWith(location: CLLocation, radiusInMeters: CLLocationDistance, completion: @escaping (Error?) -> () = { _ in }) {
-        let radiusInKilometers = radiusInMeters / 1000.0
-        let locationPredicate = NSPredicate(format: "distanceToLocation:fromLocation:(%K,%@) < %f", "PostCoordinate", location, radiusInKilometers)
+    func fetchDropSongsWith(location: CLLocation, radiusInMeters: CGFloat, completion: @escaping (SongAnnotation) -> ()) {
+        let locationPredicate = NSPredicate(format: "distanceToLocation:fromLocation:(%K,%@) < %f", "PostCoordinate", location, radiusInMeters)
         cloudKitManager.fetchRecordsWithType(DropSong.DropSongKeys.recordType, predicate: locationPredicate, sortDescriptors: nil, recordFetchedBlock: { (record) in
-            let dropSong = DropSong(cloudKitRecord: record)!
-            self.songAnnotations.append(SongAnnotation(dropSong: dropSong))
+            if let dropSong = DropSong(cloudKitRecord: record){
+                completion(SongAnnotation(dropSong: dropSong))
+            }
         }, completion: nil)
     }
 }

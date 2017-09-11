@@ -43,6 +43,9 @@
 		0FA801CC1DBC2FC900AE6B16 /* DropSong+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA801CB1DBC2FC900AE6B16 /* DropSong+CloudKit.swift */; };
 		0FBD9A8C1DBDCD2500EB9892 /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBD9A8B1DBDCD2500EB9892 /* CloudKitManager.swift */; };
 		0FE1B97F1DB15AF500CD447F /* iTunesSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1B97E1DB15AF500CD447F /* iTunesSearchController.swift */; };
+		693716691F66145200A3348B /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693716681F66145200A3348B /* KDCircularProgress.swift */; };
+		694291C01F649415009BE67B /* InstructionsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691EBED51F596DA60003463B /* InstructionsPageViewController.swift */; };
+		694291C31F65D99B009BE67B /* AppleMusicVerifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694291C21F65D99B009BE67B /* AppleMusicVerifyController.swift */; };
 		69C316A91F50FD800099BAD9 /* DescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C316A81F50FD800099BAD9 /* DescriptionViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +90,8 @@
 		0FBD9A8B1DBDCD2500EB9892 /* CloudKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
 		0FE1B97E1DB15AF500CD447F /* iTunesSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTunesSearchController.swift; sourceTree = "<group>"; };
 		691EBED51F596DA60003463B /* InstructionsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsPageViewController.swift; sourceTree = "<group>"; };
+		693716681F66145200A3348B /* KDCircularProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
+		694291C21F65D99B009BE67B /* AppleMusicVerifyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicVerifyController.swift; sourceTree = "<group>"; };
 		69C316A81F50FD800099BAD9 /* DescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,6 +129,7 @@
 		0F2DBC9E1DAD68CE0084AAD9 /* DropMusic */ = {
 			isa = PBXGroup;
 			children = (
+				694291C11F65D96C009BE67B /* AppleMusicVerify */,
 				691EBEDA1F596E7D0003463B /* CustomViews */,
 				691EBED81F596E390003463B /* Protocols */,
 				691EBED61F596DDE0003463B /* ViewControllers */,
@@ -204,8 +210,17 @@
 			children = (
 				0F772A4D1F303F1500CC2078 /* InfoView.swift */,
 				0F26ADB81F4B72E200210998 /* DescriptionView.swift */,
+				693716681F66145200A3348B /* KDCircularProgress.swift */,
 			);
 			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		694291C11F65D96C009BE67B /* AppleMusicVerify */ = {
+			isa = PBXGroup;
+			children = (
+				694291C21F65D99B009BE67B /* AppleMusicVerifyController.swift */,
+			);
+			path = AppleMusicVerify;
 			sourceTree = "<group>";
 		};
 		69D9D3B71F5258F500E8DA55 /* Controllers */ = {
@@ -344,12 +359,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				693716691F66145200A3348B /* KDCircularProgress.swift in Sources */,
+				694291C01F649415009BE67B /* InstructionsPageViewController.swift in Sources */,
 				0F685A201DAFFD8B001D4247 /* ResultsTableViewController.swift in Sources */,
 				0F1271471DB5CC5800F54D90 /* AlbumController.swift in Sources */,
 				0FBD9A8C1DBDCD2500EB9892 /* CloudKitManager.swift in Sources */,
 				0F2DBCE71DAE5F8A0084AAD9 /* NetworkController.swift in Sources */,
 				0F8260801DB6F26900D9F916 /* DropSongModel.swift in Sources */,
 				0F685A221DAFFDA3001D4247 /* ResultsTableViewCell.swift in Sources */,
+				694291C31F65D99B009BE67B /* AppleMusicVerifyController.swift in Sources */,
 				0F2DBCDC1DADB5910084AAD9 /* AlbumViewController.swift in Sources */,
 				0F81DE9C1F36A7810083FBBB /* SnappingCollectionViewLayout.swift in Sources */,
 				0F772A4E1F303F1500CC2078 /* InfoView.swift in Sources */,
@@ -516,7 +534,7 @@
 				CODE_SIGN_ENTITLEMENTS = DropMusic/DropMusic.entitlements;
 				DEVELOPMENT_TEAM = GQMN9RP4XE;
 				INFOPLIST_FILE = DropMusic/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.AngelContreras.DropMusic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -531,7 +549,7 @@
 				CODE_SIGN_ENTITLEMENTS = DropMusic/DropMusic.entitlements;
 				DEVELOPMENT_TEAM = GQMN9RP4XE;
 				INFOPLIST_FILE = DropMusic/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.AngelContreras.DropMusic;
 				PRODUCT_NAME = "$(TARGET_NAME)";

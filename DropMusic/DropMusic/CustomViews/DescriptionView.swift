@@ -45,7 +45,7 @@ final class DescriptionView: UIView {
         return label
     }()
     
-    private let descriptionTextView: UITextView = {
+    let descriptionTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.font = UIFont.systemFont(ofSize: 14)
@@ -57,6 +57,7 @@ final class DescriptionView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        clipsToBounds = false
         setupImageView()
         setupLabelsAndTextViews()
     }
@@ -94,11 +95,7 @@ final class DescriptionView: UIView {
         songTitleLabel.text = dropSong.song.songName
         artistNameLabel.text = dropSong.song.artistName
         droppedByLabel.text = dropSong.postedBy ?? "Posted by Anonymous"
-        if dropSong.description == "" {
-            descriptionTextView.removeFromSuperview()
-        } else {
-            descriptionTextView.text = dropSong.description
-        }
+        descriptionTextView.text = dropSong.description
         
         ImageController.fetchImage(withString: dropSong.song.imageURL!) { (image) in
             self.albumCoverImageView.image = image
