@@ -47,6 +47,7 @@
 		694291C01F649415009BE67B /* InstructionsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691EBED51F596DA60003463B /* InstructionsPageViewController.swift */; };
 		694291C31F65D99B009BE67B /* AppleMusicVerifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694291C21F65D99B009BE67B /* AppleMusicVerifyController.swift */; };
 		69C316A91F50FD800099BAD9 /* DescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C316A81F50FD800099BAD9 /* DescriptionViewController.swift */; };
+		CEF3FDE91F66691C006A5645 /* MusicPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3FDE81F66691C006A5645 /* MusicPlayerController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +94,7 @@
 		693716681F66145200A3348B /* KDCircularProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
 		694291C21F65D99B009BE67B /* AppleMusicVerifyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicVerifyController.swift; sourceTree = "<group>"; };
 		69C316A81F50FD800099BAD9 /* DescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionViewController.swift; sourceTree = "<group>"; };
+		CEF3FDE81F66691C006A5645 /* MusicPlayerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayerController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +237,7 @@
 				0F2DBD0B1DAEAA5D0084AAD9 /* ImageController.swift */,
 				0F1271461DB5CC5800F54D90 /* AlbumController.swift */,
 				69C316A81F50FD800099BAD9 /* DescriptionViewController.swift */,
+				CEF3FDE81F66691C006A5645 /* MusicPlayerController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -393,6 +396,7 @@
 				0F8260561DB68C3200D9F916 /* MapProtocol.swift in Sources */,
 				0F772A511F30458000CC2078 /* Extensions.swift in Sources */,
 				69C316A91F50FD800099BAD9 /* DescriptionViewController.swift in Sources */,
+				CEF3FDE91F66691C006A5645 /* MusicPlayerController.swift in Sources */,
 				0F81DE9A1F3681770083FBBB /* BaseCell.swift in Sources */,
 				0F772A531F304E7A00CC2078 /* InfoViewController.swift in Sources */,
 			);
