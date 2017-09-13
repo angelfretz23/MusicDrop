@@ -47,6 +47,7 @@
 		694291C01F649415009BE67B /* InstructionsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691EBED51F596DA60003463B /* InstructionsPageViewController.swift */; };
 		694291C31F65D99B009BE67B /* AppleMusicVerifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694291C21F65D99B009BE67B /* AppleMusicVerifyController.swift */; };
 		69C316A91F50FD800099BAD9 /* DescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C316A81F50FD800099BAD9 /* DescriptionViewController.swift */; };
+		69CEDBFF1F689B98005B5585 /* MainViewController+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEDBFE1F689B98005B5585 /* MainViewController+CollectionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +94,7 @@
 		693716681F66145200A3348B /* KDCircularProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
 		694291C21F65D99B009BE67B /* AppleMusicVerifyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicVerifyController.swift; sourceTree = "<group>"; };
 		69C316A81F50FD800099BAD9 /* DescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionViewController.swift; sourceTree = "<group>"; };
+		69CEDBFE1F689B98005B5585 /* MainViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+CollectionView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				0F3DD1241DB52CF300E5224B /* MainViewController.swift */,
+				69CEDBFE1F689B98005B5585 /* MainViewController+CollectionView.swift */,
 				0F2DBCDE1DAE488B0084AAD9 /* TopChartsViewController.swift */,
 				0F685A1F1DAFFD8B001D4247 /* ResultsTableViewController.swift */,
 				0F2DBCDB1DADB5910084AAD9 /* AlbumViewController.swift */,
@@ -367,6 +370,7 @@
 				0F2DBCE71DAE5F8A0084AAD9 /* NetworkController.swift in Sources */,
 				0F8260801DB6F26900D9F916 /* DropSongModel.swift in Sources */,
 				0F685A221DAFFDA3001D4247 /* ResultsTableViewCell.swift in Sources */,
+				69CEDBFF1F689B98005B5585 /* MainViewController+CollectionView.swift in Sources */,
 				694291C31F65D99B009BE67B /* AppleMusicVerifyController.swift in Sources */,
 				0F2DBCDC1DADB5910084AAD9 /* AlbumViewController.swift in Sources */,
 				0F81DE9C1F36A7810083FBBB /* SnappingCollectionViewLayout.swift in Sources */,

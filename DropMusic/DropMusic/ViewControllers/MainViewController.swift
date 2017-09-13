@@ -75,7 +75,7 @@ class MainViewController: UIViewController {
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         view.addConstraintsWithFormat(format: "H:|[v0]|", views: collectionView)
-        view.addConstraintsWithFormat(format: "V:[v0(100)]-15-|", views: collectionView)
+        view.addConstraintsWithFormat(format: "V:[v0(136)]-18-|", views: collectionView)
     }
     
 //    private func toggleMapViewProperties(bool: Bool){
@@ -194,7 +194,6 @@ extension MainViewController: MKMapViewDelegate{
             mapView.setCamera(camera, animated: true)
         
         DropSongController.shared.songAnnotations.removeAll()
-//        DropSongController.shared.fetchDropSongsWith(location: userLocation, radiusInMeters: radiusInMeters)
     }
 
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
@@ -203,7 +202,6 @@ extension MainViewController: MKMapViewDelegate{
     
     func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
         collectionView.reloadData()
-//        centerMapOnLocation(location: (locationManager.location?.coordinate)!)
     }
 }
 
@@ -222,54 +220,6 @@ extension MainViewController: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         manager.stopUpdatingLocation()
     }
-    
-//    func locationManagerShouldDisplayHeadingCalibration(_ manager: CLLocationManager) -> Bool {
-//        return true
-//    }
-//    
-//    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-//        if isLocked{
-//            mapView.camera.heading = newHeading.trueHeading
-//        }
-//        
-//    }
 }
 
-// MARK: - Collection View Delegate
-extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! DropSongCollectionViewCell
-        cell.backgroundColor = UIColor(red: 67/255, green: 67/255, blue: 67/255, alpha: 1)
-        cell.layer.borderColor = UIColor.white.cgColor
-        cell.layer.borderWidth = 1
-        let songAnnotation = songAnnotations[indexPath.row]
-        cell.songAnnotation = songAnnotation
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mapView.annotations.filter{ ($0 is MKUserLocation) == false}.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = view.frame.width - 30
-        let height = collectionView.frame.height - 20
-        return CGSize(width: width, height: height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! DropSongCollectionViewCell
-        guard let dropSong = cell.songAnnotation?.dropSong else { return }
-        descriptionViewController.showDetailsWith(dropSong: dropSong)
-    }
-}
 
-extension MainViewController: UIScrollViewDelegate{
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let x = scrollView.contentOffset.x + 15 // adding inset
-        guard let indexPath = collectionView.indexPathForItem(at: CGPoint(x: x, y: 10)), let cell = collectionView.cellForItem(at: indexPath) as? DropSongCollectionViewCell else { return }
-        if let selectedAnnotation = cell.songAnnotation {
-            self.mapView.selectAnnotation(selectedAnnotation, animated: true)
-        }
-    }
-}
