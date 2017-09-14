@@ -82,7 +82,6 @@ class DropSongViewController: UIViewController {
         super.viewDidLoad()
         setupSubViews()
         loadMapView()
-        descriptionTextView.delegate = self
         mapView.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(notification:)), name: .UIKeyboardDidShow, object: nil)
     }
@@ -123,8 +122,8 @@ class DropSongViewController: UIViewController {
     
     @IBAction func doneBarButtonPressed(_ sender: UIBarButtonItem) {
         guard let location = locationManager.location else { return }
-        let dropsong = DropSong(postCoordinates: location, song: self.song!, description: descriptionTextView.text)
-        DropSongController.shared.post(dropSong: dropsong)
+        let dropSong = DropSong(postCoordinates: location, song: self.song!, postedBy: UsernameController.shared.getUserName(), description: descriptionTextView.text)
+        DropSongController.shared.post(dropSong: dropSong)
         let deselectNotification = Notification.Name("delectAllAnnotations")
         NotificationCenter.default.post(name: deselectNotification, object: MainViewController.self)
         self.navigationController?.dismiss(animated: true, completion: nil)
@@ -228,10 +227,6 @@ extension DropSongViewController: MKMapViewDelegate{
         }
         return MKAnnotationView()
     }
-}
-
-extension DropSongViewController: UITextViewDelegate{
-    
 }
 
 extension DropSongViewController: CLLocationManagerDelegate{

@@ -24,11 +24,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Display View Controller that handles apple music subscription
         }
 
-        let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateInitialViewController()
-        window?.rootViewController = vc
+        let userDefualts = UserDefaults.standard
+        let launchedBefore = userDefualts.bool(forKey: "lauchedBefore")
         
+        if launchedBefore {
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+            window?.rootViewController = vc
+        } else {
+            let vc = InstructionsPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+            window?.rootViewController = vc
+        }
+        
+        userDefualts.synchronize()
 
-        DropSongController.shared.fetchDropSongs()
         return true
     }
 

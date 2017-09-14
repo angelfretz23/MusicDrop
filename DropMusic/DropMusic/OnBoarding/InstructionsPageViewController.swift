@@ -8,32 +8,11 @@
 
 import UIKit
 
-class RedViewController: UIViewController{
-    
-    let imageView: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
-        iv.backgroundColor = .red
-        return iv
-    }()
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupSubViews()
-    }
-    
-    private func setupSubViews(){
-        view.addSubview(imageView)
-        view.addConstraintsWithFormat(format: "H:|[v0]|", views: imageView)
-        view.addConstraintsWithFormat(format: "V:|[v0]|", views: imageView)
-    }
-}
-class BlueViewController: UIViewController{}
-
 class InstructionsPageViewController: UIPageViewController {
 
     override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : Any]? = nil) {
         super.init(transitionStyle: style, navigationOrientation: navigationOrientation, options: options)
-        setViewControllers([redVC], direction: .forward, animated: true, completion: nil)
+        setViewControllers([firstScreenVC], direction: .forward, animated: true, completion: nil)
         dataSource = self
     }
     
@@ -41,17 +20,23 @@ class InstructionsPageViewController: UIPageViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let redVC: RedViewController  = {
-        let vc = RedViewController()
+    let firstScreenVC: FirstScreenViewController  = {
+        let vc = FirstScreenViewController()
         vc.view.frame = UIScreen.main.bounds
         vc.view.backgroundColor = .white
         return vc
     }()
     
-    let blueVC: BlueViewController = {
-        let vc = BlueViewController()
+    let secondScreenVC: SecondScreenViewController = {
+        let vc = SecondScreenViewController()
         vc.view.frame = UIScreen.main.bounds
         vc.view.backgroundColor = .blue
+        return vc
+    }()
+    
+    let thirdScreenVC: ThirdScreenViewController = {
+        let vc = ThirdScreenViewController()
+        vc.view.frame = UIScreen.main.bounds
         return vc
     }()
     
@@ -77,29 +62,35 @@ class InstructionsPageViewController: UIPageViewController {
             view.bringSubview(toFront: pageControl!)
         }
     }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 }
 
 extension InstructionsPageViewController: UIPageViewControllerDataSource{
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        if viewController is RedViewController{
+        if viewController is FirstScreenViewController{
             return nil
-        } else if viewController is BlueViewController {
-            return self.redVC
+        } else if viewController is SecondScreenViewController {
+            return firstScreenVC
+        } else if viewController is ThirdScreenViewController {
+            return secondScreenVC
         }
         return nil
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        if viewController is RedViewController{
-            return blueVC
-        } else if viewController is BlueViewController {
-            return nil
+        if viewController is FirstScreenViewController{
+            return secondScreenVC
+        } else if viewController is SecondScreenViewController {
+            return thirdScreenVC
         }
         return nil
     }
     
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        return 2
+        return 3
     }
     
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {

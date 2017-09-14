@@ -27,6 +27,11 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return mapView.annotations.filter{ ($0 is MKUserLocation) == false}.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as? DropSongCollectionViewCell
+        cell?.play()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = view.frame.width - 30
         let height: CGFloat = 136

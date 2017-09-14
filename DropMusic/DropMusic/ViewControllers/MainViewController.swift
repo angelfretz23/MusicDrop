@@ -78,13 +78,6 @@ class MainViewController: UIViewController {
         view.addConstraintsWithFormat(format: "V:[v0(136)]-18-|", views: collectionView)
     }
     
-//    private func toggleMapViewProperties(bool: Bool){
-//        mapView.isZoomEnabled = bool
-//        mapView.isPitchEnabled = bool
-//        mapView.isRotateEnabled = bool
-//        mapView.isScrollEnabled = bool
-//    }
-    
     @objc private func createAnnotation(){
         for songAnnotation in DropSongController.shared.songAnnotations {
             self.mapView.addAnnotation(songAnnotation)
@@ -112,6 +105,8 @@ class MainViewController: UIViewController {
             let CLLocationFromCoordinates = CLLocation(latitude: tappedCoordinates.latitude, longitude: tappedCoordinates.longitude)
             let annotaions = self.mapView.annotations
             self.mapView.removeAnnotations(annotaions)
+            _ = CloudKitManager()
+            centerMapOnLocation(location: CLLocationCoordinate2D(latitude: tappedCoordinates.latitude, longitude: tappedCoordinates.longitude))
             DropSongController.shared.fetchDropSongsWith(location: CLLocationFromCoordinates, radiusInMeters: 10000) { (songAnnotation) in
                 DispatchQueue.main.async {
                     self.mapView.addAnnotation(songAnnotation)
@@ -190,7 +185,7 @@ extension MainViewController: MKMapViewDelegate{
     }
     
     func centerMapOnLocation(location: CLLocationCoordinate2D){
-            let camera = MKMapCamera(lookingAtCenter: location, fromDistance: 10, pitch: 0, heading: locationManager.heading?.trueHeading ?? 0)
+            let camera = MKMapCamera(lookingAtCenter: location, fromDistance: 500, pitch: 0, heading: locationManager.heading?.trueHeading ?? 0)
             mapView.setCamera(camera, animated: true)
         
         DropSongController.shared.songAnnotations.removeAll()

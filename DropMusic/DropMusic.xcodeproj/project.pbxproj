@@ -48,6 +48,8 @@
 		694291C31F65D99B009BE67B /* AppleMusicVerifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694291C21F65D99B009BE67B /* AppleMusicVerifyController.swift */; };
 		69C316A91F50FD800099BAD9 /* DescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C316A81F50FD800099BAD9 /* DescriptionViewController.swift */; };
 		69CEDBFF1F689B98005B5585 /* MainViewController+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEDBFE1F689B98005B5585 /* MainViewController+CollectionView.swift */; };
+		69CEDC011F69E893005B5585 /* ScreenClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEDC001F69E893005B5585 /* ScreenClasses.swift */; };
+		69CEDC031F69FE13005B5585 /* UsernameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEDC021F69FE13005B5585 /* UsernameController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,6 +97,8 @@
 		694291C21F65D99B009BE67B /* AppleMusicVerifyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicVerifyController.swift; sourceTree = "<group>"; };
 		69C316A81F50FD800099BAD9 /* DescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionViewController.swift; sourceTree = "<group>"; };
 		69CEDBFE1F689B98005B5585 /* MainViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+CollectionView.swift"; sourceTree = "<group>"; };
+		69CEDC001F69E893005B5585 /* ScreenClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenClasses.swift; sourceTree = "<group>"; };
+		69CEDC021F69FE13005B5585 /* UsernameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +242,7 @@
 				0F2DBD0B1DAEAA5D0084AAD9 /* ImageController.swift */,
 				0F1271461DB5CC5800F54D90 /* AlbumController.swift */,
 				69C316A81F50FD800099BAD9 /* DescriptionViewController.swift */,
+				69CEDC021F69FE13005B5585 /* UsernameController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -277,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				691EBED51F596DA60003463B /* InstructionsPageViewController.swift */,
+				69CEDC001F69E893005B5585 /* ScreenClasses.swift */,
 			);
 			path = OnBoarding;
 			sourceTree = "<group>";
@@ -366,6 +372,7 @@
 				694291C01F649415009BE67B /* InstructionsPageViewController.swift in Sources */,
 				0F685A201DAFFD8B001D4247 /* ResultsTableViewController.swift in Sources */,
 				0F1271471DB5CC5800F54D90 /* AlbumController.swift in Sources */,
+				69CEDC011F69E893005B5585 /* ScreenClasses.swift in Sources */,
 				0FBD9A8C1DBDCD2500EB9892 /* CloudKitManager.swift in Sources */,
 				0F2DBCE71DAE5F8A0084AAD9 /* NetworkController.swift in Sources */,
 				0F8260801DB6F26900D9F916 /* DropSongModel.swift in Sources */,
@@ -390,6 +397,7 @@
 				0F2DBCB51DAD77C10084AAD9 /* SongModel.swift in Sources */,
 				0F2DBD0C1DAEAA5D0084AAD9 /* ImageController.swift in Sources */,
 				0F2DBCDA1DAD9ABE0084AAD9 /* AlbumModel.swift in Sources */,
+				69CEDC031F69FE13005B5585 /* UsernameController.swift in Sources */,
 				0F2472B81DB7EC6000F3C0F2 /* DropSongController.swift in Sources */,
 				0F2DBCA01DAD68CE0084AAD9 /* AppDelegate.swift in Sources */,
 				0F2DBCB81DAD79040084AAD9 /* StoreProtocol.swift in Sources */,

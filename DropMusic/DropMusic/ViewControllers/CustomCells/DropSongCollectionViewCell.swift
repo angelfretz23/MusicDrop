@@ -7,14 +7,17 @@
 //
 
 import UIKit
+import MediaPlayer
 
 class DropSongCollectionViewCell: BaseCell{
     
-    let albumImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        return iv
+    lazy var musicPlayer = MPMusicPlayerController()
+    
+    let albumCoverButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(play), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     let songTitleLabel: UILabel = {
@@ -44,7 +47,7 @@ class DropSongCollectionViewCell: BaseCell{
     var songAnnotation: SongAnnotation?{
         didSet{
             guard let dropSong = songAnnotation?.dropSong else { return }
-            albumImageView.image = nil
+            self.albumCoverButton.setImage(nil, for: .normal)
             updateWith(dropSong: dropSong)
         }
     }
@@ -64,22 +67,22 @@ class DropSongCollectionViewCell: BaseCell{
     }()
     
     override func setupViews() {
-        addSubview(albumImageView)
+        addSubview(albumCoverButton)
         addSubview(songTitleLabel)
         addSubview(artistTitleLabel)
         addSubview(droppedByTitleLabel)
         addSubview(descriptionTextView)
         
         // MARK: - Horizontal Constraints
-        addConstraintsWithFormat(format: "H:|[v0(80)]-[v1]-|", views: albumImageView, songTitleLabel)
+        addConstraintsWithFormat(format: "H:|[v0(80)]-[v1]-|", views: albumCoverButton, songTitleLabel)
         addConstraintsWithFormat(format: "H:[v0(v1)]-|", views: artistTitleLabel, songTitleLabel)
         addConstraintsWithFormat(format: "H:[v0(v1)]-|", views: droppedByTitleLabel, artistTitleLabel)
         addConstraintsWithFormat(format: "H:|-[v0]-|", views: descriptionTextView)
         
         // MARK: - Vertical Constraints
-        addConstraintsWithFormat(format: "V:|[v0(80)]", views: albumImageView)
+        addConstraintsWithFormat(format: "V:|[v0(80)]", views: albumCoverButton)
         addConstraintsWithFormat(format: "V:|-[v0(15)]-4-[v1(15)]-4-[v2(15)]", views: songTitleLabel, artistTitleLabel, droppedByTitleLabel)
-        addConstraintsWithFormat(format: "V:[v0][v1]|", views: albumImageView, descriptionTextView)
+        addConstraintsWithFormat(format: "V:[v0][v1]|", views: albumCoverButton, descriptionTextView)
         
         // Description View Height Constraint
 //        descriptionViewHeightConstraint = NSLayoutConstraint(item: descriptionTextView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40)
@@ -99,7 +102,16 @@ class DropSongCollectionViewCell: BaseCell{
         
 
         ImageController.fetchImage(withString: dropSong.song.imageURL!) { (image) in
-            self.albumImageView.image = image
+            self.albumCoverButton.setImage(image, for: .normal)
+        }
+    }
+    
+    @objc func play() {
+        let storeID = songAnnotation?.dropSong?.song.storeID
+        if let id = storeID {
+            musicPlayer.setQueueWithStoreIDs([id])
+            musicPlayer.prepareToPlay()
+            musicPlayer.play()
         }
     }
 }
