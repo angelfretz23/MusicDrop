@@ -38,6 +38,7 @@ class ItunesSearchControllers{
             guard let jsonDictionary = (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)) as? [String: Any],
                 let resultsDictinary = jsonDictionary["results"] as? [[String:Any]] else { completion(nil); return }
             
+            print(jsonDictionary)
             let songs = resultsDictinary.flatMap{ Song(dictionaryItunesSearch: $0) }
             
             DispatchQueue.main.async {

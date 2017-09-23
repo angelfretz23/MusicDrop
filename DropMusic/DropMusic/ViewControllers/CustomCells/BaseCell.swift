@@ -12,6 +12,7 @@ class BaseCell:UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
+        setupShadow()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -20,5 +21,9 @@ class BaseCell:UICollectionViewCell {
     
     func setupViews(){
         
+    }
+    
+    func setupShadow() {
+ 
     }
 }

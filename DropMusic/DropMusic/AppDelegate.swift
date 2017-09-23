@@ -23,18 +23,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppleMusicVerifyController.shared.appleMusicCheckIfDeviceCanPlayback { (bool) in
             // Display View Controller that handles apple music subscription
         }
-
+        
         let userDefualts = UserDefaults.standard
         let launchedBefore = userDefualts.bool(forKey: "lauchedBefore")
         
-        if launchedBefore {
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
-            window?.rootViewController = vc
-        } else {
-            let vc = InstructionsPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
-            window?.rootViewController = vc
-        }
+//        if launchedBefore {
+//            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+//            window?.rootViewController = vc
+//        } else {
+//            let vc = InstructionsPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+//            window?.rootViewController = vc
+//        }
         
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() as! UINavigationController
+        vc.navigationBar.shadowImage = UIImage()
+        vc.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        vc.navigationBar.backgroundColor = UIColor(red: 67/255, green: 67/255, blue: 67/255, alpha: 1.0)
+        
+        let statusUIView = UIView()
+        statusUIView.backgroundColor = UIColor(red: 67/255, green: 67/255, blue: 67/255, alpha: 1.0)
+        vc.view.addSubview(statusUIView)
+        
+        vc.view.addConstraintsWithFormat(format: "H:|[v0]|", views: statusUIView)
+        vc.view.addConstraintsWithFormat(format: "V:|[v0(20)]", views: statusUIView)
+        
+        window?.rootViewController = vc
         userDefualts.synchronize()
 
         return true

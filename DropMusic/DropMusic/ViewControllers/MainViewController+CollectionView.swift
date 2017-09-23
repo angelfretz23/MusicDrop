@@ -18,6 +18,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.layer.borderWidth = 1
         cell.layer.cornerRadius = 20
         cell.clipsToBounds = true
+//        cell.layer.masksToBounds = false
         let songAnnotation = songAnnotations[indexPath.row]
         cell.songAnnotation = songAnnotation
         return cell
@@ -30,6 +31,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? DropSongCollectionViewCell
         cell?.play()
+        musicPlayerView.albumCoverView.image = cell?.albumCoverImage.image
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

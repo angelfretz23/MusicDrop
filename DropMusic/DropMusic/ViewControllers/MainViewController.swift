@@ -12,6 +12,7 @@ import MapKit
 class MainViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var stackView: UIStackView!
     
     var locationManager = CLLocationManager()
     var isLocked = false
@@ -20,6 +21,13 @@ class MainViewController: UIViewController {
     var songAnnotations: [SongAnnotation]{
         return mapView.annotations.filter{ ($0 is MKUserLocation) == false} as! [SongAnnotation]
     }
+    
+    lazy var musicPlayerView: MusicPlayerView = {
+        let mPV = MusicPlayerView(frame: .zero)
+        mPV.backgroundColor = UIColor(red: 67/255, green: 67/255, blue: 67/255, alpha: 1.0)
+        mPV.autoresizesSubviews = true
+        return mPV
+    }()
     
     lazy var collectionView: UICollectionView = {
         let layout = SnappingCollectionViewLayout()
@@ -36,6 +44,9 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupUpMusicPlayer()
+        
         mapView.delegate = self
         mapView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(mapViewTapped(sender:))))
         locationManager.delegate = self
@@ -79,6 +90,7 @@ class MainViewController: UIViewController {
     }
     
     @objc private func createAnnotation(){
+        collectionView.isHidden = (DropSongController.shared.songAnnotations.count == 0)
         for songAnnotation in DropSongController.shared.songAnnotations {
             self.mapView.addAnnotation(songAnnotation)
             DispatchQueue.main.async {
@@ -100,6 +112,7 @@ class MainViewController: UIViewController {
     }
     
     @objc private func mapViewTapped(sender: UILongPressGestureRecognizer) {
+        
         if sender.state == .began{
             let tappedCoordinates = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
             let CLLocationFromCoordinates = CLLocation(latitude: tappedCoordinates.latitude, longitude: tappedCoordinates.longitude)
@@ -107,9 +120,10 @@ class MainViewController: UIViewController {
             self.mapView.removeAnnotations(annotaions)
             _ = CloudKitManager()
             centerMapOnLocation(location: CLLocationCoordinate2D(latitude: tappedCoordinates.latitude, longitude: tappedCoordinates.longitude))
-            DropSongController.shared.fetchDropSongsWith(location: CLLocationFromCoordinates, radiusInMeters: 10000) { (songAnnotation) in
+            DropSongController.shared.fetchDropSongsWith(location: CLLocationFromCoordinates, radiusInMeters: 1) { (songAnnotation) in
                 DispatchQueue.main.async {
                     self.mapView.addAnnotation(songAnnotation)
+                    self.collectionView.isHidden = (self.mapView.annotations.count == 0)
                     self.collectionView.reloadData()
                 }
             }
@@ -125,6 +139,27 @@ class MainViewController: UIViewController {
             }
         }
     }
+    
+    private func setupUpMusicPlayer() {
+        stackView.insertArrangedSubview(musicPlayerView, at: 0)
+        stackView.addConstraintsWithFormat(format: "H:|[v0]|", views: musicPlayerView)
+        stackView.addConstraintsWithFormat(format: "V:|[v0(40)]|", views: musicPlayerView)
+    }
+    
+    
+    var musicPlayerViewToggle: Bool = true
+    
+    @objc private func toggleMusicPlayerView(){
+        UIView.animate(withDuration: 0.5) {
+            if let window = UIApplication.shared.keyWindow {
+//                self.musicPlayerViewToggle ? (self.musicPlayerView.frame.size = CGSize(width: window.bounds.width, height: 0)) : (self.musicPlayerView.frame.size = CGSize(width: window.bounds.width, height: 50))
+                self.musicPlayerViewToggle ? (self.musicPlayerView.frame.origin = CGPoint.zero) : (self.musicPlayerView.frame.origin = self.view.frame.origin)
+//                self.musicPlayerViewToggle ? (self.musicPlayerView.alpha = 0) : (self.musicPlayerView.alpha = 1)
+                self.musicPlayerViewToggle = !self.musicPlayerViewToggle
+            }
+        }
+    }
+    
 }
 
 extension MainViewController: MKMapViewDelegate{
@@ -185,7 +220,7 @@ extension MainViewController: MKMapViewDelegate{
     }
     
     func centerMapOnLocation(location: CLLocationCoordinate2D){
-            let camera = MKMapCamera(lookingAtCenter: location, fromDistance: 500, pitch: 0, heading: locationManager.heading?.trueHeading ?? 0)
+            let camera = MKMapCamera(lookingAtCenter: location, fromDistance: 1000, pitch: 0, heading: 0)
             mapView.setCamera(camera, animated: true)
         
         DropSongController.shared.songAnnotations.removeAll()

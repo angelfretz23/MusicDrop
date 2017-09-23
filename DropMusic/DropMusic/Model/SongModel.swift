@@ -114,7 +114,9 @@ class Song: StoreProtocol {
             let albumName = dictionaryItunesSearch["collectionName"] as? String,
             let genre = dictionaryItunesSearch["primaryGenreName"] as? String,
             let largeImageURL = dictionaryItunesSearch["artworkUrl100"] as? String,
-            let collectionID = dictionaryItunesSearch["collectionId"] as? Double else { return nil }
+            let collectionID = dictionaryItunesSearch["collectionId"] as? Double,
+            let isStreamableValue = dictionaryItunesSearch["isStreamable"] as? Int,
+            isStreamableValue != 0 else { return nil }
         
         self.songName = songName
         self.artistName = artistSong
