@@ -32,10 +32,15 @@ extension UIImage{
 
 class ImageController{
     
-    static private let cache = NSCache<NSString, UIImage>()
+    static var cache: NSCache<NSString, UIImage> = {
+       var cache = NSCache<NSString, UIImage>()
+        cache.countLimit = 100
+        cache.totalCostLimit = 0
+        return cache
+    }()
     
-    static func fetchImage(withString url: String, with size: Double = 500, completion: @escaping (UIImage?) -> Void){
-        if var imageFromCache = cache.object(forKey: NSString(string: url)) {
+    static func fetchImage(withString url: String, with size: Double = 500, id: String? = nil, completion: @escaping (UIImage?) -> Void){
+        if var imageFromCache = cache.object(forKey: NSString(string: id ?? url)) {
             if size != 500 {
                 imageFromCache = imageWith(image: imageFromCache, scaleToSize: CGSize(width: size, height: size))!
             }
@@ -50,7 +55,7 @@ class ImageController{
                 guard let data = data else {completion(nil); return }
                 if let image = UIImage(data: data){
                     let resizedImage = imageWith(image: UIImage(data: data), scaleToSize: CGSize(width: size, height: size))
-                    self.cache.setObject(image, forKey: urlNSString)
+                    self.cache.setObject(image, forKey: NSString(string: id ?? String(urlNSString)))
                     DispatchQueue.main.async {
                         completion(resizedImage)
                     }

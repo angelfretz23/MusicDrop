@@ -34,7 +34,7 @@ class AlbumController{
             let albumDictionary = resultsArrayofDictionaries.removeFirst()
             guard let album = Album(dictionary: albumDictionary) else { completion(nil); return }
             
-            let songs = resultsArrayofDictionaries.flatMap{Song(dictionaryItunesSearch: $0)}
+            let songs = resultsArrayofDictionaries.compactMap{Song(dictionaryItunesSearch: $0)}
             album.songs = songs
             self.album = album
             DispatchQueue.main.async {

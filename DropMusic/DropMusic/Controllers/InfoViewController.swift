@@ -50,7 +50,7 @@ class InfoViewController: NSObject{
         }
     }
     
-    final func dismiss(){
+    @objc final func dismiss(){
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
             self.blackView.alpha = 0
             if let window = UIApplication.shared.keyWindow{
@@ -62,7 +62,7 @@ class InfoViewController: NSObject{
         }
     }
     
-    final func dismissWith(sender: UIPanGestureRecognizer){
+    @objc final func dismissWith(sender: UIPanGestureRecognizer){
         guard let superView = infoView.superview else { return }
         
         let translation = sender.translation(in: superView)

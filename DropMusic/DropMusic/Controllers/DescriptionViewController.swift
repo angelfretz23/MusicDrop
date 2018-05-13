@@ -51,7 +51,7 @@ final class DescriptionViewController: NSObject {
         }
     }
     
-    func dismiss() {
+    @objc func dismiss() {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
             self.blackView.alpha = 0
             if let window = UIApplication.shared.keyWindow{
@@ -62,7 +62,7 @@ final class DescriptionViewController: NSObject {
         }
     }
     
-    func dismissWith(sender: UIPanGestureRecognizer){
+    @objc func dismissWith(sender: UIPanGestureRecognizer){
         guard let superView = descriptionView.superview else { return }
         
         let translation = sender.translation(in: superView)

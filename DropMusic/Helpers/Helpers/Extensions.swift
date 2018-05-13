@@ -29,7 +29,27 @@ extension UIView{
 }
 
 extension UIColor{
-    var projectBlue: UIColor{
+    class var projectBlue: UIColor{
         return UIColor(red: 67/255, green: 191/255, blue: 254/255, alpha: 0.90)
     }
+    
+    class var projectBlack: UIColor {
+        return UIColor(red: 67/255, green: 67/255, blue: 67/255, alpha: 1.0)
+    }
+}
+
+public extension UIViewController {
+    
+    /// If this viewController pertences to a PulleyViewController, return it.
+    public var pulleyViewController: PulleyViewController? {
+        var parentVC = parent
+        while parentVC != nil {
+            if let pulleyViewController = parentVC as? PulleyViewController {
+                return pulleyViewController
+            }
+            parentVC = parentVC?.parent
+        }
+        return nil
+    }
+    
 }

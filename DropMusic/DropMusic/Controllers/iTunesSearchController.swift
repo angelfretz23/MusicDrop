@@ -30,7 +30,7 @@ class ItunesSearchControllers{
                 let responseDataString = String.init(data: data, encoding: String.Encoding.utf8) else { completion(nil); return }
             
             if error != nil {
-                print(error?.localizedDescription)
+                print(error?.localizedDescription ?? "")
             } else if responseDataString.contains("error") {
                 print("Error: \(responseDataString)")
             }
@@ -39,7 +39,7 @@ class ItunesSearchControllers{
                 let resultsDictinary = jsonDictionary["results"] as? [[String:Any]] else { completion(nil); return }
             
             print(jsonDictionary)
-            let songs = resultsDictinary.flatMap{ Song(dictionaryItunesSearch: $0) }
+            let songs = resultsDictinary.compactMap{ Song(dictionaryItunesSearch: $0) }
             
             DispatchQueue.main.async {
                 self.songs = songs
@@ -63,7 +63,7 @@ class ItunesSearchControllers{
         }
         
         for song in songs{
-            print(song.imageURL)
+            print(song.imageURL ?? "")
             let albumFromSong = Album(withSong: song) as StoreProtocol
             if !arrayOfItuneObjects.contains(where: {$0 == albumFromSong}) {
                 arrayOfItuneObjects.append(albumFromSong)

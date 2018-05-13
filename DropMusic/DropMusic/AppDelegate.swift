@@ -35,17 +35,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            window?.rootViewController = vc
 //        }
         
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() as! UINavigationController
-        vc.navigationBar.shadowImage = UIImage()
-        vc.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        vc.navigationBar.backgroundColor = UIColor(red: 67/255, green: 67/255, blue: 67/255, alpha: 1.0)
-        
-        let statusUIView = UIView()
-        statusUIView.backgroundColor = UIColor(red: 67/255, green: 67/255, blue: 67/255, alpha: 1.0)
-        vc.view.addSubview(statusUIView)
-        
-        vc.view.addConstraintsWithFormat(format: "H:|[v0]|", views: statusUIView)
-        vc.view.addConstraintsWithFormat(format: "V:|[v0(20)]", views: statusUIView)
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+//        vc.navigationBar.shadowImage = UIImage()
+//        vc.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        vc.navigationBar.backgroundColor = .clear
+//        vc.navigationBar.tintColor = UIColor.projectBlue
         
         window?.rootViewController = vc
         userDefualts.synchronize()

@@ -15,12 +15,7 @@ class DropSongController{
     static let shared = DropSongController()
     let cloudKitManager = CloudKitManager()
     
-    var songAnnotations:[SongAnnotation] = []{
-        didSet{
-            let notificationName = Notification.Name(rawValue: "newDropSongAdded")
-            NotificationCenter.default.post(name: notificationName, object: nil)
-        }
-    }
+    var songAnnotations:[SongAnnotation] = []
     
     func post(dropSong: DropSong, completion: @escaping ((Error?) -> Void) = { _ in }){
         let record = dropSong.cloudKitRecord
@@ -33,7 +28,7 @@ class DropSongController{
             }
             completion(error)
         }
-        let songAnnotation = SongAnnotation(dropSong: dropSong)
+        let songAnnotation = SongAnnotation.songAnnotation(fromDropSong: dropSong)
         self.songAnnotations.append(songAnnotation)
     }
 
@@ -48,11 +43,9 @@ class DropSongController{
                 return
             }
             guard let records = records else { return }
+            let dropSongs = records.compactMap({ DropSong(cloudKitRecord: $0)})
             DispatchQueue.main.async {
-                let dropSongs = records.flatMap({ DropSong(cloudKitRecord: $0)})
-                dropSongs.forEach({ (dropSong) in
-                    self.songAnnotations.append(SongAnnotation(dropSong: dropSong))
-                })
+                self.songAnnotations = SongAnnotation.songAnnotations(fromDropSongs: dropSongs)
             }
             completion(error)
         }
@@ -62,7 +55,13 @@ class DropSongController{
         let locationPredicate = NSPredicate(format: "distanceToLocation:fromLocation:(%K,%@) < %f", "PostCoordinate", location, radiusInMeters)
         cloudKitManager.fetchRecordsWithType(DropSong.DropSongKeys.recordType, predicate: locationPredicate, sortDescriptors: nil, recordFetchedBlock: { (record) in
             if let dropSong = DropSong(cloudKitRecord: record){
-                completion(SongAnnotation(dropSong: dropSong))
+                let songAnnotation = SongAnnotation.songAnnotation(fromDropSong: dropSong)
+                DispatchQueue.main.async {
+                    if !self.songAnnotations.contains(songAnnotation) {
+                        self.songAnnotations.append(songAnnotation)
+                    }
+                    completion(songAnnotation)
+                }
             }
         }, completion: nil)
     }

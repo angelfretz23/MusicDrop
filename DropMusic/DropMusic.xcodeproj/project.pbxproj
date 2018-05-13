@@ -43,13 +43,18 @@
 		0FA801CC1DBC2FC900AE6B16 /* DropSong+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA801CB1DBC2FC900AE6B16 /* DropSong+CloudKit.swift */; };
 		0FBD9A8C1DBDCD2500EB9892 /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBD9A8B1DBDCD2500EB9892 /* CloudKitManager.swift */; };
 		0FE1B97F1DB15AF500CD447F /* iTunesSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE1B97E1DB15AF500CD447F /* iTunesSearchController.swift */; };
+		0FF3630C20A6AA2000EB2E17 /* PulleyPassthroughScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3630920A6AA1F00EB2E17 /* PulleyPassthroughScrollView.swift */; };
+		0FF3630D20A6AA2000EB2E17 /* UIView+constrainToParent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3630A20A6AA1F00EB2E17 /* UIView+constrainToParent.swift */; };
+		0FF3630E20A6AA2000EB2E17 /* PulleyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3630B20A6AA2000EB2E17 /* PulleyViewController.swift */; };
+		0FF3631020A6B34400EB2E17 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3630F20A6B34400EB2E17 /* DrawerViewController.swift */; };
+		0FF3631220A7E9E500EB2E17 /* ClusterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3631120A7E9E500EB2E17 /* ClusterView.swift */; };
+		0FF3631420A7EF8B00EB2E17 /* SongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3631320A7EF8B00EB2E17 /* SongView.swift */; };
 		6903D7E11F6C8A03007C2CB9 /* MusicPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6903D7E01F6C8A03007C2CB9 /* MusicPlayerView.swift */; };
 		693716691F66145200A3348B /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693716681F66145200A3348B /* KDCircularProgress.swift */; };
 		694291C01F649415009BE67B /* InstructionsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691EBED51F596DA60003463B /* InstructionsPageViewController.swift */; };
 		694291C31F65D99B009BE67B /* AppleMusicVerifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694291C21F65D99B009BE67B /* AppleMusicVerifyController.swift */; };
 		6963AD171F70EF15000BAF1E /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6963AD161F70EF15000BAF1E /* CustomNavigationController.swift */; };
 		69C316A91F50FD800099BAD9 /* DescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C316A81F50FD800099BAD9 /* DescriptionViewController.swift */; };
-		69CEDBFF1F689B98005B5585 /* MainViewController+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEDBFE1F689B98005B5585 /* MainViewController+CollectionView.swift */; };
 		69CEDC011F69E893005B5585 /* ScreenClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEDC001F69E893005B5585 /* ScreenClasses.swift */; };
 		69CEDC031F69FE13005B5585 /* UsernameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CEDC021F69FE13005B5585 /* UsernameController.swift */; };
 		69E7A2DB1F74AE3500626320 /* MusicPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E7A2DA1F74AE3500626320 /* MusicPlayerController.swift */; };
@@ -95,13 +100,18 @@
 		0FA801CB1DBC2FC900AE6B16 /* DropSong+CloudKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DropSong+CloudKit.swift"; sourceTree = "<group>"; };
 		0FBD9A8B1DBDCD2500EB9892 /* CloudKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
 		0FE1B97E1DB15AF500CD447F /* iTunesSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTunesSearchController.swift; sourceTree = "<group>"; };
+		0FF3630920A6AA1F00EB2E17 /* PulleyPassthroughScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PulleyPassthroughScrollView.swift; sourceTree = "<group>"; };
+		0FF3630A20A6AA1F00EB2E17 /* UIView+constrainToParent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+constrainToParent.swift"; sourceTree = "<group>"; };
+		0FF3630B20A6AA2000EB2E17 /* PulleyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PulleyViewController.swift; sourceTree = "<group>"; };
+		0FF3630F20A6B34400EB2E17 /* DrawerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerViewController.swift; sourceTree = "<group>"; };
+		0FF3631120A7E9E500EB2E17 /* ClusterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterView.swift; sourceTree = "<group>"; };
+		0FF3631320A7EF8B00EB2E17 /* SongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongView.swift; sourceTree = "<group>"; };
 		6903D7E01F6C8A03007C2CB9 /* MusicPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayerView.swift; sourceTree = "<group>"; };
 		691EBED51F596DA60003463B /* InstructionsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsPageViewController.swift; sourceTree = "<group>"; };
 		693716681F66145200A3348B /* KDCircularProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
 		694291C21F65D99B009BE67B /* AppleMusicVerifyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicVerifyController.swift; sourceTree = "<group>"; };
 		6963AD161F70EF15000BAF1E /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		69C316A81F50FD800099BAD9 /* DescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionViewController.swift; sourceTree = "<group>"; };
-		69CEDBFE1F689B98005B5585 /* MainViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+CollectionView.swift"; sourceTree = "<group>"; };
 		69CEDC001F69E893005B5585 /* ScreenClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenClasses.swift; sourceTree = "<group>"; };
 		69CEDC021F69FE13005B5585 /* UsernameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameController.swift; sourceTree = "<group>"; };
 		69E7A2DA1F74AE3500626320 /* MusicPlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerController.swift; sourceTree = "<group>"; };
@@ -141,6 +151,7 @@
 		0F2DBC9E1DAD68CE0084AAD9 /* DropMusic */ = {
 			isa = PBXGroup;
 			children = (
+				0FF3630820A6AA0900EB2E17 /* Pulley */,
 				694291C11F65D96C009BE67B /* AppleMusicVerify */,
 				691EBEDA1F596E7D0003463B /* CustomViews */,
 				691EBED81F596E390003463B /* Protocols */,
@@ -183,17 +194,27 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		0FF3630820A6AA0900EB2E17 /* Pulley */ = {
+			isa = PBXGroup;
+			children = (
+				0FF3630920A6AA1F00EB2E17 /* PulleyPassthroughScrollView.swift */,
+				0FF3630B20A6AA2000EB2E17 /* PulleyViewController.swift */,
+				0FF3630A20A6AA1F00EB2E17 /* UIView+constrainToParent.swift */,
+			);
+			path = Pulley;
+			sourceTree = "<group>";
+		};
 		691EBED61F596DDE0003463B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				0F3DD1241DB52CF300E5224B /* MainViewController.swift */,
-				69CEDBFE1F689B98005B5585 /* MainViewController+CollectionView.swift */,
 				0F2DBCDE1DAE488B0084AAD9 /* TopChartsViewController.swift */,
 				0F685A1F1DAFFD8B001D4247 /* ResultsTableViewController.swift */,
 				0F2DBCDB1DADB5910084AAD9 /* AlbumViewController.swift */,
 				6963AD161F70EF15000BAF1E /* CustomNavigationController.swift */,
 				0F3DD0FD1DB36A3B00E5224B /* DropSongViewController.swift */,
 				691EBED71F596DF90003463B /* CustomCells */,
+				0FF3630F20A6B34400EB2E17 /* DrawerViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -260,10 +281,12 @@
 			isa = PBXGroup;
 			children = (
 				0F2472B51DB7E83F00F3C0F2 /* SongAnnotation.swift */,
+				0FF3631320A7EF8B00EB2E17 /* SongView.swift */,
 				0F82607F1DB6F26900D9F916 /* DropSongModel.swift */,
 				0F2DBCB41DAD77C10084AAD9 /* SongModel.swift */,
 				0F3DD0FF1DB3F91F00E5224B /* DataTypeExtensions.swift */,
 				0F2DBCD91DAD9ABE0084AAD9 /* AlbumModel.swift */,
+				0FF3631120A7E9E500EB2E17 /* ClusterView.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -323,12 +346,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Angel Contreras";
 				TargetAttributes = {
 					0F2DBC9B1DAD68CE0084AAD9 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = GQMN9RP4XE;
+						LastSwiftMigration = 0930;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -384,9 +408,11 @@
 				69CEDC011F69E893005B5585 /* ScreenClasses.swift in Sources */,
 				0FBD9A8C1DBDCD2500EB9892 /* CloudKitManager.swift in Sources */,
 				0F2DBCE71DAE5F8A0084AAD9 /* NetworkController.swift in Sources */,
+				0FF3630C20A6AA2000EB2E17 /* PulleyPassthroughScrollView.swift in Sources */,
 				0F8260801DB6F26900D9F916 /* DropSongModel.swift in Sources */,
+				0FF3631420A7EF8B00EB2E17 /* SongView.swift in Sources */,
 				0F685A221DAFFDA3001D4247 /* ResultsTableViewCell.swift in Sources */,
-				69CEDBFF1F689B98005B5585 /* MainViewController+CollectionView.swift in Sources */,
+				0FF3630E20A6AA2000EB2E17 /* PulleyViewController.swift in Sources */,
 				694291C31F65D99B009BE67B /* AppleMusicVerifyController.swift in Sources */,
 				0F2DBCDC1DADB5910084AAD9 /* AlbumViewController.swift in Sources */,
 				0F81DE9C1F36A7810083FBBB /* SnappingCollectionViewLayout.swift in Sources */,
@@ -411,10 +437,13 @@
 				0F2DBCDA1DAD9ABE0084AAD9 /* AlbumModel.swift in Sources */,
 				69CEDC031F69FE13005B5585 /* UsernameController.swift in Sources */,
 				0F2472B81DB7EC6000F3C0F2 /* DropSongController.swift in Sources */,
+				0FF3631220A7E9E500EB2E17 /* ClusterView.swift in Sources */,
 				0F2DBCA01DAD68CE0084AAD9 /* AppDelegate.swift in Sources */,
 				0F2DBCB81DAD79040084AAD9 /* StoreProtocol.swift in Sources */,
 				0F3DD1001DB3F91F00E5224B /* DataTypeExtensions.swift in Sources */,
 				0F8260561DB68C3200D9F916 /* MapProtocol.swift in Sources */,
+				0FF3630D20A6AA2000EB2E17 /* UIView+constrainToParent.swift in Sources */,
+				0FF3631020A6B34400EB2E17 /* DrawerViewController.swift in Sources */,
 				0F772A511F30458000CC2078 /* Extensions.swift in Sources */,
 				69C316A91F50FD800099BAD9 /* DescriptionViewController.swift in Sources */,
 				0F81DE9A1F3681770083FBBB /* BaseCell.swift in Sources */,
@@ -457,6 +486,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -464,6 +494,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -514,6 +545,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -521,6 +553,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -558,11 +591,12 @@
 				CODE_SIGN_ENTITLEMENTS = DropMusic/DropMusic.entitlements;
 				DEVELOPMENT_TEAM = GQMN9RP4XE;
 				INFOPLIST_FILE = DropMusic/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.AngelContreras.DropMusic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -574,11 +608,12 @@
 				CODE_SIGN_ENTITLEMENTS = DropMusic/DropMusic.entitlements;
 				DEVELOPMENT_TEAM = GQMN9RP4XE;
 				INFOPLIST_FILE = DropMusic/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.AngelContreras.DropMusic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

@@ -11,7 +11,7 @@ import MediaPlayer
 
 class DropSongCollectionViewCell: BaseCell{
     
-    lazy var musicPlayer = MPMusicPlayerController()
+    lazy var musicPlayer = MPMusicPlayerController.systemMusicPlayer
     
     let albumCoverImage: UIImageView = {
         let iv = UIImageView()
@@ -24,7 +24,7 @@ class DropSongCollectionViewCell: BaseCell{
     
     let songTitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor().projectBlue
+        label.textColor = UIColor.projectBlue
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -32,7 +32,7 @@ class DropSongCollectionViewCell: BaseCell{
     
     let artistTitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor().projectBlue
+        label.textColor = UIColor.projectBlue
         label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -40,7 +40,7 @@ class DropSongCollectionViewCell: BaseCell{
     
     let droppedByTitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor().projectBlue
+        label.textColor = UIColor.projectBlue
         label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -111,7 +111,7 @@ class DropSongCollectionViewCell: BaseCell{
         }
         
 
-        ImageController.fetchImage(withString: dropSong.song.imageURL!) { (image) in
+        ImageController.fetchImage(withString: dropSong.song.imageURL!, id: dropSong.song.storeID) { (image) in
             self.albumCoverImage.image = image
         }
     }
@@ -119,7 +119,7 @@ class DropSongCollectionViewCell: BaseCell{
     @objc func play() {
         let storeID = songAnnotation?.dropSong?.song.storeID
         if let id = storeID {
-            musicPlayer.setQueueWithStoreIDs([id])
+            musicPlayer.setQueue(with: [id])
             musicPlayer.prepareToPlay()
             musicPlayer.play()
         }

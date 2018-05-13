@@ -16,7 +16,8 @@ class MusicPlayerView: UIView{
         button.imageView?.contentMode = .scaleAspectFit
         button.addTarget(self.musicPlayerController, action: #selector(self.musicPlayerController.previous), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(#imageLiteral(resourceName: "Previous"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Previous").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .projectBlue
         return button
     }()
     
@@ -24,7 +25,9 @@ class MusicPlayerView: UIView{
         let button = UIButton()
         button.imageView?.contentMode = .scaleAspectFit
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(#imageLiteral(resourceName: "Skip"), for: .normal)
+        button.addTarget(self.musicPlayerController, action: #selector(self.musicPlayerController.skip), for: .touchUpInside)
+        button.setImage(#imageLiteral(resourceName: "Skip").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .projectBlue
         return button
     }()
     
@@ -32,7 +35,8 @@ class MusicPlayerView: UIView{
         let button = UIButton()
         button.imageView?.contentMode = .scaleAspectFit
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(#imageLiteral(resourceName: "Play"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Play").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .projectBlue
         button.addTarget(self.musicPlayerController, action: #selector(self.musicPlayerController.playPause), for: .touchUpInside)
         return button
     }()
@@ -44,30 +48,12 @@ class MusicPlayerView: UIView{
         return iv
     }()
     
-    lazy var currentlyPlayingLabel: UILabel = {
+    lazy var songDetailLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10, weight: UIFontWeightThin)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .white
-        label.text = "Currently Playing"
-        return label
-    }()
-    
-    lazy var songTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = UIColor().projectBlue
-        label.text = "Song Title"
-        return label
-    }()
-    
-    lazy var artistNameLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = UIColor().projectBlue
-        label.text = "Artist Name"
+        label.textColor = UIColor.white
+        label.numberOfLines = 0
         return label
     }()
     
@@ -76,11 +62,12 @@ class MusicPlayerView: UIView{
         mPC.delegate = self
         return mPC
     }()
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupSubviews()
-        setupShadow()
+//        setupShadow()
         setupCurrentPlayingItem(currentPlayingItem: musicPlayerController.fetchCurrentPlayItem())
     }
     
@@ -89,28 +76,44 @@ class MusicPlayerView: UIView{
     }
     
     private func setupSubviews() {
-        [previousButton, skipButton, playPauseButton, albumCoverView, songTitleLabel, artistNameLabel, currentlyPlayingLabel].forEach { (view) in
+        [previousButton, skipButton, playPauseButton, albumCoverView, songDetailLabel].forEach { (view) in
             addSubview(view)
         }
         
-        addConstraintsWithFormat(format: "H:|-4-[v0(40)]", views: albumCoverView)
+        addConstraintsWithFormat(format: "H:|[v0(68)]", views: albumCoverView)
         addConstraintsWithFormat(format: "H:[v0(20)]-25-[v1(20)]-20-[v2(20)]-15-|", views: previousButton, playPauseButton, skipButton)
+        
         
         albumCoverView.topAnchor.constraint(equalTo: topAnchor).isActive = true
         albumCoverView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        
-        
         
         addConstraintsWithFormat(format: "V:|[v0]|", views: previousButton)
         addConstraintsWithFormat(format: "V:|[v0]|", views: playPauseButton)
         addConstraintsWithFormat(format: "V:|[v0]|", views: skipButton)
         
-        // Labels
-        addConstraintsWithFormat(format: "H:[v0]-4-[v1][v2]", views: albumCoverView, currentlyPlayingLabel, previousButton)
-        addConstraintsWithFormat(format: "H:[v0]-4-[v1][v2]", views: albumCoverView, songTitleLabel, previousButton)
-        addConstraintsWithFormat(format: "H:[v0]-4-[v1][v2]", views: albumCoverView, artistNameLabel, previousButton)
         
-        addConstraintsWithFormat(format: "V:|[v0][v1][v2]-4-|", views: currentlyPlayingLabel, songTitleLabel, artistNameLabel)
+        // Labels
+        addConstraintsWithFormat(format: "H:[v0]-4-[v1]-4-[v2]", views: albumCoverView, songDetailLabel, previousButton)
+        
+        addConstraintsWithFormat(format: "V:[v0]-8-|", views: songDetailLabel)
+    }
+    
+    enum PlayingState {
+        case noItemCurrentlyPlaying
+        case currentlyPlaying
+        case paused
+    }
+    
+    func updatePlayerWith(playingState: PlayingState) {
+        var bool: Bool!
+        switch playingState {
+        case .noItemCurrentlyPlaying:
+            bool = true
+        case .currentlyPlaying, .paused:
+            bool = false
+        }
+        albumCoverView.isHidden = bool
+        songDetailLabel.isHidden = bool
     }
     
     private func setupShadow() {
@@ -123,7 +126,9 @@ class MusicPlayerView: UIView{
     }
     
     private func setupCurrentPlayingItem(currentPlayingItem: (UIImage?, String?, String?)) {
-        
+        if currentPlayingItem.0 == nil, currentPlayingItem.1 == nil, currentPlayingItem.2 == nil {
+            updatePlayerWith(playingState: .noItemCurrentlyPlaying)
+        }
     }
 }
 
@@ -133,19 +138,22 @@ extension MusicPlayerView: MusicPlayerControllerDelegate {
         if let albumCover = albumCover{
             albumCoverView.image = albumCover
         }
-        songTitleLabel.text = songTitle
-        artistNameLabel.text = artistName
+        let songDetailsString = "\(songTitle ?? "")\n\(artistName ?? "")"
+        let attributedString = NSMutableAttributedString(string: songDetailsString)
+        let range = attributedString.mutableString.range(of: artistName ?? "", options: .caseInsensitive)
+        attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.projectBlue, range: range)
+        songDetailLabel.attributedText = attributedString
     }
     
     func playbackStateDidChange(playback: MPMusicPlaybackState) {
-        let setPlayPauseButtonImageToPlay: () = playPauseButton.setImage(#imageLiteral(resourceName: "Play"), for: .normal)
+        let setPlayPauseButtonImageToPlay: () = playPauseButton.setImage(#imageLiteral(resourceName: "Play").withRenderingMode(.alwaysTemplate), for: .normal)
         switch playback {
         case .interrupted:
             setPlayPauseButtonImageToPlay
         case .paused:
             setPlayPauseButtonImageToPlay
         case .playing:
-            playPauseButton.setImage(#imageLiteral(resourceName: "Pause"), for: .normal)
+            playPauseButton.setImage(#imageLiteral(resourceName: "Pause").withRenderingMode(.alwaysTemplate), for: .normal)
         case .stopped:
             setPlayPauseButtonImageToPlay
         default:

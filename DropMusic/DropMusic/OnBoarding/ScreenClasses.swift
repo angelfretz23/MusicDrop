@@ -49,7 +49,7 @@ class ThirdScreenViewController: BaseViewController {
     
     lazy var enterUsernameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor().projectBlue
+        label.textColor = UIColor.projectBlue
         label.text = "Enter your alias name"
         label.font = UIFont.systemFont(ofSize: 17)
         label.textAlignment = .center
@@ -70,7 +70,7 @@ class ThirdScreenViewController: BaseViewController {
         let button = UIButton()
         button.setTitle("Done", for: .normal)
         button.setTitleColor(UIColor(red: 67/255, green: 67/255, blue: 67/255, alpha: 1.0), for: .normal)
-        button.backgroundColor = UIColor().projectBlue
+        button.backgroundColor = UIColor.projectBlue
         button.addTarget(self, action: #selector(doneButtonPressed(_:)), for: .touchUpInside)
         button.layer.cornerRadius = 5
         return button

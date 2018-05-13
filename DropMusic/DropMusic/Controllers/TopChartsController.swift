@@ -20,7 +20,7 @@ class TopChartsController{
             let responseDataString = String.init(data: data, encoding: String.Encoding.utf8) else { completion([]); return }
             
             if error != nil {
-                print("Error: \(error?.localizedDescription)")
+                print("Error: \(error?.localizedDescription ?? "")")
             } else if responseDataString.contains("error") {
                 print("Error: \(responseDataString)")
             }
@@ -29,7 +29,7 @@ class TopChartsController{
             guard let feedDictionary = jsonFromData?["feed"] as? [String: Any] else { return }
             guard let topSongsArrayOfDictionaries = feedDictionary["entry"] as? [[String: Any]] else {completion([]); return }
             
-            let songs = topSongsArrayOfDictionaries.flatMap{Song(dictionaryTopCharts: $0)}
+            let songs = topSongsArrayOfDictionaries.compactMap{Song(dictionaryTopCharts: $0)}
             DispatchQueue.main.async {
                 completion(songs)
             }

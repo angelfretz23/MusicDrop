@@ -6,49 +6,75 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DropMusic/Controllers/TopChartsController.swift"
+            timestampString = "547105063.582913"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "fetchSongs(completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in static DropMusic.TopChartsController.fetchSongs(completion: (Swift.Array&lt;DropMusic.Song&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "DropMusic"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/angelc/Dropbox/Capstone/DropMusic/DropMusic/Controllers/TopChartsController.swift"
+                  timestampString = "547105024.166487"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "2904">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; Swift.Optional&lt;DropMusic.Song&gt; in closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in static DropMusic.TopChartsController.fetchSongs(completion: (Swift.Array&lt;DropMusic.Song&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "DropMusic"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/angelc/Dropbox/Capstone/DropMusic/DropMusic/Controllers/TopChartsController.swift"
+                  timestampString = "547105024.1687599"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "DropMusic/MainViewController.swift"
-            timestampString = "523751751.271645"
+            scope = "0"
+            stopOnStyle = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DropMusic/Controllers/MusicPlayerController.swift"
+            timestampString = "547889937.332481"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
-            landmarkName = "unknown"
-            landmarkType = "0">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "DropMusic.MainViewController.(selectCurrentCollectionViewItamOnMapView in _ADF8C7B94C79177F20FE7C1D0741F1B2)() -&gt; ()"
-                  moduleName = "DropMusic"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/AngelC/Dropbox/DevMountain_iOS%20Cohort%208/Capstone/DropMusic/DropMusic/MainViewController.swift"
-                  timestampString = "523748697.92391"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "122"
-                  endingLineNumber = "122"
-                  offsetFromSymbolStart = "36">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__ObjC.MKAnnotation) -&gt; Swift.Bool in DropMusic.MainViewController.(selectCurrentCollectionViewItamOnMapView in _ADF8C7B94C79177F20FE7C1D0741F1B2)() -&gt; ()"
-                  moduleName = "DropMusic"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/AngelC/Dropbox/DevMountain_iOS%20Cohort%208/Capstone/DropMusic/DropMusic/MainViewController.swift"
-                  timestampString = "523748697.925181"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "122"
-                  endingLineNumber = "122"
-                  offsetFromSymbolStart = "16">
-               </Location>
-            </Locations>
+            startingLineNumber = "96"
+            endingLineNumber = "96"
+            landmarkName = "fetchCurrentPlayItem()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -57,14 +83,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "DropMusic/MainViewController.swift"
-            timestampString = "523751751.271793"
+            filePath = "DropMusic/ViewControllers/DrawerViewController.swift"
+            timestampString = "547892753.77174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "111"
+            endingLineNumber = "111"
+            landmarkName = "didSelectClusterAnnotation(with:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

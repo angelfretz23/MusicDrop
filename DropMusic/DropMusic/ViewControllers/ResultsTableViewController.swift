@@ -16,7 +16,7 @@ class ResultsTableViewController: UITableViewController {
         super.viewDidLoad()
     }
     
-    let mediaPlayer = MPMusicPlayerController.systemMusicPlayer()
+    let mediaPlayer = MPMusicPlayerController.systemMusicPlayer
     
     var songs: [StoreProtocol] = []
     
@@ -64,7 +64,7 @@ class ResultsTableViewController: UITableViewController {
     }
     
     func playSongWith(ids: String...){
-        mediaPlayer.setQueueWithStoreIDs(ids)
+        mediaPlayer.setQueue(with: ids)
         mediaPlayer.play()
     }
 }

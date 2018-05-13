@@ -17,7 +17,7 @@ protocol MusicPlayerControllerDelegate: class {
 final class MusicPlayerController {
     
     // MARK: - Private
-    private let applicationMusicPlayer = MPMusicPlayerController.systemMusicPlayer()
+    private let applicationMusicPlayer = MPMusicPlayerController.systemMusicPlayer
     
     // MARK: - Public
 //    public static let shared = MusicPlayerController()
@@ -40,13 +40,18 @@ final class MusicPlayerController {
     
     // MARK: - Methods
     public func playSongWith(id string: String) {
-        applicationMusicPlayer.setQueueWithStoreIDs([string])
+        applicationMusicPlayer.setQueue(with: [string])
     }
     
     public func loadQueueWith(ids: [String], withFirstID firstID: String) {
         var idArray = ids
         idArray.insert(firstID, at: 0)
-        applicationMusicPlayer.setQueueWithStoreIDs(idArray)
+        applicationMusicPlayer.setQueue(with: idArray)
+    }
+    
+    func play() {
+        applicationMusicPlayer.prepareToPlay()
+        applicationMusicPlayer.play()
     }
     
     @objc public func playPause() {
@@ -82,6 +87,11 @@ final class MusicPlayerController {
         image = currentPlayingItem?.artwork?.image(at: CGSize(width: 50, height: 50))
         songTitle = currentPlayingItem?.title
         artistName = currentPlayingItem?.artist
+        
+        if image == nil {
+            guard let id = currentPlayingItem?.playbackStoreID else { return (nil, songTitle, artistName)}
+            image = ImageController.cache.object(forKey: NSString(string: id))
+        }
         
         return (image, songTitle, artistName)
     }

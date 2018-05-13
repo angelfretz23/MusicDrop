@@ -24,7 +24,7 @@ final class DescriptionView: UIView {
     private let songTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 17)
-        label.textColor = UIColor().projectBlue
+        label.textColor = UIColor.projectBlue
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -32,7 +32,7 @@ final class DescriptionView: UIView {
     private let artistNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = UIColor().projectBlue
+        label.textColor = UIColor.projectBlue
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -40,7 +40,7 @@ final class DescriptionView: UIView {
     private let droppedByLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = UIColor().projectBlue
+        label.textColor = UIColor.projectBlue
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -97,7 +97,7 @@ final class DescriptionView: UIView {
         droppedByLabel.text = dropSong.postedBy ?? "Posted by Anonymous"
         descriptionTextView.text = dropSong.description
         
-        ImageController.fetchImage(withString: dropSong.song.imageURL!) { (image) in
+        ImageController.fetchImage(withString: dropSong.song.imageURL!, id: dropSong.song.storeID) { (image) in
             self.albumCoverImageView.image = image
         }
     }

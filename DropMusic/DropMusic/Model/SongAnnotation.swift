@@ -9,24 +9,28 @@
 import Foundation
 import MapKit
 
-class SongAnnotation: NSObject, MKAnnotation{
-    var coordinate: CLLocationCoordinate2D
-    let dropSong: DropSong?
-    var title: String?
-    var subtitle: String?
+class SongAnnotation: MKPointAnnotation{
     
-    init(coordinate: CLLocationCoordinate2D) {
-        self.coordinate = coordinate
-        self.dropSong = nil
+    var dropSong: DropSong?
+    
+    class func songAnnotations(fromDropSongs dropSongs: [DropSong]) -> [SongAnnotation] {
+        let dSongs = dropSongs.map { (dropSong) -> SongAnnotation in
+            let songAnnotation = SongAnnotation()
+            songAnnotation.dropSong = dropSong
+            songAnnotation.coordinate = dropSong.postCoordinates.coordinate
+            songAnnotation.title = dropSong.song.songName
+            songAnnotation.subtitle = dropSong.song.artistName
+            return songAnnotation
+        }
+        return dSongs
     }
     
-    init(dropSong: DropSong){
-        self.coordinate = dropSong.postCoordinates.coordinate
-        self.dropSong = dropSong
-        self.title =  dropSong.song.songName
-        self.subtitle = dropSong.song.artistName
-        super.init()
+    class func songAnnotation(fromDropSong dropSong: DropSong) -> SongAnnotation {
+        let songAnnotation = SongAnnotation()
+        songAnnotation.dropSong = dropSong
+        songAnnotation.coordinate = dropSong.postCoordinates.coordinate
+        songAnnotation.title = dropSong.song.songName
+        songAnnotation.subtitle = dropSong.song.artistName
+        return songAnnotation
     }
-
-    
 }

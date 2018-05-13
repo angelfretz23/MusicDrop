@@ -27,7 +27,7 @@ class DropSongViewController: UIViewController {
     
     let songNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightSemibold)
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
         return label
@@ -75,7 +75,7 @@ class DropSongViewController: UIViewController {
     
     var collectionImage: UIImage?
     
-    let mediaPlayer = MPMusicPlayerController.systemMusicPlayer()
+    let mediaPlayer = MPMusicPlayerController.systemMusicPlayer
     let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
@@ -135,13 +135,13 @@ class DropSongViewController: UIViewController {
     }
     
     func playSongWith(id: String...){
-        mediaPlayer.setQueueWithStoreIDs(id)
+        mediaPlayer.setQueue(with: id)
         
         mediaPlayer.play()
     }
     
     func updateWith(song: Song){
-        ImageController.fetchImage(withString: (song.imageURL)!, with: 50) { (image) in
+        ImageController.fetchImage(withString: (song.imageURL)!, with: 50, id: song.storeID) { (image) in
             self.albumCover.image = image
             self.collectionImage = image
         }
@@ -153,7 +153,7 @@ class DropSongViewController: UIViewController {
     func addAnnotationOnLoad(){
         guard let location = locationManager.location, let song = song else { return }
         let dropSong = DropSong(postCoordinates: location, song: song, description: nil)
-        let songAnnotation = SongAnnotation(dropSong: dropSong)
+        let songAnnotation = SongAnnotation.songAnnotation(fromDropSong: dropSong)
         mapView.addAnnotation(songAnnotation)
     }
     
