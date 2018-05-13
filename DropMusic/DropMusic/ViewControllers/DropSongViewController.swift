@@ -84,6 +84,8 @@ class DropSongViewController: UIViewController {
         loadMapView()
         mapView.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(notification:)), name: .UIKeyboardDidShow, object: nil)
+        mapView.register(SongView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        mapView.showsUserLocation = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -123,9 +125,8 @@ class DropSongViewController: UIViewController {
     @IBAction func doneBarButtonPressed(_ sender: UIBarButtonItem) {
         guard let location = locationManager.location else { return }
         let dropSong = DropSong(postCoordinates: location, song: self.song!, postedBy: UsernameController.shared.getUserName(), description: descriptionTextView.text)
-        DropSongController.shared.post(dropSong: dropSong)
-        let deselectNotification = Notification.Name("delectAllAnnotations")
-        NotificationCenter.default.post(name: deselectNotification, object: MainViewController.self)
+        DropSongController.shared.post(dropSong: dropSong, addToCache: true)
+        
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
@@ -211,28 +212,12 @@ extension DropSongViewController: MKMapViewDelegate{
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius, regionRadius)
         mapView.setRegion(coordinateRegion, animated: false)
     }
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "newDropSong") ?? MKAnnotationView(annotation: annotation, reuseIdentifier: "newDropSong")
-        if !(annotation is MKUserLocation){
-            
-            annotationView.image = collectionImage
-            annotationView.bounds.size.height = 50
-            annotationView.bounds.size.width = 50
-            annotationView.layer.shadowColor = UIColor.gray.cgColor
-            annotationView.layer.shadowOpacity = 0.7
-            annotationView.layer.shadowRadius = 5.0
-            annotationView.layer.shadowOffset = CGSize(width: 5, height: 5)
-            return annotationView
-        }
-        return MKAnnotationView()
-    }
 }
 
 extension DropSongViewController: CLLocationManagerDelegate{
     func getQuickLocationUpdate(){
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse{
-            mapView.showsUserLocation = true
+            mapView.showsUserLocation = false
         } else {
             locationManager.requestWhenInUseAuthorization()
         }

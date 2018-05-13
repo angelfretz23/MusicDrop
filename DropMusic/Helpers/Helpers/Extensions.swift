@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 extension UIView{
     func addConstraintsWithFormat(format: String, options: NSLayoutFormatOptions = [], views: UIView...) {
@@ -52,4 +53,17 @@ public extension UIViewController {
         return nil
     }
     
+}
+
+extension MKMapView {
+    var topCenterCoordinate: CLLocationCoordinate2D {
+        return self.convert(CGPoint(x: self.frame.size.width / 2.0, y: 0), toCoordinateFrom: self)
+    }
+    
+    var currentRadius: CGFloat {
+        let centerLocation = CLLocation(latitude: self.centerCoordinate.latitude, longitude: self.centerCoordinate.longitude)
+        let topCenterCoordinate = self.topCenterCoordinate
+        let topCenterLocation = CLLocation(latitude: topCenterCoordinate.latitude, longitude: topCenterCoordinate.longitude)
+        return CGFloat(centerLocation.distance(from: topCenterLocation))
+    }
 }

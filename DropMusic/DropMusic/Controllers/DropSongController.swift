@@ -17,7 +17,9 @@ class DropSongController{
     
     var songAnnotations:[SongAnnotation] = []
     
-    func post(dropSong: DropSong, completion: @escaping ((Error?) -> Void) = { _ in }){
+    var tempSongAnnotations: [SongAnnotation] = []
+    
+    func post(dropSong: DropSong, addToCache: Bool = false, completion: @escaping ((Error?) -> Void) = { _ in }){
         let record = dropSong.cloudKitRecord
         
         cloudKitManager.saveRecord(record) { (_, error) in
@@ -30,6 +32,10 @@ class DropSongController{
         }
         let songAnnotation = SongAnnotation.songAnnotation(fromDropSong: dropSong)
         self.songAnnotations.append(songAnnotation)
+        
+        if addToCache {
+            tempSongAnnotations.append(songAnnotation)
+        }
     }
 
     

@@ -18,8 +18,11 @@ class TopChartsTableViewCell: UITableViewCell {
         self.songNameLabel.text = song.songName
         self.artistNameLabel.text = song.artistName
         self.indexLabel.text = "\(index + 1)"
+        collectinImage.image = nil
         ImageController.fetchImage(withString: song.imageURL!, id: song.storeID) { (image) in
-            self.collectinImage.image = image
+            DispatchQueue.main.async {
+                self.collectinImage.image = image
+            }
         }
     }
 }

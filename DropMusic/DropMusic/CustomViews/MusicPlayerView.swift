@@ -69,6 +69,8 @@ class MusicPlayerView: UIView{
         setupSubviews()
 //        setupShadow()
         setupCurrentPlayingItem(currentPlayingItem: musicPlayerController.fetchCurrentPlayItem())
+        skipButton.isHidden = true
+        previousButton.isHidden = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -95,7 +97,7 @@ class MusicPlayerView: UIView{
         // Labels
         addConstraintsWithFormat(format: "H:[v0]-4-[v1]-4-[v2]", views: albumCoverView, songDetailLabel, previousButton)
         
-        addConstraintsWithFormat(format: "V:[v0]-8-|", views: songDetailLabel)
+        addConstraintsWithFormat(format: "V:[v0]-4-|", views: songDetailLabel)
     }
     
     enum PlayingState {
@@ -125,7 +127,7 @@ class MusicPlayerView: UIView{
         
     }
     
-    private func setupCurrentPlayingItem(currentPlayingItem: (UIImage?, String?, String?)) {
+    private func setupCurrentPlayingItem(currentPlayingItem: (UIImage?, String?, String?, String?)) {
         if currentPlayingItem.0 == nil, currentPlayingItem.1 == nil, currentPlayingItem.2 == nil {
             updatePlayerWith(playingState: .noItemCurrentlyPlaying)
         }
@@ -134,9 +136,17 @@ class MusicPlayerView: UIView{
 
 // MARK: - Music Player Controller Delegate
 extension MusicPlayerView: MusicPlayerControllerDelegate {
-    func nowPlayingItemDidChange(albumCover: UIImage?, songTitle: String?, artistName: String?) {
+    func nowPlayingItemDidChange(albumCover: UIImage?, songTitle: String?, artistName: String?, id: String?) {
         if let albumCover = albumCover{
             albumCoverView.image = albumCover
+        } else {
+            let song = DropSongController.shared.songAnnotations.filter{ $0.dropSong?.song.storeID == id }.compactMap{$0.dropSong?.song}.first
+            guard let realSong = song else { return }
+            ImageController.fetchImage(withString: realSong.imageURL ?? "", with: 50, id: id) { (img) in
+                DispatchQueue.main.async {
+                    self.albumCoverView.image = img
+                }
+            }
         }
         let songDetailsString = "\(songTitle ?? "")\n\(artistName ?? "")"
         let attributedString = NSMutableAttributedString(string: songDetailsString)

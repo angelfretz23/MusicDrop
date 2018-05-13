@@ -10,7 +10,7 @@ import UIKit
 import MediaPlayer
 
 protocol MusicPlayerControllerDelegate: class {
-    func nowPlayingItemDidChange(albumCover: UIImage?, songTitle: String?, artistName: String?)
+    func nowPlayingItemDidChange(albumCover: UIImage?, songTitle: String?, artistName: String?, id: String?)
     func playbackStateDidChange(playback: MPMusicPlaybackState)
 }
 
@@ -78,7 +78,7 @@ final class MusicPlayerController {
         }
     }
     
-    public func fetchCurrentPlayItem() -> (UIImage?, String?, String?) {
+    public func fetchCurrentPlayItem() -> (UIImage?, String?, String?, String?) {
         var image: UIImage?
         var songTitle: String?
         var artistName: String?
@@ -88,17 +88,17 @@ final class MusicPlayerController {
         songTitle = currentPlayingItem?.title
         artistName = currentPlayingItem?.artist
         
+        let id = currentPlayingItem?.playbackStoreID
         if image == nil {
-            guard let id = currentPlayingItem?.playbackStoreID else { return (nil, songTitle, artistName)}
-            image = ImageController.cache.object(forKey: NSString(string: id))
+            image = ImageController.cache.object(forKey: NSString(string: id ?? ""))
         }
         
-        return (image, songTitle, artistName)
+        return (image, songTitle, artistName, id)
     }
     
     @objc public func nowPlayingItemChanged(_ notification: Notification) {
         let currentItem = fetchCurrentPlayItem()
-        delegate?.nowPlayingItemDidChange(albumCover: currentItem.0, songTitle: currentItem.1, artistName: currentItem.2)
+        delegate?.nowPlayingItemDidChange(albumCover: currentItem.0, songTitle: currentItem.1, artistName: currentItem.2, id: currentItem.3)
     }
     
     @objc public func playbackStateChanged(_ notification: Notification) {

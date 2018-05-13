@@ -8,6 +8,73 @@
 
 import UIKit
 
+class DrawerTableViewCell: UITableViewCell {
+    lazy var songDetailsLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 14)
+        return label
+    }()
+    
+    lazy var albumArtwork: UIImageView = {
+        let iv = UIImageView()
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.contentMode = .scaleAspectFit
+        return iv
+    }()
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupViews()
+    }
+    
+    override var isSelected: Bool {
+        didSet{
+            
+        }
+    }
+    
+    var song: Song? {
+        didSet{
+            guard let song = self.song else { return }
+            updateWith(song: song)
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupViews() {
+        [songDetailsLabel, albumArtwork].forEach { (view) in
+            addSubview(view)
+        }
+        
+        addConstraintsWithFormat(format: "H:|-[v0]-[v1(60)]|", views: songDetailsLabel, albumArtwork)
+        
+        addConstraintsWithFormat(format: "V:|[v0]|", views: albumArtwork)
+        songDetailsLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+    }
+    
+    private func updateWith(song: Song) {
+        let songDetailsString = "\(song.songName)\n\(song.artistName)"
+        let attributedString = NSMutableAttributedString(string: songDetailsString)
+        let range = attributedString.mutableString.range(of: song.artistName, options: .caseInsensitive)
+        attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.projectBlue, range: range)
+        self.songDetailsLabel.attributedText = attributedString
+        self.albumArtwork.image = nil
+        
+        ImageController.fetchImage(withString: song.imageURL ?? "", with: 60, id: song.storeID) { (img) in
+            DispatchQueue.main.async {
+                self.albumArtwork.image = img
+            }
+        }
+    }
+}
+
 class DrawerViewController: UIViewController {
     var musicPlayerView: MusicPlayerView = {
         let mPV = MusicPlayerView(frame: .zero)
@@ -39,7 +106,6 @@ class DrawerViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .clear
         setupViews()
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -66,7 +132,8 @@ class DrawerViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "dropSong")
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+        tableView.register(DrawerTableViewCell.self, forCellReuseIdentifier: "dropSong")
         tableView.backgroundColor = .clear//UIColor(red: 67/255, green: 67/255, blue: 67/255, alpha: 0.8)
         let blurEffect = UIBlurEffect(style: .dark)
         let visualEffect = UIVisualEffectView(effect: blurEffect)
@@ -85,19 +152,27 @@ class DrawerViewController: UIViewController {
 
 extension DrawerViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "dropSong", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "dropSong", for: indexPath) as? DrawerTableViewCell
         let song = songs[indexPath.row]
-        cell.backgroundColor = UIColor.clear
-        cell.textLabel?.textColor = .white
-        cell.textLabel?.text
-            = song.songName
-        cell.detailTextLabel?.text = song.artistName
-        cell.detailTextLabel?.textColor = .projectBlue
-        return cell
+        cell?.backgroundColor = .clear
+        cell?.song = song
+        return cell ?? UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return songs.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let song = songs[indexPath.row]
+        let musicp = MusicPlayerController()
+        musicp.playSongWith(id: song.storeID)
+        musicp.play()
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

@@ -387,7 +387,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ePf-Y8-Pwq">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="620"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="420"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
                                     <segue destination="BVP-YB-Ore" kind="embed" id="0gG-qL-H8U"/>
@@ -419,11 +419,11 @@
             <objects>
                 <viewController storyboardIdentifier="mainVC" id="BVP-YB-Ore" customClass="MainViewController" customModule="DropMusic" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xN1-mL-uSC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="620"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="420"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" showsUserLocation="YES" showsCompass="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vye-vD-SId">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="620"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="420"/>
                             </mapView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ztY-Um-Zcr">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
@@ -454,6 +454,19 @@
                                     <constraint firstItem="2AZ-ay-dpR" firstAttribute="centerX" secondItem="aHL-bz-Tj7" secondAttribute="centerX" id="zqt-Cg-e4q"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GPp-Ii-qla">
+                                <rect key="frame" x="125" y="384" width="125" height="28"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="IVV-Fl-ECW"/>
+                                    <constraint firstAttribute="width" constant="125" id="M7N-IM-GNY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <state key="normal" title="Search this Area"/>
+                                <connections>
+                                    <action selector="searchThisAreaPressed:" destination="BVP-YB-Ore" eventType="touchUpInside" id="vFM-zX-Kqq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -461,7 +474,9 @@
                             <constraint firstItem="ztY-Um-Zcr" firstAttribute="top" secondItem="xN1-mL-uSC" secondAttribute="top" id="Dki-GS-8KR"/>
                             <constraint firstAttribute="bottom" secondItem="Vye-vD-SId" secondAttribute="bottom" id="K20-dq-8gk"/>
                             <constraint firstItem="ztY-Um-Zcr" firstAttribute="leading" secondItem="xN1-mL-uSC" secondAttribute="leading" id="PtO-t0-eAw"/>
+                            <constraint firstAttribute="bottom" secondItem="GPp-Ii-qla" secondAttribute="bottom" constant="8" id="Scf-m4-1a7"/>
                             <constraint firstAttribute="trailing" secondItem="ztY-Um-Zcr" secondAttribute="trailing" id="UQq-GD-aXK"/>
+                            <constraint firstItem="GPp-Ii-qla" firstAttribute="centerX" secondItem="xN1-mL-uSC" secondAttribute="centerX" id="i9p-Rn-vrm"/>
                             <constraint firstItem="aHL-bz-Tj7" firstAttribute="top" secondItem="ztY-Um-Zcr" secondAttribute="bottom" constant="16" id="lgN-4h-beW"/>
                             <constraint firstItem="Vye-vD-SId" firstAttribute="leading" secondItem="V9b-KQ-HWD" secondAttribute="leading" id="sfD-m9-DLj"/>
                             <constraint firstItem="V9b-KQ-HWD" firstAttribute="trailing" secondItem="aHL-bz-Tj7" secondAttribute="trailing" constant="8" id="urH-9v-Kzo"/>
@@ -474,8 +489,10 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addButton" destination="2AZ-ay-dpR" id="W7b-St-mlW"/>
+                        <outlet property="bottonLayoutConstraint" destination="Scf-m4-1a7" id="e7t-eo-s5E"/>
                         <outlet property="controlPanel" destination="aHL-bz-Tj7" id="DeI-jb-b2c"/>
                         <outlet property="mapView" destination="Vye-vD-SId" id="069-Mj-sge"/>
+                        <outlet property="searchThisAreaButton" destination="GPp-Ii-qla" id="9JO-W7-JMQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dT4-RO-guf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -485,7 +502,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1631.2" y="346.92118226600985"/>
+            <point key="canvasLocation" x="1631.2" y="346.55172413793105"/>
         </scene>
         <!--Drawer View Controller-->
         <scene sceneID="oAt-wd-b7v">
